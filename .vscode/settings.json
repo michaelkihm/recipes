@@ -1,0 +1,8 @@
+{
+    "eslint.validate": ["typescript"],
+    "editor.rulers": [120],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true 
+    },
+    "typescript.preferences.quoteStyle": "single",
+}
