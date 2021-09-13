@@ -1,4 +1,4 @@
-name: build-desktop
+name: build-frontend
 on:
   push:
     paths:
