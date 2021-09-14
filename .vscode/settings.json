@@ -5,4 +5,9 @@
         "source.fixAll.eslint": true 
     },
     "typescript.preferences.quoteStyle": "single",
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
 }
