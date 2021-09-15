@@ -9,6 +9,6 @@ export class Recipe {
         public id: string,
         public ingredients: Ingredient[],
         public createdBy: string,
-        public category: Category
+        public category: Category[]
     ) {}
 }
