@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReceipesService } from '../recipes-service/recipes.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesListComponent implements OnInit {
 
-  constructor() { }
+  categories: readonly string[] = [];
+  constructor(private recipeService: ReceipesService) { }
 
   ngOnInit(): void {
+    this.categories = this.recipeService.getCategories();
   }
 
 }

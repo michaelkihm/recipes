@@ -1,1 +1,7 @@
-<p>categories-list works!</p>
+<div class="container">
+    <h2 >Categorien</h2>
+    <div *ngFor="let category of categories" class="category">
+        <input class="checkbox" type="checkbox" id="{{ category }}" name="{{ category }}">
+        <label class="label" for="{{ category }}">{{ category }}</label>
+    </div>
+</div>
