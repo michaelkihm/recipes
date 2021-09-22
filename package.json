@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
-    "test:watch": "ng test"
+    "test:watch": "ng test",
+    "start:server": "nodemon backend/dist/app.js",
+    "compile:server": "tsc -p backend -w"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +21,11 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
     "ngx-bootstrap": "^7.1.0",
+    "nodemon": "^2.0.12",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -29,8 +34,10 @@
     "@angular-devkit/build-angular": "~12.2.1",
     "@angular/cli": "~12.2.1",
     "@angular/compiler-cli": "~12.2.0",
+    "@types/body-parser": "^1.19.1",
+    "@types/express": "^4.17.13",
     "@types/jasmine": "~3.8.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.20.26",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "eslint": "^7.32.0",
     "jasmine-core": "~3.8.0",
