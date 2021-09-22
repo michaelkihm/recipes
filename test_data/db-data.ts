@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Recipe } from 'models/recipe.model';
+import { Recipe } from '../models/recipe.model';
 
 export const RECIPES: Recipe[] = [
     {
