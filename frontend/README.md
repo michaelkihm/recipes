@@ -1,27 +1,49 @@
-# Frontend
+# Recipes
+
+WebApp with list of recipes and user settings to add or comment recipes.
+
+
+## Tech Stack
+Mongo DB
+Express
+Angular
+NodeJs
+
+## IDE
+VSCode
+
+## Frontend 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.1.
 
-## Development server
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Get up and running
 
-## Running unit tests
+### Frontend 
+```
+npm i
+ng serve
+```
+## Debugging
+TO DO
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Testing
+### Frontend 
+If you are using VS Code you can use the debugger configured in the [launch](.vscode/launch.json) file. However, for using the debugger you have to download the [Microsoft Edge Tools for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-edgedevtools.vscode-edge-devtools) extension and the [Microsoft Edge](https://www.microsoft.com/en-us/edge) browser. Then run
+```
+cd frontend
+ng serve
+```
+and start the Launch Edge against localhost debugger. 
+#### Unit tests
+```
+cd frontend
+ng test
+```
+### Backend
