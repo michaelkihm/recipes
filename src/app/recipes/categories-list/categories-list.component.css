@@ -1,6 +1,7 @@
 .container {
-    padding: 2rem;
+    padding: 1rem;
     border: 1px solid rgba(14, 13, 13, 0.692);
+    margin-left: 0.5rem;
 }
 
 .category {
@@ -10,7 +11,6 @@
 }
 
 .checkbox {
-    display: flex;
     transform: scale(1.5)
 }
 
