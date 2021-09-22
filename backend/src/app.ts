@@ -6,6 +6,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/recipes',recipeRouter);
+app.use('/api/recipes',recipeRouter);
 
 app.listen('4000');
