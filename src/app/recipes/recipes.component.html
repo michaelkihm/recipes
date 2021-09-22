@@ -4,7 +4,11 @@
             <app-categories-list></app-categories-list>
         </div>
         <div class="col">
-            <router-outlet></router-outlet>
+        <div class="row">
+            <div class="col" *ngFor="let recipe of recipes">
+                <app-recipe-card  [recipe]="recipe"></app-recipe-card>
+            </div>
+        </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from '../../../models/recipe.model';
+import { ReceipesService } from './recipes-service/recipes.service';
 
 @Component({
   selector: 'app-recipes',
@@ -7,8 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecipesComponent implements OnInit {
 
-	constructor() { }
+  	recipes: Recipe[];
+	constructor(private recipesService: ReceipesService) { }
 
-  	ngOnInit(): void {}
+  	ngOnInit(): void {
+		this.recipesService.fetchRandomRecipes().subscribe(recipesResponse => {
+			this.recipes = recipesResponse.recipes;
+		});
+	}
 
 }

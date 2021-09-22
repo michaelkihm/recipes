@@ -1,23 +1,30 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Recipe } from 'models/recipe.model';
-import { RECIPES } from '../../../../test_data/db-data';
+import { Observable } from 'rxjs';
+import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/routes/recipes';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
-
 @Injectable({
     providedIn: 'root'
 })
-export class ReceipeService {
+export class ReceipesService {
 
-    recipes: Recipe[] = RECIPES;
+    private baseUrl = 'http://localhost:4000/api/recipes';
+    private randomRecipesAmount = 2;
 
-    getRecipe(id: string): Recipe | undefined {
-        return this.recipes.find(recipe => recipe.id = id);
+    constructor(private http: HttpClient) {}
+
+    fetchRecipes(): Observable<RecipesGetResponse> {
+        return this.http.get<RecipesGetResponse>(this.baseUrl);
     }
 
-    getRecipes(): Recipe[] {
-        return this.recipes.slice();
+    fetchRecipe(id: string): Observable<SingleRecipeResponse> {
+        return this.http.get<SingleRecipeResponse>(`${this.baseUrl}/${id}`);
     }
 
+    fetchRandomRecipes(): Observable<RecipesGetResponse> {
+        return this.http.get<RecipesGetResponse>(`${this.baseUrl}/random/${this.randomRecipesAmount}`);
+    }
+    
     getCategories(): readonly Category[] {
         return ALL_CATEGORIES;
     }

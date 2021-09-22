@@ -4,16 +4,21 @@ import { Recipe } from './../../../models/recipe.model';
 
 export const recipeRouter = Router();
 
-type GetResponse = {
+export type RecipesGetResponse = {
     message: string,
     recipes: Recipe[]
 };
 
-recipeRouter.get('',(req, res: Response<GetResponse>) => {
+export type SingleRecipeResponse = {
+    message: string,
+    recipe?: Recipe
+};
+
+recipeRouter.get('',(req, res: Response<RecipesGetResponse>) => {
     res.status(200).json({ message: `Have ${RECIPES.length} recipes`, recipes: RECIPES });
 });
 
-recipeRouter.get('/random/:amount', (req: Request<{amount: string}>, res: Response<GetResponse>) => {
+recipeRouter.get('/random/:amount', (req: Request<{amount: string}>, res: Response<RecipesGetResponse>) => {
     if(+req.params.amount < RECIPES.length){
         res.status(200).json({
             message: `Return ${req.params.amount} recipes`,
@@ -27,7 +32,7 @@ recipeRouter.get('/random/:amount', (req: Request<{amount: string}>, res: Respon
     }
 });
 
-recipeRouter.get('/:id',(req: Request<{id: string}>, res: Response<{message: string, recipe?: Recipe}>) => {
+recipeRouter.get('/:id',(req: Request<{id: string}>, res: Response<SingleRecipeResponse>) => {
 
     const recipe = RECIPES.find(recipe => recipe.id === req.params.id);
     if(recipe) res.status(200).json({ message: `Found recipe ${req.params.id}`, recipe });
