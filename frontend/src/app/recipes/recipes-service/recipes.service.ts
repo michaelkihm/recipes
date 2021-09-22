@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from 'models/recipe.model';
 import { RECIPES } from '../../../../test_data/db-data';
+import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 
 @Injectable({
     providedIn: 'root'
@@ -15,5 +16,9 @@ export class ReceipeService {
 
     getRecipes(): Recipe[] {
         return this.recipes.slice();
+    }
+
+    getCategories(): readonly Category[] {
+        return ALL_CATEGORIES;
     }
 }
