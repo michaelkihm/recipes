@@ -16,9 +16,7 @@ jobs:
           node-version: '15'
       - name: Install modules
         run: npm install
-        working-directory: frontend
       - name: Unit test frontend
         run: npm test
-        working-directory: frontend
 
 
