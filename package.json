@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
-    "start:server": "nodemon backend/dist/app.js",
+    "start:server": "nodemon backend/dist/backend/src/app.js",
     "compile:server": "tsc -p backend -w"
   },
   "private": true,
