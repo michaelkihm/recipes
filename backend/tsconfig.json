@@ -15,11 +15,15 @@
       "typeRoots": [
         "node_modules/@types"
       ],
+      "types": ["@types/jest"],
       "skipLibCheck": true,
       "lib": [
         "es2018",
         "dom"
-      ]
+      ],
     },
+    "exclude": [
+      "src/**/*.spec.ts"
+    ]
    
 }
