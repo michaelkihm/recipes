@@ -5,7 +5,7 @@ on:
     - "src/**"
     - ".github/workflows/build-frontend.yml"
 jobs:
-  build-frontend:
+  build-project:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
