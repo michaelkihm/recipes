@@ -2,7 +2,7 @@ name: build-frontend
 on:
   push:
     paths:
-    - "frontend/**"
+    - "src/**"
     - ".github/workflows/build-frontend.yml"
 jobs:
   build-frontend:
@@ -18,5 +18,3 @@ jobs:
         run: npm install
       - name: Unit test frontend
         run: npm test
-
-
