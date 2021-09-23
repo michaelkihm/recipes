@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RecipesGetResponse, SingleRecipeResponse } from '../../../../backend/src/controllers/recipes.controller';
+import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
+
 @Injectable({
     providedIn: 'root'
 })
