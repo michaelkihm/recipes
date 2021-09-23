@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { recipeRouter } from './routes/recipes';
+import { recipeRouter } from './routes/recipes.routes';
 
 const app = express();
 

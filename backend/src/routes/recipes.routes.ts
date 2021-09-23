@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
+import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
-import { Recipe } from './../../../models/recipe.model';
 
 export const recipeRouter = Router();
 

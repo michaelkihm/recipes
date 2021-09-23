@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/routes/recipes';
+import { RecipesGetResponse, SingleRecipeResponse } from '../../../../backend/src/routes/recipes.routes';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 @Injectable({
     providedIn: 'root'
