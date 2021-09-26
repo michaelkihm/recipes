@@ -14,8 +14,9 @@ const recipeSchema = new Schema<Recipe>({
     category: { type: [String], required: true },
     ingredients: {
         type: [{
-            name: Number,
-            amount: Number
+            name: String,
+            amount: Number,
+            unit: String
         }],
         required: true }
 });
