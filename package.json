@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
-    "test:backend": "jest backend --config=backend/jest.config.js",
+    "pretest:backend": "docker-compose up -d mongodb_container",
+    "test:backend": "jest backend --config=backend/jest.config.js || :",
+    "posttest:backend": "echo I run afert && docker-compose stop",
     "start:server": "nodemon backend/dist/backend/src/app.js",
     "compile:server": "tsc -p backend -w"
   },
