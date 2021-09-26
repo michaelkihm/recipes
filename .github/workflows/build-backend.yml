@@ -5,7 +5,7 @@ on:
     - "backend/**"
     - ".github/workflows/build-backend.yml"
 jobs:
-  build-project:
+  build-test-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
