@@ -1,8 +1,15 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import { connect } from 'mongoose';
 import { recipeRouter } from './routes/recipes.routes';
 
-const app = express();
+const testDBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
+
+export const app = express();
+
+connect(testDBPath)
+  .then(() => console.log('Connected to Database'))
+  .catch(err => console.log(err));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,4 +27,4 @@ app.use((_req, res, next) => {
 
 app.use('/api/recipes',recipeRouter);
 
-app.listen('4000');
+export const server = app.listen('4000');

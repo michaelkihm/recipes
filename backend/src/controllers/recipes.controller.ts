@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
+import { RecipeModel } from '../models/recipe';
 
 export type RecipesGetResponse = {
     message: string,
@@ -13,7 +14,11 @@ export type SingleRecipeResponse = {
 };
 
 export const getRecipes = (_req: Request, res: Response<RecipesGetResponse>): void => {
-    res.status(200).json({ message: `Have ${RECIPES.length} recipes`, recipes: RECIPES });
+    
+    RecipeModel.find({}, (err, docs) => {
+        if(!err) res.status(200).json({ message: `Have ${docs.length} recipes`, recipes: docs });
+        else res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] });
+    });
 };
 
 export const getRandomRecipes = (req: Request<{amount: string}>, res: Response<RecipesGetResponse>): void => {
