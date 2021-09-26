@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 
 const testDBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
 
@@ -11,7 +11,11 @@ describe('Recipes Routes',() => {
                 console.log('Connected to Database');
                 done();
             })
-            .catch(err => console.log(err));
+            .catch(err => {console.log(err);});
+    });
+
+    afterAll(() => {
+        connection.close(true);
     });
 
     it('should run like thia',() => {
