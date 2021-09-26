@@ -18,7 +18,8 @@ jobs:
         run: npm install
       - name: Start test server
         run: npm run setupTest:backend
-      - name: Unit test back
+      - name: Unit test backend
         run: npm run test:backend
       - name: Stop test server
+        if: always()
         run: npm run cleanTest:backend
