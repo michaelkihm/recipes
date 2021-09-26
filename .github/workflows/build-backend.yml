@@ -16,5 +16,9 @@ jobs:
           node-version: '15'
       - name: Install modules
         run: npm install
+      - name: Start test server
+        run: npm run setupTest:backend
       - name: Unit test back
         run: npm run test:backend
+      - name: Stop test server
+        run: npm run cleanTest:backend
