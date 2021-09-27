@@ -15,10 +15,9 @@ export type SingleRecipeResponse = {
 
 export const getRecipes = (_req: Request, res: Response<RecipesGetResponse>): void => {
     
-    RecipeModel.find({}, (err, docs) => {
-        if(!err) res.status(200).json({ message: `Have ${docs.length} recipes`, recipes: docs });
-        else res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] });
-    });
+    RecipeModel.find()
+        .then(docs => res.status(200).json({ message: `Have ${docs.length} recipes`, recipes: docs }))
+        .catch(err => res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] }));
 };
 
 export const getRandomRecipes = (req: Request<{amount: string}>, res: Response<RecipesGetResponse>): void => {
