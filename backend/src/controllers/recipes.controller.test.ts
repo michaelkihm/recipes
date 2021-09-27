@@ -1,12 +1,15 @@
 import { createRequest, createResponse } from 'node-mocks-http';
+import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
 import { RecipeModel } from '../models/recipe';
-import { getRandomRecipes, getRecipe, getRecipes } from './recipes.controller';
+import { getRandomRecipes, getRecipe, getRecipes, postRecipe } from './recipes.controller';
+
 
 jest.mock('../models/recipe');
 
 
 jest.spyOn(RecipeModel, 'find');
+jest.spyOn(RecipeModel, 'create');
 
 describe('Recipes Controller', () => {
 
@@ -64,6 +67,31 @@ describe('Recipes Controller', () => {
 
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData().recipes.length).toBe(+amount);
+        expect(res._isEndCalled()).toBeTruthy();
+    });
+
+    it('should add a model by calling postRectipe',async () => {
+
+        const recipe: Recipe = {
+            name: 'Test recipe',
+            description: 'Fast to cook',
+            duration: { unit: 'min', duration: 15 },
+            ingredients:
+                [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
+            createdBy: 'TestUser',
+            category: ['italian'],
+            id: '9'
+        };
+        
+        (RecipeModel.create as jest.Mock).mockReturnValue(Promise.resolve(recipe));
+        req.body = { recipe };
+
+        await postRecipe(req, res);
+
+        expect(res.statusCode).toBe(201);
+        expect(RecipeModel.create).toBeCalledWith(recipe);
+        expect(res._getJSONData().recipe.name).toEqual(recipe.name);
+        expect(res._getJSONData().message).toEqual('Created recipe Test recipe successfully');
         expect(res._isEndCalled()).toBeTruthy();
     });
 });

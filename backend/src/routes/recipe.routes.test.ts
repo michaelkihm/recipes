@@ -1,5 +1,6 @@
 import { connection } from 'mongoose';
 import { agent, SuperAgentTest } from 'supertest';
+import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
 import { app, server } from '../app';
 import { RecipeModel } from './../models/recipe';
@@ -41,5 +42,26 @@ describe('Recipes Routes',() => {
         catch (e) {
             console.error('Did not fetch all recipes from db');
         }
+    });
+
+    it('should add new recipe to db if POST to route /api/recipes', async () => {
+
+        const recipe: Recipe = {
+            name: 'Test recipe',
+            description: 'Fast to cook',
+            duration: { unit: 'min', duration: 15 },
+            ingredients:
+                [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
+            createdBy: 'TestUser',
+            category: ['italian'],
+            id: '9'
+        };
+        const response = await appAgent.post('/api/recipes').send({ recipe });
+
+        expect(response.statusCode).toBe(201);
+        expect(response.body.message).toEqual('Created recipe Test recipe successfully');
+        expect(response.body.recipe.description).toEqual(recipe.description);
+        expect(response.body.recipe.name).toEqual(recipe.name);
+        expect(response.body.recipe.category).toEqual(recipe.category);
     });
 });

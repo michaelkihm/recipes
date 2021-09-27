@@ -43,3 +43,16 @@ export const getRecipe = (req: Request<{id: string}>, res: Response<SingleRecipe
     if(recipe) res.status(200).json({ message: `Found recipe ${req.params.id}`, recipe });
     else res.status(404).json({ message: `Could not find ${req.params.id}` });
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const postRecipe = (req: Request<{},{},{recipe: Recipe}>, res: Response<SingleRecipeResponse>): void => {
+
+    RecipeModel.create(req.body.recipe)
+        .then((createdRecipe) => res.status(201).json({
+                message: `Created recipe ${createdRecipe.name} successfully`,
+                recipe: createdRecipe })
+        )
+        .catch(err => res.status(500).json({
+            message: `Could not save recipe ${req.body.recipe.name} in the database. \n Error: ${err}`
+        }));
+};
