@@ -12,7 +12,8 @@
     "test:backend": "jest backend --config=backend/jest.config.js",
     "stopTestDB:backend": "docker-compose -f docker-compose.test.yml stop",
     "start:server": "nodemon backend/dist/backend/src/app.js",
-    "compile:server": "tsc -p backend -w"
+    "compile:server": "tsc -p backend -w",
+    "migrate:testData": "tsc -p backend && docker-compose -f docker-compose.dev.yml up -d mongodb_container && node backend/dist/backend/migration/migrate-test-data.js && docker-compose -f docker-compose.dev.yml stop" 
   },
   "private": true,
   "dependencies": {

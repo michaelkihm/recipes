@@ -8,7 +8,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./db_test:/data/db
+      - ./db_dev:/data/db
 
 
 #docker-compose up -d

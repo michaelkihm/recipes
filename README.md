@@ -32,11 +32,20 @@ ng serve
 ```
 
 ### Backend
-Run 
+To migrate some test data to the test db
+```
+npm run migrate:testData
+```
+Start dev db with
+```
+docker-compose -f docker-compose.dev.yml up -d mongodb_container
+```
+
+To start the development server run
 ```
 npm run compile:server
 ```
-to compile typescript code. In another start server by 
+to compile typescript code. In another terminal start server by 
 ```
 npm run start:server
 ```
