@@ -33,7 +33,7 @@ describe('Recipes Controller', () => {
 
     it('should return recipe with given id when calling getRecipe(id)',() => {
 
-        const id = '2';
+        const id = '6151e30732820d7c71705f24';
         const recipe = RECIPES.find(recipe => recipe.id === id);
         expect(recipe).toBeTruthy();
         req.params = { id };
@@ -81,18 +81,16 @@ describe('Recipes Controller', () => {
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
             createdBy: 'TestUser',
             category: ['italian'],
-            id: '9'
         };
         
-        (RecipeModel.create as jest.Mock).mockReturnValue(Promise.resolve(recipe));
+        (RecipeModel.create as jest.Mock).mockReturnValue(Promise.resolve());
         req.body = { recipe };
 
         await postRecipe(req, res);
 
         expect(res.statusCode).toBe(201);
         expect(RecipeModel.create).toBeCalledWith(recipe);
-        expect(res._getJSONData().recipe.name).toEqual(recipe.name);
-        expect(res._getJSONData().message).toEqual('Created recipe Test recipe successfully');
+        await expect(RecipeModel.create).toBeCalledTimes(1);
         expect(res._isEndCalled()).toBeTruthy();
     });
 });

@@ -1,4 +1,4 @@
-import { connect, connection } from 'mongoose';
+import { connect, connection, Types } from 'mongoose';
 import { RECIPES } from '../../test_data/db-data';
 import { RecipeModel } from '../src/models/recipe';
 
@@ -13,4 +13,7 @@ connect(dBPath)
     })
     .catch(err => console.error(`Error during test data migration: \n ${err}`));
 
-const migrateData = async () => RecipeModel.insertMany(RECIPES);
+const migrateData = async () => RecipeModel.insertMany(RECIPES.map(recipe => ({
+    ...recipe,
+    _id: Types.ObjectId.createFromHexString(recipe.id)
+})));

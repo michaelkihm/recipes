@@ -1,4 +1,4 @@
-import { connection } from 'mongoose';
+import { connection, Types } from 'mongoose';
 import { agent, SuperAgentTest } from 'supertest';
 import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
@@ -14,7 +14,10 @@ describe('Recipes Routes',() => {
         migrateData().then(() => done());
     });
 
-    const migrateData = async () => RecipeModel.insertMany(RECIPES);
+    const migrateData = async () => RecipeModel.insertMany(RECIPES.map(recipe => ({
+        ...recipe,
+        _id: Types.ObjectId.createFromHexString(recipe.id)
+    })));
 
     afterAll((done) => {
 
@@ -54,7 +57,6 @@ describe('Recipes Routes',() => {
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
             createdBy: 'TestUser',
             category: ['italian'],
-            id: '9'
         };
         const response = await appAgent.post('/api/recipes').send({ recipe });
 
@@ -62,6 +64,7 @@ describe('Recipes Routes',() => {
         expect(response.body.message).toEqual('Created recipe Test recipe successfully');
         expect(response.body.recipe.description).toEqual(recipe.description);
         expect(response.body.recipe.name).toEqual(recipe.name);
+        expect(response.body.recipe.id).toBeDefined();
         expect(response.body.recipe.category).toEqual(recipe.category);
     });
 });

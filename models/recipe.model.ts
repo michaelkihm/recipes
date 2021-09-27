@@ -5,14 +5,13 @@ interface Duration {
     duration: number,
     unit: 'min' | 'h'
 }
-export class Recipe {
-    constructor(
-        public name: string,
-        public description: string,
-        public id: string,
-        public ingredients: Ingredient[],
-        public createdBy: string,
-        public category: Category[],
-        public duration: Duration
-    ) {}
+
+export interface Recipe {
+    name: string,
+    description: string,
+    id?: string,
+    ingredients: Ingredient[],
+    createdBy: string,
+    category: Category[],
+    duration: Duration
 }

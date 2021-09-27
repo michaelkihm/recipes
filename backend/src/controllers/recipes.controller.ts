@@ -49,7 +49,7 @@ export const postRecipe = (req: Request<{},{},{recipe: Recipe}>, res: Response<S
     RecipeModel.create(req.body.recipe)
         .then((createdRecipe) => res.status(201).json({
                 message: `Created recipe ${createdRecipe.name} successfully`,
-                recipe: createdRecipe })
+                recipe: { ...createdRecipe.toJSON(), id: createdRecipe._id.toString() } })
         )
         .catch(err => res.status(500).json({
             message: `Could not save recipe ${req.body.recipe.name} in the database. \n Error: ${err}`
