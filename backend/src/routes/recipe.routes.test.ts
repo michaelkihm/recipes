@@ -4,7 +4,6 @@ import { RECIPES } from '../../../test_data/db-data';
 import { app, server } from '../app';
 import { RecipeModel } from './../models/recipe';
 
-const testDBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
 
 describe('Recipes Routes',() => {
     let appAgent: SuperAgentTest;
