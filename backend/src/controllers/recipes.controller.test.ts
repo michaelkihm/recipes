@@ -11,6 +11,7 @@ jest.mock('../models/recipe');
 jest.spyOn(RecipeModel, 'find');
 jest.spyOn(RecipeModel, 'create');
 jest.spyOn(RecipeModel, 'updateOne');
+jest.spyOn(RecipeModel, 'findById');
 
 describe('Recipes Controller', () => {
 
@@ -32,34 +33,21 @@ describe('Recipes Controller', () => {
         expect(res._isEndCalled()).toBeTruthy();
     });
 
-    it('should return recipe with given id when calling getRecipe(id)',() => {
+    it('should return recipe with given id when calling getRecipe(id)', async () => {
 
-        const id = '6151e30732820d7c71705f24';
-        const recipe = RECIPES.find(recipe => recipe.id === id);
-        expect(recipe).toBeTruthy();
-        req.params = { id };
+        (RecipeModel.findById as jest.Mock).mockReturnValue(Promise.resolve(RECIPES[0]));
+        const recipe = RECIPES[0];
+        
+        req.params = { id: recipe.id };
 
-        getRecipe(req, res);
+        await getRecipe(req, res);
         
         expect(res.statusCode).toBe(200);
-        expect(res._getJSONData()).toEqual({
-            recipe,
-            message: `Found recipe ${id}`
-        });
+        expect(RecipeModel.findById).toBeCalledWith(recipe.id);
         expect(res._isEndCalled()).toBeTruthy();
     });
 
-    it('should return a 404 if getRecipe does not find a recipe with given id', () => {
-
-        const id = '404';
-        req.params = { id };
-
-        getRecipe(req, res);
-        
-        expect(res.statusCode).toBe(404);
-        expect(res._isEndCalled()).toBeTruthy();
-    });
-
+    
     it('should return number of random recipes when calling getRandomRecipes(amount)', () => {
 
         const amount = '2';

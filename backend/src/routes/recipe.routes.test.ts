@@ -66,6 +66,8 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.name).toEqual(recipe.name);
         expect(response.body.recipe.id).toBeDefined();
         expect(response.body.recipe.category).toEqual(recipe.category);
+        expect(response.body.recipe.createdBy).toEqual(recipe.createdBy);
+        expect(response.body.recipe.ingredients).toEqual(recipe.ingredients);
     });
 
     it('should update a recipe by calling PUT to /api/recipes/:id', async () => {
@@ -91,5 +93,25 @@ describe('Recipes Routes',() => {
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message.includes(`Error while updating recipe ${randomId}`)).toBeTruthy();
+    });
+
+    it('should get the recipe if calling GET /api/recipes/:id', async () => {
+        
+        const recipe = RECIPES[1];
+
+        const response = await appAgent.get(`/api/recipes/${recipe.id }`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({
+            message: `Found recipe ${recipe.id}`,
+            recipe
+        });
+    });
+
+    it('should return 404 if recipe by calling GET /api/recipes/:id is not found', async () => {
+        
+        const response = await appAgent.get('/api/recipes/435');
+
+        expect(response.statusCode).toBe(404);
     });
 });

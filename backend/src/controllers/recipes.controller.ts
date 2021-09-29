@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import { Document, Types } from 'mongoose';
+import { Category } from '../../../models/category.type';
 import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
 import { RecipeModel } from '../models/recipe';
@@ -41,23 +43,42 @@ export const getRandomRecipes = (req: Request<{amount: string}>, res: Response<R
 
 export const getRecipe = (req: Request<{id: string}>, res: Response<SingleRecipeResponse>): void => {
 
-    const recipe = RECIPES.find(recipe => recipe.id === req.params.id);
-    if(recipe) res.status(200).json({ message: `Found recipe ${req.params.id}`, recipe });
-    else res.status(404).json({ message: `Could not find ${req.params.id}` });
+    RecipeModel.findById(req.params.id)
+        .then(doc => res.status(200).json({
+            message: `Found recipe ${req.params.id}`,
+            recipe: mongoDBResultToRecipe(doc)
+        }))
+        .catch(err => res.status(404).json({
+            message: `Could not find recipe with id ${req.params.id}: ${err}`
+        }));
 };
 
 
 export const postRecipe = (req: Request<never,never,{recipe: Recipe}>, res: Response<SingleRecipeResponse>): void => {
 
     RecipeModel.create(req.body.recipe)
-        .then((createdRecipe) => res.status(201).json({
+        .then(createdRecipe => res.status(201).json({
                 message: `Created recipe ${createdRecipe.name} successfully`,
-                recipe: { ...createdRecipe.toJSON(), id: createdRecipe._id.toString() } })
+                recipe: mongoDBResultToRecipe(createdRecipe) })
         )
         .catch(err => res.status(500).json({
             message: `Could not save recipe ${req.body.recipe.name} in the database. \n Error: ${err}`
         }));
 };
+
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mongoDBResultToRecipe = (doc: Document<any, any, Recipe> & Recipe & {_id: Types.ObjectId;}): Recipe => ({
+    name: doc.name,
+    id: doc._id,
+    description: doc.description,
+    createdBy: doc.createdBy,
+    category: doc.category as Category[],
+    duration: { duration: doc.duration.duration, unit: doc.duration.unit },
+    ingredients: doc.ingredients.map(
+                    ingredient => ({ name: ingredient.name, amount: ingredient.amount, unit: ingredient.unit }))
+
+});
 
 
 // eslint-disable-next-line max-len
