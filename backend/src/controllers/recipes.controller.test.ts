@@ -71,7 +71,7 @@ describe('Recipes Controller', () => {
         expect(res._isEndCalled()).toBeTruthy();
     });
 
-    it('should add a model by calling postRectipe',async () => {
+    it('should add a recipe by calling postRectipe',async () => {
 
         const recipe: Recipe = {
             name: 'Test recipe',
