@@ -41,17 +41,6 @@ export const getRandomRecipes = (req: Request<{amount: string}>, res: Response<R
             message: `Error while fetching random recipes: ${err}`,
             recipes: []
         }));
-    // if(+req.params.amount < RECIPES.length){
-        // res.status(200).json({
-        //     message: `Return ${req.params.amount} recipes`,
-        //     recipes: RECIPES.sort(() => Math.random() - Math.random()).slice(0, +req.params.amount)
-    //     });
-    // } else {
-    //     res.status(404).json({
-    //         message: `Number ${req.params.amount} is longer than the list of recipes`,
-    //         recipes: []
-    //     });
-    // }
 };
 
 
