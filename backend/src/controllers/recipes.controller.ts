@@ -43,8 +43,8 @@ export const getRecipe = (req: Request<{id: string}>, res: Response<SingleRecipe
     else res.status(404).json({ message: `Could not find ${req.params.id}` });
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const postRecipe = (req: Request<{},{},{recipe: Recipe}>, res: Response<SingleRecipeResponse>): void => {
+
+export const postRecipe = (req: Request<never,never,{recipe: Recipe}>, res: Response<SingleRecipeResponse>): void => {
 
     RecipeModel.create(req.body.recipe)
         .then((createdRecipe) => res.status(201).json({
