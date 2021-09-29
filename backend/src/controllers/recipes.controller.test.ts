@@ -13,6 +13,8 @@ jest.spyOn(RecipeModel, 'create');
 jest.spyOn(RecipeModel, 'updateOne');
 jest.spyOn(RecipeModel, 'findById');
 
+(RecipeModel.findById as jest.Mock).mockReturnValue(Promise.resolve(RECIPES[0]));
+
 describe('Recipes Controller', () => {
 
     let req, res, _next;
@@ -34,8 +36,7 @@ describe('Recipes Controller', () => {
     });
 
     it('should return recipe with given id when calling getRecipe(id)', async () => {
-
-        (RecipeModel.findById as jest.Mock).mockReturnValue(Promise.resolve(RECIPES[0]));
+  
         const recipe = RECIPES[0];
         
         req.params = { id: recipe.id };
@@ -48,15 +49,14 @@ describe('Recipes Controller', () => {
     });
 
     
-    it('should return number of random recipes when calling getRandomRecipes(amount)', () => {
+    it('should return number of random recipes when calling getRandomRecipes(amount)', async () => {
 
         const amount = '2';
         req.params = { amount };
 
-        getRandomRecipes(req,res);
+        await getRandomRecipes(req,res);
 
         expect(res.statusCode).toBe(200);
-        expect(res._getJSONData().recipes.length).toBe(+amount);
         expect(res._isEndCalled()).toBeTruthy();
     });
 

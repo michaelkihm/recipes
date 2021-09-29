@@ -114,4 +114,20 @@ describe('Recipes Routes',() => {
 
         expect(response.statusCode).toBe(404);
     });
+
+    it('should return random numbers of recipes by calling GET /api/recipes/random/:amount', async () => {
+    
+        const amount = 3;
+
+        const response = await appAgent.get(`/api/recipes/random/${amount}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.recipes.length).toBe(amount);
+        (response.body.recipes as Recipe[]).forEach(recipe => {
+            expect(recipe.name).toBeDefined();
+            expect(recipe.description).toBeDefined();
+            expect(recipe.id).toBeDefined();
+            expect(recipe.ingredients).toBeDefined();
+        });
+    });
 });
