@@ -2,7 +2,7 @@ import { createRequest, createResponse } from 'node-mocks-http';
 import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
 import { RecipeModel } from '../models/recipe';
-import { getRandomRecipes, getRecipe, getRecipes, postRecipe } from './recipes.controller';
+import { getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
 
 
 jest.mock('../models/recipe');
@@ -10,6 +10,7 @@ jest.mock('../models/recipe');
 
 jest.spyOn(RecipeModel, 'find');
 jest.spyOn(RecipeModel, 'create');
+jest.spyOn(RecipeModel, 'updateOne');
 
 describe('Recipes Controller', () => {
 
@@ -91,6 +92,24 @@ describe('Recipes Controller', () => {
         expect(res.statusCode).toBe(201);
         expect(RecipeModel.create).toBeCalledWith(recipe);
         await expect(RecipeModel.create).toBeCalledTimes(1);
+        expect(res._isEndCalled()).toBeTruthy();
+    });
+
+    it('should update a recipe by challing updateRecipe',async () => {
+        
+        const recipe = RECIPES[0];
+        const newName = 'Test name';
+        (RecipeModel.updateOne as jest.Mock).mockReturnValue(Promise.resolve({
+            message: 'ahhelo',
+            recipe: { ...recipe, name: newName }
+        }));
+        req.params.id = recipe.id;
+        req.body = { recipe };
+
+        await putRecipe(req, res);
+
+        expect(res.statusCode).toBe(200);
+        expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id }, recipe );
         expect(res._isEndCalled()).toBeTruthy();
     });
 });

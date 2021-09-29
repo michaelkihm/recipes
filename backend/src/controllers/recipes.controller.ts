@@ -55,3 +55,13 @@ export const postRecipe = (req: Request<never,never,{recipe: Recipe}>, res: Resp
             message: `Could not save recipe ${req.body.recipe.name} in the database. \n Error: ${err}`
         }));
 };
+
+// eslint-disable-next-line max-len
+export const putRecipe = (req: Request<{id: string},never, {recipe: Recipe}>, res: Response<SingleRecipeResponse>): void => {
+
+    RecipeModel.updateOne({ _id: req.params.id }, req.body.recipe)
+        .then(() => res.status(200).json({
+            message: `Updated recipe ${req.params.id}` }))
+        .catch(err => res.status(404).json({ message: `Error while updating recipe ${req.params.id}: ${err}` }));
+        
+};

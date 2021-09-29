@@ -67,4 +67,29 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.id).toBeDefined();
         expect(response.body.recipe.category).toEqual(recipe.category);
     });
+
+    it('should update a recipe by calling PUT to /api/recipes/:id', async () => {
+        
+        const recipe = RECIPES[0];
+        const updatedName = 'new Name';
+
+        const response = await appAgent.put(`/api/recipes/${recipe.id }`)
+                                    .send({ recipe: { recipe, name: updatedName } });
+
+        expect(response.statusCode).toBe(200);
+        const foundRecipe = await RecipeModel.findById(recipe.id);
+        
+        expect(foundRecipe.name).toEqual(updatedName);
+    });
+
+    it('should return 404 if calling PUT /api/recipes/:id with not existing id', async () => {
+
+        const recipe = RECIPES[0];
+        const randomId = recipe.id + 'adf';
+        
+        const response = await appAgent.put(`/api/recipes/${randomId}`).send({ recipe });
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.message.includes(`Error while updating recipe ${randomId}`)).toBeTruthy();
+    });
 });
