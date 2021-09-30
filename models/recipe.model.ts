@@ -8,7 +8,7 @@ interface Duration {
 
 export interface Recipe {
     name: string,
-    description: string,
+    description: string[],
     id?: string,
     ingredients: Ingredient[],
     createdBy: string,

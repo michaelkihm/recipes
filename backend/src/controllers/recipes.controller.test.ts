@@ -64,7 +64,7 @@ describe('Recipes Controller', () => {
 
         const recipe: Recipe = {
             name: 'Test recipe',
-            description: 'Fast to cook',
+            description: ['Fast to cook'],
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],

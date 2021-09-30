@@ -51,7 +51,7 @@ describe('Recipes Routes',() => {
 
         const recipe: Recipe = {
             name: 'Test recipe',
-            description: 'Fast to cook',
+            description: ['Fast to cook', 'Test'],
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],

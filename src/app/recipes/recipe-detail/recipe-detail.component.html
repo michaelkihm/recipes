@@ -25,7 +25,9 @@
             </ul>
         </div>
         <div class="col">
-            <p>{{recipe.description}}</p>
+            <ul>
+                <li *ngFor="let step of recipe.description">{{ step }}</li>
+            </ul>
         </div>
     </div>
 </div>
