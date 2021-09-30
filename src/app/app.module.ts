@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { CategoriesListComponent } from './recipes/categories-list/categories-list.component';
 import { RecipeCardComponent } from './recipes/recipe-card/recipe-card.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesComponent } from './recipes/recipes.component';
 
 
@@ -18,7 +19,8 @@ import { RecipesComponent } from './recipes/recipes.component';
     HeaderComponent,
     RecipeCardComponent,
     RecipeDetailComponent,
-    CategoriesListComponent
+    CategoriesListComponent,
+    RecipeEditComponent
   ],
   imports: [
     BrowserModule,
