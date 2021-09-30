@@ -33,7 +33,7 @@ export class RecipeEditComponent implements OnInit {
 			'description': new FormArray(
 								this.recipe.description.map(step => new FormControl(step, Validators.required))),
 			'ingredients': new FormArray(this.populateIngredients()),
-			'categories': new FormArray(this.recipe.category.map(cat => new FormControl(cat)))
+			'categories': new FormArray(this.recipe.categories.map(category => new FormControl(category)))
 		});
 	}
 

@@ -11,7 +11,7 @@ const recipeSchema = new Schema<Recipe>({
             duration: Number,
             unit: String },
         required: true },
-    category: { type: [String], required: true },
+    categories: { type: [String], required: true },
     ingredients: {
         type: [{
             name: String,

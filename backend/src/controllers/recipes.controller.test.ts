@@ -69,7 +69,7 @@ describe('Recipes Controller', () => {
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
             createdBy: 'TestUser',
-            category: ['italian'],
+            categories: ['italian'],
         };
         
         (RecipeModel.create as jest.Mock).mockReturnValue(Promise.resolve());

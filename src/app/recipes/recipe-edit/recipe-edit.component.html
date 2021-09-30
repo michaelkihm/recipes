@@ -90,7 +90,7 @@
             <h4>Kategorien</h4>
             <div *ngFor="let category of allowedCategories; let i=index">
                 <label>
-                  <input type="checkbox" [value]="category" (change)="onCheckboxChange($event)" [checked]="recipe.category.includes(category)"/>
+                  <input type="checkbox" [value]="category" (change)="onCheckboxChange($event)" [checked]="recipe.categories.includes(category)"/>
                   {{category}}
                 </label>
             </div>

@@ -14,6 +14,6 @@ export interface Recipe {
     id?: string,
     ingredients: Ingredient[],
     createdBy: string,
-    category: Category[],
+    categories: Category[],
     duration: Duration
 }

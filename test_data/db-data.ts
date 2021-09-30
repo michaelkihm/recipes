@@ -10,7 +10,7 @@ export const RECIPES: Recipe[] = [
             'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'],
         createdBy: 'user1',
         id: '6151e30732820d7c71705f24',
-        category: ['italian', 'pasta'],
+        categories: ['italian', 'pasta'],
         ingredients: [
             { name: 'tomatoes', amount: 2, unit: 'pieces' },
             { name: 'garlic', amount: 5, unit: 'pieces' },
@@ -26,7 +26,7 @@ export const RECIPES: Recipe[] = [
             'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'],
         createdBy: 'user1',
         id: '6151e310f525051cccd70219',
-        category: ['bbq'],
+        categories: ['bbq'],
         ingredients: [
             { name: 'tomatoes', amount: 2, unit: 'pieces' },
             { name: 'bread', amount: 2, unit: 'slices' },
@@ -42,7 +42,7 @@ export const RECIPES: Recipe[] = [
             'Pretium fusce id velit ut tortor pretium. Mauris augue neque gravida in fermentum et sollicitudin ac. Sed adipiscing diam donec adipiscing tristique. Viverra adipiscing at in tellus. Fusce id velit ut tortor pretium. In massa tempor nec feugiat nisl pretium. Potenti nullam ac tortor vitae purus.'],
         createdBy: 'user2',
         id: '6151e318a81f71122c95f756',
-        category: ['vegan', 'arabic'],
+        categories: ['vegan', 'arabic'],
         ingredients: [
             { name: 'chickpeas', amount: 12, unit: 'g' },
             { name: 'capsicum', amount: 7 , unit: 'pieces' },
@@ -61,7 +61,7 @@ export const RECIPES: Recipe[] = [
             'Massa massa ultricies mi quis hendrerit dolor magna eget. Posuere ac ut consequat semper. Ut enim blandit volutpat maecenas volutpat blandit aliquam. Aliquet bibendum enim facilisis gravida neque. Volutpat diam ut venenatis tellus in metus vulputate eu. Bibendum neque egestas congue quisque egestas diam in arcu cursus. Posuere lorem ipsum dolor sit amet consectetur adipiscing elit duis. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Gravida rutrum quisque non tellus. Vulputate sapien nec sagittis aliquam.'],
         createdBy: 'user4',
         id: '6151e322116c1ac97aadd5f8',
-        category: ['chicken', 'forTheWeekend'],
+        categories: ['chicken', 'forTheWeekend'],
         ingredients: [
             { name: 'meat', amount: 4, unit: 'g' },
             { name: 'water', amount: 2, unit: 'ml' },

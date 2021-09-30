@@ -56,7 +56,7 @@ describe('Recipes Routes',() => {
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
             createdBy: 'TestUser',
-            category: ['italian'],
+            categories: ['italian'],
         };
         const response = await appAgent.post('/api/recipes').send({ recipe });
 
@@ -65,7 +65,7 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.description).toEqual(recipe.description);
         expect(response.body.recipe.name).toEqual(recipe.name);
         expect(response.body.recipe.id).toBeDefined();
-        expect(response.body.recipe.category).toEqual(recipe.category);
+        expect(response.body.recipe.categories).toEqual(recipe.categories);
         expect(response.body.recipe.createdBy).toEqual(recipe.createdBy);
         expect(response.body.recipe.ingredients).toEqual(recipe.ingredients);
     });
