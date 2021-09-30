@@ -15,6 +15,9 @@ export type SingleRecipeResponse = {
     recipe?: Recipe
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MongooseRecipeResult = Document<any, any, Recipe> & Recipe & {_id: Types.ObjectId;};
+
 
 export const getRecipes = (_req: Request, res: Response<RecipesGetResponse>): void => {
     
@@ -49,7 +52,7 @@ export const getRecipe = (req: Request<{id: string}>, res: Response<SingleRecipe
     RecipeModel.findById(req.params.id)
         .then(doc => res.status(200).json({
             message: `Found recipe ${req.params.id}`,
-            recipe: mongoDBResultToRecipe(doc)
+            recipe: doc ? mongoDBResultToRecipe(doc) : undefined
         }))
         .catch(err => res.status(404).json({
             message: `Could not find recipe with id ${req.params.id}: ${err}`
@@ -70,8 +73,7 @@ export const postRecipe = (req: Request<never,never,{recipe: Recipe}>, res: Resp
 };
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mongoDBResultToRecipe = (doc: Document<any, any, Recipe> & Recipe & {_id: Types.ObjectId;}): Recipe => ({
+const mongoDBResultToRecipe = (doc: MongooseRecipeResult ): Recipe => ({
     name: doc.name,
     id: doc._id,
     description: doc.description,
