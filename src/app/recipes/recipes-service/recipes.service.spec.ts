@@ -81,4 +81,21 @@ describe('ReceipesService',() => {
             message: `Updated recipe ${id}`
         });
     });
+
+    it('should add a recipe',() => {
+
+        const newRecipe = RECIPES[0];
+
+        recipesService.addRecipe(newRecipe).subscribe(result => {
+            expect(result).toEqual(newRecipe);
+        });
+
+        const req = httpTestingController.expectOne('http://localhost:4000/api/recipes');
+        expect(req.request.method).toEqual('POST');
+        expect(req.request.body.recipe).toEqual(newRecipe);
+        req.flush({
+            recipe: newRecipe,
+            message: 'Created recipe'
+        });
+    });
 });
