@@ -7,7 +7,7 @@ import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 @Injectable({
     providedIn: 'root'
 })
-export class ReceipesService {
+export class RecipesService {
 
     private baseUrl = 'http://localhost:4000/api/recipes';
     private randomRecipesAmount = 2;

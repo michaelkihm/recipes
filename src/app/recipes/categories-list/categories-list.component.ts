@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReceipesService } from '../recipes-service/recipes.service';
+import { RecipesService } from '../recipes-service/recipes.service';
 import { Category } from './../../../../models/category.type';
 
 @Component({
@@ -12,7 +12,7 @@ export class CategoriesListComponent implements OnInit {
   categories: readonly Category[] = [];
   selected: Category[] = [];
 
-  constructor(private recipeService: ReceipesService) { }
+  constructor(private recipeService: RecipesService) { }
 
   ngOnInit(): void {
     this.categories = this.recipeService.getCategories();
