@@ -32,4 +32,9 @@ export class RecipesService {
     getCategories(): readonly Category[] {
         return ALL_CATEGORIES;
     }
+
+    updateRecipe(recipe: Recipe): Observable<Recipe | undefined> {
+        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${recipe.id}`, { recipe })
+            .pipe(map(response => response.recipe));
+    }
 }

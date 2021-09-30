@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ALL_CATEGORIES } from 'models/category.type';
+import { Recipe } from 'models/recipe.model';
 import { RECIPES } from 'test_data/db-data';
 import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
 import { RecipesService } from './recipes.service';
@@ -60,5 +61,24 @@ describe('ReceipesService',() => {
         const req = httpTestingController.expectOne('http://localhost:4000/api/recipes');
         expect(req.request.method).toEqual('GET');
         req.flush(recipesResult);
+    });
+
+    it('should update a recipe', () => {
+
+        const updatedRecipe = { ...RECIPES[0] };
+        updatedRecipe.name = 'Test';
+        const id = updatedRecipe.id as string;
+
+        recipesService.updateRecipe(updatedRecipe).subscribe(recipe => {
+            expect((recipe as Recipe).name).toEqual('Test');
+        });
+
+        const req = httpTestingController.expectOne(`http://localhost:4000/api/recipes/${id}`);
+        expect(req.request.method).toEqual('PUT');
+        expect(req.request.body.recipe).toEqual(updatedRecipe);
+        req.flush({
+            recipe: updatedRecipe,
+            message: `Updated recipe ${id}`
+        });
     });
 });
