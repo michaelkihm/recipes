@@ -1,9 +1,11 @@
 import { Category } from './category.type';
 import { Ingredient } from './ingredient.model';
 
+export const ALL_DURATION_UNITS = ['min' , 'h'];
+type Unit = typeof ALL_DURATION_UNITS[number];
 interface Duration {
     duration: number,
-    unit: 'min' | 'h'
+    unit: Unit
 }
 
 export interface Recipe {

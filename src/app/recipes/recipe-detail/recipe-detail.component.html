@@ -4,7 +4,11 @@
             <img class="img-thumbnail" src="https://iefl.co.uk/wp-content/uploads/2020/05/spices.jpg" alt="{{ recipe.name }}">
         </div>
         <div class="col">
-            <h2>{{ recipe.name }}</h2>
+            <div class="row">
+                <h2>{{ recipe.name }}</h2>
+                <button class="btn btn-primary m-1" [routerLink]="['/recipes',recipe.id,'edit']">Edit</button>
+                <button class="btn btn-danger m-1">Remove</button>
+            </div>
             <div>
                 <p>Kategorien</p>
                 <ul>

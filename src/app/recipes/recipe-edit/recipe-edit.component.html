@@ -1,1 +1,101 @@
-<p>recipe-edit works!</p>
+<div class="m-2">
+    <h2>Edit {{ recipe.name }}</h2>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                [value]="recipe.name"
+                formControlName="name"
+                class="form-control">
+        </div>
+        <div formGroupName="duration">
+            <div class="form-row">
+                <div class="col">
+                    <label for="durationValue">Dauer</label>
+                </div>
+                <div class="col">
+                    
+                    <input 
+                        type="number"
+                        id="durationValue"
+                        [value]="recipe.duration.duration"
+                        formControlName="durationValue"
+                        class="form-control"
+                    >
+                </div>
+                <div class="col">
+                    <select 
+                        name="durationUnit" 
+                        id="durationUnit" 
+                        formControlName="durationUnit" 
+                        class="form-control" >
+                        <option selected>---Wähle eine Einheit---</option>
+                        <option *ngFor="let unit of durationUnits" [value]="unit" >{{ unit }}</option>
+                    </select>
+                </div>
+            </div>    
+        </div>
+        <!-- Description -->
+        <div formArrayName="description" style="border: 1px solid black;" class="p-1 m-1">
+            <p>Wie gehts</p>
+            <div 
+                class="form-row m-1"
+                *ngFor="let step of getDescriptionSteps(); let i = index">
+                <div class="col">
+                    <input type="text" class="form-control" [formControlName]="i">
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger" (click)="onRemoveDescriptionStep(i)" type="button">Del</button>
+                </div>
+            </div>
+            <button 
+                class="btn btn-primary" 
+                type="button"
+                (click)="onAddDescriptionStep()">
+                Schritt hinzufügen
+            </button>
+        </div>
+        <!-- Ingredients -->
+        <div formArrayName="ingredients" style="border: 1px solid black;" class="p-1 m-1">
+            <p>Zutaten</p>
+            <div *ngFor="let ingredient of getIngredients(); let i = index">
+                <div [formGroupName]="i" class="form-row m-1">
+                    <div class="col">
+                        <input type="number" class="form-control" formControlName="amount">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" formControlName="name">
+                    </div>
+                    <div class="col">
+                        <select formControlName="unit" class="form-control">
+                            <option *ngFor="let unit of ingredientUnits" [value]="unit" >{{ unit }}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-danger" (click)="onRemoveIngredient(i)" type="button">Del</button>
+                    </div>
+                </div>
+            </div>
+            <button 
+                class="btn btn-primary" 
+                type="button"
+                (click)="onAddIngredient()">
+                Zutat hinzufügen
+            </button>
+        </div>
+        <!-- Categories -->
+        <div formArrayName="categories" class="m-1">
+            <h4>Kategorien</h4>
+            <div *ngFor="let category of allowedCategories; let i=index">
+                <label>
+                  <input type="checkbox" [value]="category" (change)="onCheckboxChange($event)" [checked]="recipe.category.includes(category)"/>
+                  {{category}}
+                </label>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary m-2" type="submit">Submit</button>
+    </form>
+</div>
