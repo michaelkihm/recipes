@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron" [routerLink]="['/recipes',recipe.id]">
     <h2>{{ recipe.name }}</h2>
     <img class="img-thumbnail" src="https://iefl.co.uk/wp-content/uploads/2020/05/spices.jpg" alt="{{ recipe.name }}">
     <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>
