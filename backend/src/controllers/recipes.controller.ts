@@ -22,7 +22,9 @@ type MongooseRecipeResult = Document<any, any, Recipe> & Recipe & {_id: Types.Ob
 export const getRecipes = (_req: Request, res: Response<RecipesGetResponse>): void => {
     
     RecipeModel.find()
-        .then(docs => res.status(200).json({ message: `Have ${docs.length} recipes`, recipes: docs }))
+        .then(docs => res.status(200).json({
+            message: `Have ${docs.length} recipes`,
+            recipes: docs.map(doc => mongoDBResultToRecipe(doc)) }))
         .catch(err => res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] }));
 };
 
