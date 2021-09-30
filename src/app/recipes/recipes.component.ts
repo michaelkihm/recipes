@@ -14,7 +14,7 @@ export class RecipesComponent implements OnInit {
 
   	ngOnInit(): void {
 		this.recipesService.fetchRandomRecipes().subscribe(recipesResponse => {
-			this.recipes = recipesResponse.recipes;
+			this.recipes = recipesResponse;
 		});
 	}
 
