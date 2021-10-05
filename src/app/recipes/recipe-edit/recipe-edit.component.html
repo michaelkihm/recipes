@@ -1,5 +1,5 @@
 <div class="m-2">
-    <h2>Edit {{ recipe.name }}</h2>
+    <h2 id="title">Edit {{ recipe.name }}</h2>
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>
@@ -15,8 +15,7 @@
                 <div class="col">
                     <label for="durationValue">Dauer</label>
                 </div>
-                <div class="col">
-                    
+                <div class="col"> 
                     <input 
                         type="number"
                         id="durationValue"
@@ -31,8 +30,8 @@
                         id="durationUnit" 
                         formControlName="durationUnit" 
                         class="form-control" >
-                        <option selected>---Wähle eine Einheit---</option>
-                        <option *ngFor="let unit of durationUnits" [value]="unit" >{{ unit }}</option>
+                        <option>---Wähle eine Einheit---</option>
+                        <option [selected]="recipe.duration.unit === unit" *ngFor="let unit of durationUnits" [value]="unit" >{{ unit }}</option>
                     </select>
                 </div>
             </div>    
@@ -44,7 +43,7 @@
                 class="form-row m-1"
                 *ngFor="let step of getDescriptionSteps(); let i = index">
                 <div class="col">
-                    <input type="text" class="form-control" [formControlName]="i">
+                    <input type="text" class="form-control" [formControlName]="i" [id]="'descr_'+ i">
                 </div>
                 <div class="col">
                     <button class="btn btn-danger" (click)="onRemoveDescriptionStep(i)" type="button">Del</button>
@@ -63,13 +62,13 @@
             <div *ngFor="let ingredient of getIngredients(); let i = index">
                 <div [formGroupName]="i" class="form-row m-1">
                     <div class="col">
-                        <input type="number" class="form-control" formControlName="amount">
+                        <input type="number" class="form-control" formControlName="amount" [id]="'ingredientAmount_'+i" >
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" formControlName="name">
+                        <input type="text" class="form-control" formControlName="name" [id]="'ingredientName_'+i">
                     </div>
                     <div class="col">
-                        <select formControlName="unit" class="form-control">
+                        <select formControlName="unit" class="form-control" [id]="'ingredientUnit_'+i">
                             <option *ngFor="let unit of ingredientUnits" [value]="unit" >{{ unit }}</option>
                         </select>
                     </div>
@@ -90,7 +89,12 @@
             <h4>Kategorien</h4>
             <div *ngFor="let category of allowedCategories; let i=index">
                 <label>
-                  <input type="checkbox" [value]="category" (change)="onCheckboxChange($event)" [checked]="recipe.categories.includes(category)"/>
+                  <input 
+                    type="checkbox" 
+                    [value]="category" 
+                    (change)="onCheckboxChange($event)" 
+                    [checked]="recipe.categories.includes(category)"
+                    [id]="category"/>
                   {{category}}
                 </label>
             </div>
