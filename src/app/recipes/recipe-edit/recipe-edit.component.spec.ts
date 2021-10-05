@@ -3,23 +3,24 @@ import { RecipeEditComponent } from './recipe-edit.component';
 
 
 xdescribe('RecipeEditComponent', () => {
-  let component: RecipeEditComponent;
-  let fixture: ComponentFixture<RecipeEditComponent>;
+	
+	let component: RecipeEditComponent;
+	let fixture: ComponentFixture<RecipeEditComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ RecipeEditComponent ]
-    })
-    .compileComponents();
-  });
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+		declarations: [ RecipeEditComponent ]
+		})
+		.compileComponents();
+	});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RecipeEditComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(RecipeEditComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
