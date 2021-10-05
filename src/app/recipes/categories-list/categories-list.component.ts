@@ -8,21 +8,21 @@ import { Category } from './../../../../models/category.type';
   styleUrls: ['./categories-list.component.css']
 })
 export class CategoriesListComponent implements OnInit {
+	
+	categories: readonly Category[] = [];
+  	selected: Category[] = [];
 
-  categories: readonly Category[] = [];
-  selected: Category[] = [];
+	constructor(private recipeService: RecipesService) { }
 
-  constructor(private recipeService: RecipesService) { }
+	ngOnInit(): void {
+		
+		this.categories = this.recipeService.getCategories();
+	}
 
-  ngOnInit(): void {
-    this.categories = this.recipeService.getCategories();
-  }
-
-  onSelectCategory(category: Category): void {
-    
-    const index = this.selected.indexOf(category);
-    index > -1 ? this.selected.splice(index) : this.selected.push(category);
-    console.log(this.selected);
-  }
+	onSelectCategory(category: Category): void {
+		
+		const index = this.selected.indexOf(category);
+		index > -1 ? this.selected.splice(index,1) : this.selected.push(category);
+	}
 
 }
