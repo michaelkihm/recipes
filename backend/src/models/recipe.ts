@@ -18,7 +18,8 @@ const recipeSchema = new Schema<Recipe>({
             amount: Number,
             unit: String
         }],
-        required: true }
+        required: true },
+    imagePath: { type: String, required: false },
 });
 
 export const RecipeModel = model<Recipe>('Recipe', recipeSchema);

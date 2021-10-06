@@ -15,5 +15,6 @@ export interface Recipe {
     ingredients: Ingredient[],
     createdBy: string,
     categories: Category[],
-    duration: Duration
+    duration: Duration,
+    imagePath?: string
 }
