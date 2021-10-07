@@ -15,7 +15,7 @@ export class RecipeEditComponent implements OnInit {
 
 	recipe: Recipe;
 	recipeForm: FormGroup;
-	imagePreview: string;
+	imagePreview: string | undefined;
 	durationUnits = ALL_DURATION_UNITS;
 	ingredientUnits = ALL_INGREDIENT_UNITS;
 	allowedCategories = ALL_CATEGORIES;
@@ -36,8 +36,9 @@ export class RecipeEditComponent implements OnInit {
 								this.recipe.description.map(step => new FormControl(step, Validators.required))),
 			'ingredients': new FormArray(this.populateIngredients()),
 			'categories': new FormArray(this.recipe.categories.map(category => new FormControl(category))),
-			'image': new FormControl(null, { asyncValidators: [mimeType] })
+			'image': new FormControl(this.recipe.imagePath, { asyncValidators: [mimeType] })
 		});
+		this.imagePreview = this.recipe.imagePath;
 	}
 
 	onAddDescriptionStep(): void {
