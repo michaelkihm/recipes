@@ -13,6 +13,7 @@ connect(testDBPath)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/images', express.static('backend/images'));
 
 app.use((_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin','*');
