@@ -3,7 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Data } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { RECIPES } from 'test_data/db-data';
+import { RecipesService } from './../recipes-service/recipes.service';
 import { RecipeEditComponent } from './recipe-edit.component';
 
 
@@ -15,20 +17,26 @@ describe('RecipeEditComponent', () => {
 	const { name, description, duration, ingredients, categories } = RECIPES[0];
 
 	beforeEach(async () => {
+
+		const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['updateRecipe']);
+
 		await TestBed.configureTestingModule({
-		declarations: [ RecipeEditComponent ],
-		imports: [ReactiveFormsModule],
-		providers: [
-			{ provide: ActivatedRoute,
-				useValue: {
-						data: {
-							subscribe: (fn: (value: Data) => void) => fn({
-								recipe: RECIPES[0],
-							})
-						}
-			 	}
-			}]
-		})
+			declarations: [ RecipeEditComponent ],
+			imports: [ReactiveFormsModule, RouterTestingModule,],
+			providers: [
+				{ provide: ActivatedRoute,
+					useValue: {
+							data: {
+								subscribe: (fn: (value: Data) => void) => fn({
+									recipe: RECIPES[0],
+								})
+							}
+					}
+				},
+				{ provide: RecipesService, useValue: recipesServiceSpy }
+				]
+			}
+		)
 		.compileComponents();
 	});
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Data } from '@angular/router';
-import { ALL_CATEGORIES } from 'models/category.type';
+import { ActivatedRoute, Data, Router } from '@angular/router';
+import { ALL_CATEGORIES, Category } from 'models/category.type';
 import { ALL_INGREDIENT_UNITS } from 'models/ingredient.model';
 import { ALL_DURATION_UNITS, Recipe } from 'models/recipe.model';
+import { Duration } from './../../../../models/recipe.model';
+import { RecipesService } from './../recipes-service/recipes.service';
 import { mimeType } from './mime-type.validator';
 
 @Component({
@@ -20,7 +22,7 @@ export class RecipeEditComponent implements OnInit {
 	ingredientUnits = ALL_INGREDIENT_UNITS;
 	allowedCategories = ALL_CATEGORIES;
 
-	constructor(private route: ActivatedRoute) { }
+	constructor(private route: ActivatedRoute, private router: Router, private recipesService: RecipesService) { }
 
 	ngOnInit(): void {
 		this.route.data.subscribe((data: Data) => {
@@ -94,7 +96,11 @@ export class RecipeEditComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		console.log(this.recipeForm);
+		const newRecipe = this.recipeFormToRecipe();
+		this.recipesService.updateRecipe(newRecipe).subscribe(result => {
+			if(result.message.includes('Updated recipe')) this.router.navigate(['recipes',this.recipe.id]);
+		});
+
 	}
 
 	onImagePicked(event: Event): void {
@@ -111,4 +117,24 @@ export class RecipeEditComponent implements OnInit {
 		reader.readAsDataURL(file);
 	}
 
+	recipeFormToRecipe(): Recipe {
+		
+		const values = this.recipeForm.value;
+		const duration: Duration = {
+			duration: values.duration.durationValue,
+			unit: values.duration.durationUnit
+		};
+		return {
+			id: this.recipe.id as string,
+			name: values.name as string,
+			description: values.description as string[],
+			categories: values.categories as Category[],
+			duration,
+			createdBy: this.recipe.createdBy,
+			ingredients: values.ingredients
+		};
+	}
+
 }
+
+

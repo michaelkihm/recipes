@@ -33,9 +33,8 @@ export class RecipesService {
         return ALL_CATEGORIES;
     }
 
-    updateRecipe(recipe: Recipe): Observable<Recipe | undefined> {
-        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${recipe.id}`, { recipe })
-            .pipe(map(response => response.recipe));
+    updateRecipe(recipe: Recipe): Observable<SingleRecipeResponse> {
+        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${recipe.id}`, { recipe });
     }
 
     addRecipe(recipe: Recipe): Observable<Recipe | undefined> {

@@ -3,7 +3,7 @@ import { Ingredient } from './ingredient.model';
 
 export const ALL_DURATION_UNITS = ['min' , 'h'];
 type Unit = typeof ALL_DURATION_UNITS[number];
-interface Duration {
+export interface Duration {
     duration: number,
     unit: Unit
 }
