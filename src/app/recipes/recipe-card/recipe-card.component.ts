@@ -8,11 +8,11 @@ import { Recipe } from '../../../../models/recipe.model';
 })
 export class RecipeCardComponent implements OnInit {
 
-  	@Input('recipe') recipe: Recipe;
+	@Input('recipe') recipe: Recipe;
   	constructor() { }
 
   	ngOnInit(): void {
-
+		console.log(this.recipe);
 	}
 
 }
