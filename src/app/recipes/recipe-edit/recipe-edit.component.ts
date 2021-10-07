@@ -4,6 +4,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { ALL_CATEGORIES } from 'models/category.type';
 import { ALL_INGREDIENT_UNITS } from 'models/ingredient.model';
 import { ALL_DURATION_UNITS, Recipe } from 'models/recipe.model';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -14,6 +15,7 @@ export class RecipeEditComponent implements OnInit {
 
 	recipe: Recipe;
 	recipeForm: FormGroup;
+	imagePreview: string;
 	durationUnits = ALL_DURATION_UNITS;
 	ingredientUnits = ALL_INGREDIENT_UNITS;
 	allowedCategories = ALL_CATEGORIES;
@@ -33,7 +35,8 @@ export class RecipeEditComponent implements OnInit {
 			'description': new FormArray(
 								this.recipe.description.map(step => new FormControl(step, Validators.required))),
 			'ingredients': new FormArray(this.populateIngredients()),
-			'categories': new FormArray(this.recipe.categories.map(category => new FormControl(category)))
+			'categories': new FormArray(this.recipe.categories.map(category => new FormControl(category))),
+			'image': new FormControl(null, { asyncValidators: [mimeType] })
 		});
 	}
 
@@ -91,6 +94,20 @@ export class RecipeEditComponent implements OnInit {
 
 	onSubmit(): void {
 		console.log(this.recipeForm);
+	}
+
+	onImagePicked(event: Event): void {
+
+		if(!event || !event.target ) return;
+		const target = event.target as HTMLInputElement;
+		if(!target.files ) return;
+		
+		const file = target.files[0];
+		this.recipeForm.patchValue({ image: file });
+		this.recipeForm.get('image')?.updateValueAndValidity();
+		const reader = new FileReader();
+		reader.onload = () => this.imagePreview = reader.result as string;
+		reader.readAsDataURL(file);
 	}
 
 }

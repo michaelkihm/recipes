@@ -99,7 +99,14 @@
                 </label>
             </div>
         </div>
-        
+        <hr>
+        <div>
+            <button class="btn btn-primary" type="button" (click)="filePicker.click()">Bild hochladen</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)"/>
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(recipeForm.get('image')).valid" >
+            <img [src]="imagePreview" [alt]="recipeForm.value.name">
+        </div>
         <button class="btn btn-primary m-2" type="submit">Submit</button>
     </form>
 </div>
