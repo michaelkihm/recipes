@@ -38,9 +38,9 @@ export class RecipeEditComponent implements OnInit {
 								this.recipe.description.map(step => new FormControl(step, Validators.required))),
 			'ingredients': new FormArray(this.populateIngredients()),
 			'categories': new FormArray(this.recipe.categories.map(category => new FormControl(category))),
-			'image': new FormControl(this.recipe.imagePath, { asyncValidators: [mimeType] })
+			'image': new FormControl(this.recipe.image, { asyncValidators: [mimeType] })
 		});
-		this.imagePreview = this.recipe.imagePath;
+		this.imagePreview = this.recipe.image as string;
 	}
 
 	onAddDescriptionStep(): void {
@@ -96,11 +96,10 @@ export class RecipeEditComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		const newRecipe = this.recipeFormToRecipe();
-		this.recipesService.updateRecipe(newRecipe).subscribe(result => {
+		
+		this.recipesService.updateRecipe(this.recipeFormToFormData()).subscribe(result => {
 			if(result.message.includes('Updated recipe')) this.router.navigate(['recipes',this.recipe.id]);
 		});
-
 	}
 
 	onImagePicked(event: Event): void {
@@ -117,22 +116,26 @@ export class RecipeEditComponent implements OnInit {
 		reader.readAsDataURL(file);
 	}
 
-	recipeFormToRecipe(): Recipe {
+	recipeFormToFormData(): FormData {
 		
 		const values = this.recipeForm.value;
+		const recipeData = new FormData();
+
 		const duration: Duration = {
 			duration: values.duration.durationValue,
 			unit: values.duration.durationUnit
 		};
-		return {
-			id: this.recipe.id as string,
-			name: values.name as string,
-			description: values.description as string[],
-			categories: values.categories as Category[],
-			duration,
-			createdBy: this.recipe.createdBy,
-			ingredients: values.ingredients
-		};
+
+		recipeData.append('name', values.name as string);
+		recipeData.append('description', JSON.stringify(values.description as string[]));
+		recipeData.append('id',this.recipe.id as string);
+		recipeData.append('ingredients',JSON.stringify(values.ingredients));
+		recipeData.append('createdBy', values.createdBy);
+		recipeData.append('categories', JSON.stringify(values.categories as Category[]));
+		recipeData.append('duration',JSON.stringify(duration));
+		recipeData.append('image',values.image);
+
+    	return recipeData;
 	}
 
 }

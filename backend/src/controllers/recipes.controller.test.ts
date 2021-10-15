@@ -1,5 +1,5 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import { Recipe } from '../../../models/recipe.model';
+import { Recipe, RecipeStrings } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
 import { RecipeModel } from '../models/recipe';
 import { getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
@@ -83,16 +83,26 @@ describe('Recipes Controller', () => {
         expect(res._isEndCalled()).toBeTruthy();
     });
 
-    it('should update a recipe by challing updateRecipe',async () => {
+    it('should update a recipe by calling putRecipe',async () => {
         
         const recipe = RECIPES[0];
+        const recipeStrings: RecipeStrings = {
+            name: recipe.name,
+            id: recipe.id,
+            description: JSON.stringify(recipe.description),
+            duration: JSON.stringify(recipe.duration),
+            ingredients: JSON.stringify(recipe.ingredients),
+            categories: JSON.stringify(recipe.categories),
+            createdBy: recipe.createdBy,
+            image: recipe.image
+        };
         const newName = 'Test name';
         (RecipeModel.updateOne as jest.Mock).mockReturnValue(Promise.resolve({
             message: 'ahhelo',
             recipe: { ...recipe, name: newName }
         }));
         req.params.id = recipe.id;
-        req.body = { recipe };
+        req.body = recipeStrings;
 
         await putRecipe(req, res);
 

@@ -17,7 +17,7 @@ export const RECIPES: Recipe[] = [
             { name: 'parsley', amount: 1, unit: 'pieces' }
         ],
         duration: { duration: 100, unit: 'min' },
-        imagePath: 'http://localhost:4000/images/test_spaghetti.jpeg',
+        image: 'http://localhost:4000/images/test_spaghetti.jpeg',
     },
     {
         name: 'Burger',
@@ -34,7 +34,7 @@ export const RECIPES: Recipe[] = [
             { name: 'salat', amount: 3, unit: 'pieces' }
         ],
         duration: { duration: 1, unit: 'min' },
-        imagePath: 'http://localhost:4000/images/test_burger.jpeg',
+        image: 'http://localhost:4000/images/test_burger.jpeg',
     },
     {
         name: 'Falafel',
@@ -51,7 +51,7 @@ export const RECIPES: Recipe[] = [
             { name: 'tahin', amount: 1, unit: 'ml' }
         ],
         duration: { duration: 12, unit: 'min' },
-        imagePath: 'http://localhost:4000/images/test_falafel.jpeg',
+        image: 'http://localhost:4000/images/test_falafel.jpeg',
     },
     {
         name: 'Recipe',

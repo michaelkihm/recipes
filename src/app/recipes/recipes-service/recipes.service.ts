@@ -33,11 +33,14 @@ export class RecipesService {
         return ALL_CATEGORIES;
     }
 
-    updateRecipe(recipe: Recipe): Observable<SingleRecipeResponse> {
-        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${recipe.id}`, { recipe });
+    updateRecipe(recipe: FormData): Observable<SingleRecipeResponse> {
+
+        const id = recipe.get('id') as string;
+        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${id}`, recipe );
     }
 
     addRecipe(recipe: Recipe): Observable<Recipe | undefined> {
         return this.http.post<SingleRecipeResponse>(this.baseUrl, { recipe }).pipe(map(response => response.recipe));
     }
+
 }

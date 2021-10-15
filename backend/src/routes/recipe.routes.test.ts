@@ -5,7 +5,6 @@ import { RECIPES } from '../../../test_data/db-data';
 import { app, server } from '../app';
 import { RecipeModel } from './../models/recipe';
 
-
 describe('Recipes Routes',() => {
     let appAgent: SuperAgentTest;
     beforeAll( (done) => {
@@ -76,8 +75,15 @@ describe('Recipes Routes',() => {
         const updatedName = 'new Name';
 
         const response = await appAgent.put(`/api/recipes/${recipe.id }`)
-                                    .send({ recipe: { recipe, name: updatedName } });
-
+                                    .field('name',updatedName )
+                                    .field('createdBy', recipe.createdBy)
+                                    .field('description', JSON.stringify(recipe.description))
+                                    .field('id',recipe.id )
+                                    .field('categories', JSON.stringify(recipe.categories))
+                                    .field('duration',JSON.stringify(recipe.duration))
+                                    .field('ingredients',JSON.stringify(recipe.ingredients))
+                                    .attach('image','backend/images/test_burger.jpeg');
+                                    
         expect(response.statusCode).toBe(200);
         const foundRecipe = await RecipeModel.findById(recipe.id);
         
@@ -89,7 +95,15 @@ describe('Recipes Routes',() => {
         const recipe = RECIPES[0];
         const randomId = recipe.id + 'adf';
         
-        const response = await appAgent.put(`/api/recipes/${randomId}`).send({ recipe });
+        const response = await appAgent.put(`/api/recipes/${randomId}`)
+                                    .field('name',recipe.name )
+                                    .field('createdBy', recipe.createdBy)
+                                    .field('description', JSON.stringify(recipe.description))
+                                    .field('id',randomId)
+                                    .field('categories', JSON.stringify(recipe.categories))
+                                    .field('duration',JSON.stringify(recipe.duration))
+                                    .field('ingredients',JSON.stringify(recipe.ingredients))
+                                    .attach('image','backend/images/test_burger.jpeg');
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message.includes(`Error while updating recipe ${randomId}`)).toBeTruthy();

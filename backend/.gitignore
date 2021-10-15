@@ -1,4 +1,6 @@
 dist
 
 images/*
-!images/test_*
+!images/test_burger.jpeg
+!images/test_falafel.jpeg
+!images/test_spaghetti.jpeg

@@ -19,7 +19,7 @@ const recipeSchema = new Schema<Recipe>({
             unit: String
         }],
         required: true },
-    imagePath: { type: String, required: false },
+    image: { type: String, required: false },
 });
 
 export const RecipeModel = model<Recipe>('Recipe', recipeSchema);

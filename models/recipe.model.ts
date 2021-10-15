@@ -16,5 +16,33 @@ export interface Recipe {
     createdBy: string,
     categories: Category[],
     duration: Duration,
-    imagePath?: string
+    image?: string,
 }
+
+type HasKeys<T> = {
+    [P in keyof T]: string
+};
+
+export type RecipeStrings = HasKeys<Recipe>;
+
+export const recipeFormDataToRecipe = (formData: RecipeStrings): Recipe => {
+    
+    const hasImageChanged = () => typeof formData.image !== 'string';
+
+    const description = JSON.parse(formData.description) as string[];
+    const ingredients = JSON.parse(formData.ingredients) as Ingredient[];
+    const categories = JSON.parse(formData.categories) as Category[];
+    const duration = JSON.parse(formData.duration) as Duration;
+    const image = hasImageChanged() ? '' : formData.image;
+
+    return {
+        id: formData.id,
+        name: formData.name,
+        description,
+        ingredients,
+        createdBy: formData.createdBy,
+        categories,
+        duration,
+        image
+    };
+};

@@ -1,5 +1,5 @@
 <div class="jumbotron" [routerLink]="['/recipes',recipe.id]">
     <h2>{{ recipe.name }}</h2>
-    <img class="img-thumbnail" [src]="recipe.imagePath" [alt]="recipe.name">
+    <img class="img-thumbnail" [src]="recipe.image" [alt]="recipe.name">
     <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>
 </div>
