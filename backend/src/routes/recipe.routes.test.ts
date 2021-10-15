@@ -1,4 +1,6 @@
+import fs from 'fs';
 import { connection, Types } from 'mongoose';
+import path from 'path';
 import { agent, SuperAgentTest } from 'supertest';
 import { Recipe } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-data';
@@ -24,6 +26,7 @@ describe('Recipes Routes',() => {
             .then(() => {connection.close();})
             .then(() => {
                 server.close();
+                removeDummyFiles();
                 done();
             });
     });
@@ -145,3 +148,17 @@ describe('Recipes Routes',() => {
         });
     });
 });
+
+const removeDummyFiles = () => {
+    
+    const imagePath = './backend/images';
+    fs.readdir(imagePath, (err, files) => {
+    
+        files.forEach(file => {
+            const fileDir = path.join(imagePath, file);
+            if (file !== 'test_burger.jpeg' && file !== 'test_falafel.jpeg' && file !== 'test_spaghetti.jpeg') {
+                fs.unlinkSync(fileDir);
+            }
+        });
+    });
+};
