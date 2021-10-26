@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import { connect } from 'mongoose';
 import { recipeRouter } from './routes/recipes.routes';
+import { userRouter } from './routes/user.routes';
 
 const testDBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
 
@@ -19,7 +20,7 @@ app.use((_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin','*');
 	res.setHeader(
     	'Access-Control-Allow-Headers',
-    	'Origin, X-Requested-With, Content-Type, Accept');
+    	'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 	res.setHeader(
 		'Access-Control-Allow-Methods',
 		'GET, POST, PUT, DELETE, OPTIONS');
@@ -27,5 +28,6 @@ app.use((_req, res, next) => {
 });
 
 app.use('/api/recipes',recipeRouter);
+app.use('/api/user', userRouter);
 
 export const server = app.listen('4000');
