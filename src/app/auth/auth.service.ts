@@ -9,12 +9,17 @@ export class AuthService {
 
     private baseUrl = 'http://localhost:4000/api/user';
     private token: string;
+    private isAuthenticated = false;
     private authStatusListener = new Subject<boolean>();
 
     constructor(private http: HttpClient, private router: Router) { }
 
     getToken(): string {
         return this.token;
+    }
+
+    getIsAuth(): boolean {
+        return this.isAuthenticated;
     }
 
     getAuthStatusListener(): Observable<boolean> {
@@ -32,8 +37,12 @@ export class AuthService {
         const authData: AuthData = { email, password };
         this.http.post<{token: string}>(`${this.baseUrl}/login`,authData).subscribe(response => {
             this.token = response.token;
-            this.authStatusListener.next(true);
-            this.router.navigate(['/']);
+            if(this.token){
+                this.isAuthenticated = true;
+                this.authStatusListener.next(true);
+                this.router.navigate(['/']);
+            }
+            
         });
     }
 }
