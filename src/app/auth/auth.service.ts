@@ -13,7 +13,6 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     getToken(): string {
-        console.log('GET TOKEN',this.token);
         return this.token;
     }
 
