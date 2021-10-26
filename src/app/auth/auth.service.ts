@@ -45,4 +45,12 @@ export class AuthService {
             
         });
     }
+
+    logout(): void {
+
+        this.token = '';
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        this.router.navigate(['/']);
+    }
 }
