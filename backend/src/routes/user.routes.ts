@@ -36,7 +36,7 @@ userRouter.post(
     
 });
 
-userRouter.post('/login', (req: UserRequest, res: Response<{message: string, token?: string}>) => {
+userRouter.post('/login', (req: UserRequest, res: Response<{message: string, token?: string, expiresIn?: number}>) => {
 
     UserModel.findOne({ email: req.body.email })
         .then(async user => {
@@ -52,7 +52,8 @@ userRouter.post('/login', (req: UserRequest, res: Response<{message: string, tok
 
             res.status(200).json({
                 message: 'Logged in',
-                token
+                token,
+                expiresIn: 3600
             });
         })
         .catch(_err => res.status(401).json({ message: 'Did not find user' }));
