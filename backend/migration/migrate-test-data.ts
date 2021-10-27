@@ -1,8 +1,5 @@
-import { connect, connection, Types } from 'mongoose';
-import { RECIPES } from '../../test_data/db-recipes';
-import { USERS } from '../../test_data/db-users';
-import { RecipeModel } from '../src/models/recipe';
-import { UserModel } from '../src/models/user';
+import { connect, connection } from 'mongoose';
+import { migrateRecipeData, migrateUserData } from './migration-helpers';
 
 const dBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
 
@@ -18,14 +15,3 @@ connect(dBPath)
         connection.close();
     })
     .catch(err => console.error(`Error during test data migration: \n ${err}`));
-
-const migrateRecipeData = async () => RecipeModel.insertMany(RECIPES.map(recipe => ({
-    ...recipe,
-    userId: Types.ObjectId.createFromHexString(recipe.userId as string),
-    _id: Types.ObjectId.createFromHexString(recipe.id)
-})));
-
-const migrateUserData = async () => UserModel.insertMany(USERS.map(user => ({
-    ...user,
-    _id: Types.ObjectId.createFromHexString(user.id)
-})));
