@@ -1,3 +1,4 @@
+import { Schema } from 'mongoose';
 import { Category } from './category.type';
 import { Ingredient } from './ingredient.model';
 
@@ -13,7 +14,7 @@ export interface Recipe {
     description: string[],
     id?: string,
     ingredients: Ingredient[],
-    userId: string,
+    userId: string | Schema.Types.ObjectId,
     categories: Category[],
     duration: Duration,
     image?: string,

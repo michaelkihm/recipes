@@ -93,7 +93,7 @@ describe('Recipes Controller', () => {
             duration: JSON.stringify(recipe.duration),
             ingredients: JSON.stringify(recipe.ingredients),
             categories: JSON.stringify(recipe.categories),
-            userId: recipe.userId,
+            userId: recipe.userId as string,
             image: recipe.image
         };
         const newName = 'Test name';

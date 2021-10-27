@@ -79,7 +79,7 @@ describe('Recipes Routes',() => {
 
         const response = await appAgent.put(`/api/recipes/${recipe.id }`)
                                     .field('name',updatedName )
-                                    .field('userId', recipe.userId)
+                                    .field('userId', recipe.userId as string)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',recipe.id )
                                     .field('categories', JSON.stringify(recipe.categories))
@@ -100,7 +100,7 @@ describe('Recipes Routes',() => {
         
         const response = await appAgent.put(`/api/recipes/${randomId}`)
                                     .field('name',recipe.name )
-                                    .field('userId', recipe.userId)
+                                    .field('userId', recipe.userId as string)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',randomId)
                                     .field('categories', JSON.stringify(recipe.categories))

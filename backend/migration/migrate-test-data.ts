@@ -21,6 +21,7 @@ connect(dBPath)
 
 const migrateRecipeData = async () => RecipeModel.insertMany(RECIPES.map(recipe => ({
     ...recipe,
+    userId: Types.ObjectId.createFromHexString(recipe.userId as string),
     _id: Types.ObjectId.createFromHexString(recipe.id)
 })));
 

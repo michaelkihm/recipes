@@ -129,7 +129,8 @@ const mongoDBResultToRecipe = (doc: MongooseRecipeResult ): Recipe => ({
 // eslint-disable-next-line max-len
 export const putRecipe = (req: PutRequest, res: Response<SingleRecipeResponse>): void => {
     
-    const recipe = recipeFormDataToRecipe(req.body);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const recipe = recipeFormDataToRecipe({ ...req.body, userId: (req as any).userData.userId });
     let image = recipe.image;
     if(didMulterSaveImage(req)){
         const url = `${req.protocol}://${req.get('host')}`;
