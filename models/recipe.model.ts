@@ -13,7 +13,7 @@ export interface Recipe {
     description: string[],
     id?: string,
     ingredients: Ingredient[],
-    createdBy: string,
+    userId: string,
     categories: Category[],
     duration: Duration,
     image?: string,
@@ -40,7 +40,7 @@ export const recipeFormDataToRecipe = (formData: RecipeStrings): Recipe => {
         name: formData.name,
         description,
         ingredients,
-        createdBy: formData.createdBy,
+        userId: formData.userId,
         categories,
         duration,
         image

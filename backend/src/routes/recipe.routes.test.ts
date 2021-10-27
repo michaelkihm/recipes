@@ -57,7 +57,7 @@ describe('Recipes Routes',() => {
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
-            createdBy: 'TestUser',
+            userId: 'TestUser',
             categories: ['italian'],
         };
         const response = await appAgent.post('/api/recipes').send({ recipe });
@@ -68,7 +68,7 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.name).toEqual(recipe.name);
         expect(response.body.recipe.id).toBeDefined();
         expect(response.body.recipe.categories).toEqual(recipe.categories);
-        expect(response.body.recipe.createdBy).toEqual(recipe.createdBy);
+        expect(response.body.recipe.userId).toEqual(recipe.userId);
         expect(response.body.recipe.ingredients).toEqual(recipe.ingredients);
     });
 
@@ -79,7 +79,7 @@ describe('Recipes Routes',() => {
 
         const response = await appAgent.put(`/api/recipes/${recipe.id }`)
                                     .field('name',updatedName )
-                                    .field('createdBy', recipe.createdBy)
+                                    .field('userId', recipe.userId)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',recipe.id )
                                     .field('categories', JSON.stringify(recipe.categories))
@@ -100,7 +100,7 @@ describe('Recipes Routes',() => {
         
         const response = await appAgent.put(`/api/recipes/${randomId}`)
                                     .field('name',recipe.name )
-                                    .field('createdBy', recipe.createdBy)
+                                    .field('userId', recipe.userId)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',randomId)
                                     .field('categories', JSON.stringify(recipe.categories))

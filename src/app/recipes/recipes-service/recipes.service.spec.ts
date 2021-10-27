@@ -69,7 +69,7 @@ describe('ReceipesService',() => {
         const id = recipe.id as string;
         const updatedRecipe = new FormData();
         updatedRecipe.append('name',updatedName);
-        updatedRecipe.append('createdBy', recipe.createdBy);
+        updatedRecipe.append('userId', recipe.userId);
         updatedRecipe.append('description', JSON.stringify(recipe.description));
         updatedRecipe.append('id',id);
         updatedRecipe.append('categories', JSON.stringify(recipe.categories));

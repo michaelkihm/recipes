@@ -68,7 +68,7 @@ describe('Recipes Controller', () => {
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
-            createdBy: 'TestUser',
+            userId: 'TestUser',
             categories: ['italian'],
         };
         
@@ -93,7 +93,7 @@ describe('Recipes Controller', () => {
             duration: JSON.stringify(recipe.duration),
             ingredients: JSON.stringify(recipe.ingredients),
             categories: JSON.stringify(recipe.categories),
-            createdBy: recipe.createdBy,
+            userId: recipe.userId,
             image: recipe.image
         };
         const newName = 'Test name';

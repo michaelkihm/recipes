@@ -116,7 +116,7 @@ const mongoDBResultToRecipe = (doc: MongooseRecipeResult ): Recipe => ({
     name: doc.name,
     id: doc._id,
     description: doc.description,
-    createdBy: doc.createdBy,
+    userId: doc.userId,
     categories: doc.categories as Category[],
     duration: { duration: doc.duration.duration, unit: doc.duration.unit },
     ingredients: doc.ingredients.map(

@@ -130,7 +130,7 @@ export class RecipeEditComponent implements OnInit {
 		recipeData.append('description', JSON.stringify(values.description as string[]));
 		recipeData.append('id',this.recipe.id as string);
 		recipeData.append('ingredients',JSON.stringify(values.ingredients));
-		recipeData.append('createdBy', values.createdBy);
+		recipeData.append('userId', values.userId);
 		recipeData.append('categories', JSON.stringify(values.categories as Category[]));
 		recipeData.append('duration',JSON.stringify(duration));
 		recipeData.append('image',values.image);
