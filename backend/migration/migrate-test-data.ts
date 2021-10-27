@@ -1,5 +1,5 @@
 import { connect, connection, Types } from 'mongoose';
-import { RECIPES } from '../../test_data/db-data';
+import { RECIPES } from '../../test_data/db-recipes';
 import { RecipeModel } from '../src/models/recipe';
 
 const dBPath = 'mongodb://root:rootpassword@localhost:27017/admin';

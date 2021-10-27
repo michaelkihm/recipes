@@ -3,7 +3,7 @@ import { connection, Types } from 'mongoose';
 import path from 'path';
 import { agent, SuperAgentTest } from 'supertest';
 import { Recipe } from '../../../models/recipe.model';
-import { RECIPES } from '../../../test_data/db-data';
+import { RECIPES } from '../../../test_data/db-recipes';
 import { app, server } from '../app';
 import { RecipeModel } from './../models/recipe';
 

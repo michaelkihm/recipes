@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ALL_CATEGORIES } from 'models/category.type';
-import { RECIPES } from 'test_data/db-data';
+import { RECIPES } from 'test_data/db-recipes';
 import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
 import { RecipesService } from './recipes.service';
 

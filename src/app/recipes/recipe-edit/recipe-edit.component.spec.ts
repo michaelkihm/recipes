@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Data } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RECIPES } from 'test_data/db-data';
+import { RECIPES } from 'test_data/db-recipes';
 import { RecipesService } from './../recipes-service/recipes.service';
 import { RecipeEditComponent } from './recipe-edit.component';
 
