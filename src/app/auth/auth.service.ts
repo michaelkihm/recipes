@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { UserSignupResponse } from '../../../backend/src/controllers/user.controller';
+import { LoginResponse, UserSignupResponse } from '../../../backend/src/controllers/user.controller';
 import { User } from '../../../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -13,11 +13,16 @@ export class AuthService {
     private isAuthenticated = false;
     private authStatusListener = new Subject<boolean>();
     private tokenTimer: NodeJS.Timer;
+    private userId: string;
 
     constructor(private http: HttpClient, private router: Router) { }
 
     getToken(): string {
         return this.token;
+    }
+
+    getUserId(): string {
+        return this.userId;
     }
 
     getIsAuth(): boolean {
@@ -38,22 +43,23 @@ export class AuthService {
     login(email: string, password: string): void {
 
         const authData: User = { email, password };
-        this.http.post<{ token: string; expiresIn: number }>(`${this.baseUrl}/login`,authData)
+        this.http.post<LoginResponse>(`${this.baseUrl}/login`,authData)
           	.subscribe(response => {
-				const token = response.token;
-				this.token = token;
-				if (token) {
-				const expiresInDuration = response.expiresIn;
-				this.setAuthTimer(expiresInDuration);
-				this.isAuthenticated = true;
-				this.authStatusListener.next(true);
-				const now = new Date();
-				const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-				console.log(expirationDate);
-				this.saveAuthData(token, expirationDate);
-				this.router.navigate(['/']);
+
+				const { token, userId, expiresIn } = response;
+				if (token && userId && expiresIn) {
+                    this.token = token;
+                    this.userId = userId;
+                    this.setAuthTimer(expiresIn);
+                    this.isAuthenticated = true;
+                    this.authStatusListener.next(true);
+                    const now = new Date();
+                    const expirationDate = new Date(now.getTime() + expiresIn * 1000);
+                    console.log(expirationDate);
+                    this.saveAuthData(token, expirationDate, userId);
+                    this.router.navigate(['/']);
 				}
-          });
+            });
       }
     
     autoAuthUser(): void {
@@ -66,6 +72,7 @@ export class AuthService {
         if (expiresIn > 0) {
 			this.token = authInformation.token;
 			this.isAuthenticated = true;
+            this.userId = authInformation.userId;
 			this.setAuthTimer(expiresIn / 1000);
 			this.authStatusListener.next(true);
         }
@@ -74,6 +81,7 @@ export class AuthService {
     logout(): void {
         this.token = '';
         this.isAuthenticated = false;
+        this.userId = '';
         this.authStatusListener.next(false);
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
@@ -87,25 +95,28 @@ export class AuthService {
         }, duration * 1000);
     }
     
-    private saveAuthData(token: string, expirationDate: Date) {
+    private saveAuthData(token: string, expirationDate: Date, userId: string) {
         localStorage.setItem('token', token);
         localStorage.setItem('expiration', expirationDate.toISOString());
+        localStorage.setItem('userId', userId);
     }
     
     private clearAuthData() {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
+        localStorage.removeItem('userId');
     }
     
     private getAuthData() {
         const token = localStorage.getItem('token');
         const expirationDate = localStorage.getItem('expiration');
-        if (!token || !expirationDate) {
-          return;
-        }
+        const userId = localStorage.getItem('userId');
+        if (!token || !expirationDate || !userId) return;
+        
         return {
-          token: token,
-          expirationDate: new Date(expirationDate)
+          token,
+          expirationDate: new Date(expirationDate),
+          userId
         };
     }
 }

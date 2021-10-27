@@ -11,8 +11,8 @@ import { AuthService } from './../../auth/auth.service';
 export class RecipeDetailComponent implements OnInit {
 
 	userIsAuthenticated = false;
+	userIsCreator = false;
 	recipe: Recipe;
-	//private authListener: Subscription;
 
   	constructor(private route: ActivatedRoute, private authService: AuthService) { }
 
@@ -21,6 +21,6 @@ export class RecipeDetailComponent implements OnInit {
 			this.recipe = data['recipe'];
 		});
 		this.userIsAuthenticated = this.authService.getIsAuth();
-		
+		this.userIsCreator = this.authService.getUserId() === this.recipe.userId;
     }
 }

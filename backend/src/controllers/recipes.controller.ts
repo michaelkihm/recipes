@@ -137,8 +137,10 @@ export const putRecipe = (req: PutRequest, res: Response<SingleRecipeResponse>):
         image = `${url}/images/${req?.file?.filename}`;
     }
    
-    RecipeModel.updateOne({ _id: req.params.id }, { ...recipe, image })
-        .then(() => res.status(200).json({
-            message: `Updated recipe ${req.params.id}` }))
+    RecipeModel.updateOne({ _id: req.params.id, userId: recipe.userId }, { ...recipe, image })
+        .then(result => {
+            if(result.modifiedCount > 0) return res.status(200).json({ message: `Updated recipe ${req.params.id}` });
+            else return res.status(401).json({ message: `Not Authorized!! Could not update recipe ${req.params.id}.` });
+        })
         .catch(err => res.status(404).json({ message: `Error while updating recipe ${req.params.id}: ${err}` }));
 };
