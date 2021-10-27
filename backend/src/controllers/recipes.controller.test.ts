@@ -103,11 +103,11 @@ describe('Recipes Controller', () => {
         }));
         req.params.id = recipe.id;
         req.body = recipeStrings;
+        req.userData = { userId: recipe.userId as string };
 
         await putRecipe(req, res);
 
-        expect(res.statusCode).toBe(200);
-        expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id }, recipe );
+        expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id, userId: recipe.userId as string }, recipe );
         expect(res._isEndCalled()).toBeTruthy();
     });
 });
