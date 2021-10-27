@@ -1,12 +1,18 @@
 import { compare, hash } from 'bcrypt';
 import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
+import { Document, Types } from 'mongoose';
+import { User } from '../../../models/user.model';
 import { SECRET_STRING } from '../constants';
 import { UserModel } from '../models/user';
 
-type UserRequest = Request<never, never, {email: string, password: string}>;
+type UserRequest = Request<never, never, User>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UserSaveResult = Document<any, any, User> & User & {_id: Types.ObjectId};
+export type UserSignupResponse = {message: string, result: UserSaveResult};
 
-export const signup = (req: UserRequest, res: Response<{message: string, result: any}>): void => {
+
+export const signup = (req: UserRequest, res: Response<UserSignupResponse>): void => {
     
     hash(req.body.password, 10)
         .then(hash => {
@@ -15,7 +21,7 @@ export const signup = (req: UserRequest, res: Response<{message: string, result:
                 password: hash
             });
             user.save()
-                .then(result => {
+                .then((result: UserSaveResult) => {
                     res.status(201).json({
                         message: 'User created',
                         result: result
@@ -46,7 +52,7 @@ export const login = (req: UserRequest, res: Response<{message: string, token?: 
                 SECRET_STRING,
                 { expiresIn: '1h' });
 
-            res.status(200).json({
+            return res.status(200).json({
                 message: 'Logged in',
                 token,
                 expiresIn: 3600
