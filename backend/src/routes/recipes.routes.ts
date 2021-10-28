@@ -3,16 +3,17 @@ import {
     getRandomRecipes, getRecipe, getRecipes, multerMiddleware, postRecipe
 } from '../controllers/recipes.controller';
 import { putRecipe } from './../controllers/recipes.controller';
+import { checkAuth } from './../middleware/check-auth';
 
 export const recipeRouter = Router();
 
 
 recipeRouter.get('', getRecipes);
 
-recipeRouter.post('', postRecipe);
+recipeRouter.post('', checkAuth, multerMiddleware, postRecipe);
 
 recipeRouter.get('/random/:amount', getRandomRecipes);
 
 recipeRouter.get('/:id',getRecipe);
 
-recipeRouter.put('/:id',multerMiddleware, putRecipe);
+recipeRouter.put('/:id',checkAuth, multerMiddleware, putRecipe);

@@ -1,28 +1,39 @@
 import fs from 'fs';
-import { connection, Types } from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { connection } from 'mongoose';
 import path from 'path';
 import { agent, SuperAgentTest } from 'supertest';
 import { Recipe } from '../../../models/recipe.model';
-import { RECIPES } from '../../../test_data/db-data';
+import { RECIPES } from '../../../test_data/db-recipes';
+import { migrateRecipeData, migrateUserData } from '../../migration/migration-helpers';
 import { app, server } from '../app';
+import { user1Id, USERS } from './../../../test_data/db-users';
 import { RecipeModel } from './../models/recipe';
+import { UserModel } from './../models/user';
+
+
+jest.mock('jsonwebtoken');
 
 describe('Recipes Routes',() => {
+    
     let appAgent: SuperAgentTest;
+    const verify = jest.spyOn(jwt, 'verify');
+    verify.mockImplementation(() => ({ email: 'test@test.com', userId: user1Id }));
+
     beforeAll( (done) => {
 
         appAgent = agent(app);
-        migrateData().then(() => done());
+        migrateUserData()
+            .then(() => migrateRecipeData())
+            .then(() => done());
     });
 
-    const migrateData = async () => RecipeModel.insertMany(RECIPES.map(recipe => ({
-        ...recipe,
-        _id: Types.ObjectId.createFromHexString(recipe.id)
-    })));
 
     afterAll((done) => {
 
-        connection.collections.recipes.drop()
+        
+        connection.collections.users.drop()
+            .then(() => connection.collections.recipes.drop())
             .then(() => {connection.close();})
             .then(() => {
                 server.close();
@@ -33,8 +44,10 @@ describe('Recipes Routes',() => {
 
     it('should have migrated test data successfully', async () => {
         const docs = await RecipeModel.countDocuments();
+        const users = await UserModel.countDocuments();
 
         expect(docs).toBe(RECIPES.length);
+        expect(users).toBe(USERS.length);
     });
 
     it('should return recipes when GET route /api/recipes',async() => {
@@ -57,10 +70,19 @@ describe('Recipes Routes',() => {
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
-            createdBy: 'TestUser',
+            userId: user1Id,
             categories: ['italian'],
         };
-        const response = await appAgent.post('/api/recipes').send({ recipe });
+
+        const response = await appAgent.post('/api/recipes')
+                                    .field('name',recipe.name )
+                                    .field('description', JSON.stringify(recipe.description))
+                                    .field('id','' )
+                                    .field('categories', JSON.stringify(recipe.categories))
+                                    .field('duration',JSON.stringify(recipe.duration))
+                                    .field('ingredients',JSON.stringify(recipe.ingredients))
+                                    .attach('image','backend/images/test_burger.jpeg')
+                                    .set('authorization','Bearer token');
 
         expect(response.statusCode).toBe(201);
         expect(response.body.message).toEqual('Created recipe Test recipe successfully');
@@ -68,7 +90,7 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.name).toEqual(recipe.name);
         expect(response.body.recipe.id).toBeDefined();
         expect(response.body.recipe.categories).toEqual(recipe.categories);
-        expect(response.body.recipe.createdBy).toEqual(recipe.createdBy);
+        expect(response.body.recipe.userId).toEqual(recipe.userId);
         expect(response.body.recipe.ingredients).toEqual(recipe.ingredients);
     });
 
@@ -79,13 +101,14 @@ describe('Recipes Routes',() => {
 
         const response = await appAgent.put(`/api/recipes/${recipe.id }`)
                                     .field('name',updatedName )
-                                    .field('createdBy', recipe.createdBy)
+                                    .field('userId', recipe.userId as string)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',recipe.id )
                                     .field('categories', JSON.stringify(recipe.categories))
                                     .field('duration',JSON.stringify(recipe.duration))
                                     .field('ingredients',JSON.stringify(recipe.ingredients))
-                                    .attach('image','backend/images/test_burger.jpeg');
+                                    .attach('image','backend/images/test_burger.jpeg')
+                                    .set('authorization','Bearer token');
                                     
         expect(response.statusCode).toBe(200);
         const foundRecipe = await RecipeModel.findById(recipe.id);
@@ -100,13 +123,14 @@ describe('Recipes Routes',() => {
         
         const response = await appAgent.put(`/api/recipes/${randomId}`)
                                     .field('name',recipe.name )
-                                    .field('createdBy', recipe.createdBy)
+                                    .field('userId', recipe.userId as string)
                                     .field('description', JSON.stringify(recipe.description))
                                     .field('id',randomId)
                                     .field('categories', JSON.stringify(recipe.categories))
                                     .field('duration',JSON.stringify(recipe.duration))
                                     .field('ingredients',JSON.stringify(recipe.ingredients))
-                                    .attach('image','backend/images/test_burger.jpeg');
+                                    .attach('image','backend/images/test_burger.jpeg')
+                                    .set('authorization','Bearer token');
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message.includes(`Error while updating recipe ${randomId}`)).toBeTruthy();

@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ALL_CATEGORIES } from 'models/category.type';
-import { RECIPES } from 'test_data/db-data';
+import { RECIPES } from 'test_data/db-recipes';
 import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
 import { RecipesService } from './recipes.service';
 
@@ -69,7 +69,7 @@ describe('ReceipesService',() => {
         const id = recipe.id as string;
         const updatedRecipe = new FormData();
         updatedRecipe.append('name',updatedName);
-        updatedRecipe.append('createdBy', recipe.createdBy);
+        updatedRecipe.append('userId', recipe.userId as string);
         updatedRecipe.append('description', JSON.stringify(recipe.description));
         updatedRecipe.append('id',id);
         updatedRecipe.append('categories', JSON.stringify(recipe.categories));

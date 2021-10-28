@@ -1,7 +1,8 @@
 import { createRequest, createResponse } from 'node-mocks-http';
 import { Recipe, RecipeStrings } from '../../../models/recipe.model';
-import { RECIPES } from '../../../test_data/db-data';
+import { RECIPES } from '../../../test_data/db-recipes';
 import { RecipeModel } from '../models/recipe';
+import { user1Id } from './../../../test_data/db-users';
 import { getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
 
 
@@ -68,17 +69,28 @@ describe('Recipes Controller', () => {
             duration: { unit: 'min', duration: 15 },
             ingredients:
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
-            createdBy: 'TestUser',
+            userId: '',
             categories: ['italian'],
+            image: '',
         };
-        
+        const recipeStrings: RecipeStrings = {
+            name: recipe.name,
+            id: recipe.id,
+            description: JSON.stringify(recipe.description),
+            duration: JSON.stringify(recipe.duration),
+            ingredients: JSON.stringify(recipe.ingredients),
+            categories: JSON.stringify(recipe.categories),
+            userId: '',
+            image: recipe.image
+        };
+          
         (RecipeModel.create as jest.Mock).mockReturnValue(Promise.resolve());
-        req.body = { recipe };
+        req.body = recipeStrings;
+        req.userData = { userId: user1Id, email: 't@test.com' };
 
         await postRecipe(req, res);
 
-        expect(res.statusCode).toBe(201);
-        expect(RecipeModel.create).toBeCalledWith(recipe);
+        expect(RecipeModel.create).toBeCalledWith({ ...recipe, userId: user1Id });
         await expect(RecipeModel.create).toBeCalledTimes(1);
         expect(res._isEndCalled()).toBeTruthy();
     });
@@ -93,7 +105,7 @@ describe('Recipes Controller', () => {
             duration: JSON.stringify(recipe.duration),
             ingredients: JSON.stringify(recipe.ingredients),
             categories: JSON.stringify(recipe.categories),
-            createdBy: recipe.createdBy,
+            userId: recipe.userId as string,
             image: recipe.image
         };
         const newName = 'Test name';
@@ -103,11 +115,11 @@ describe('Recipes Controller', () => {
         }));
         req.params.id = recipe.id;
         req.body = recipeStrings;
+        req.userData = { userId: recipe.userId as string };
 
         await putRecipe(req, res);
 
-        expect(res.statusCode).toBe(200);
-        expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id }, recipe );
+        expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id, userId: recipe.userId as string }, recipe );
         expect(res._isEndCalled()).toBeTruthy();
     });
 });
