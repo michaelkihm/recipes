@@ -10,10 +10,10 @@ export const recipeRouter = Router();
 
 recipeRouter.get('', getRecipes);
 
-recipeRouter.post('', checkAuth,postRecipe);
+recipeRouter.post('', checkAuth, multerMiddleware, postRecipe);
 
 recipeRouter.get('/random/:amount', getRandomRecipes);
 
 recipeRouter.get('/:id',getRecipe);
 
-recipeRouter.put('/:id',checkAuth,multerMiddleware, putRecipe);
+recipeRouter.put('/:id',checkAuth, multerMiddleware, putRecipe);
