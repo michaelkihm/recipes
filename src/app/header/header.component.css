@@ -5,3 +5,12 @@
 .icon:hover {
     opacity: 1;
 }
+
+.username {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.userAnchor:hover {
+    text-decoration: none;
+}

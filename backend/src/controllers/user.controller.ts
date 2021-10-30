@@ -10,7 +10,7 @@ type UserRequest = Request<never, never, User>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UserSaveResult = Document<any, any, User> & User & {_id: Types.ObjectId};
 export type UserSignupResponse = {message: string, result: UserSaveResult};
-export type LoginResponse = { message: string, token?: string, expiresIn?: number, userId?: string };
+export type LoginResponse = { message: string, token?: string, expiresIn?: number, userId?: string, username?: string };
 
 export const signup = (req: UserRequest, res: Response<UserSignupResponse>): void => {
     
@@ -56,7 +56,8 @@ export const login = (req: UserRequest, res: Response<LoginResponse>): void => {
                 message: 'Logged in',
                 token,
                 expiresIn: 3600,
-                userId: user._id
+                userId: user._id,
+                username: user.username
             });
         })
         .catch(_err => res.status(401).json({ message: 'Did not find user' }));

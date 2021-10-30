@@ -15,7 +15,8 @@ describe('HeaderComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 
-		const authServiceSpy = jasmine.createSpyObj('AuthService',['getIsAuth', 'getAuthStatusListener']);
+		const authServiceSpy = jasmine.createSpyObj('AuthService',
+			['getIsAuth', 'getAuthStatusListener', 'getUsernameListener', 'getUsername']);
 
 		TestBed.configureTestingModule({
 			declarations: [
@@ -28,8 +29,9 @@ describe('HeaderComponent', () => {
 			component = fixture.componentInstance;
 			el = fixture.debugElement;
 			authService = TestBed.inject(AuthService);
+			authService.getUsernameListener.and.returnValue(of('TestUser'));
 		});
-
+		
 	}));
 
 	it('should create', () => {
@@ -39,22 +41,25 @@ describe('HeaderComponent', () => {
 
 	it('should display only Einloggen button if NOT logged in', () => {
 
-		authService.getAuthStatusListener.and.returnValue(of(false ));
+		authService.getAuthStatusListener.and.returnValue(of(false));
 		authService.getIsAuth.and.returnValue(false);
+		
 		fixture.detectChanges();
 		
 		const einloggenBtn = el.query(By.css('#logInBtn'));
 		const logOutbtn = el.query(By.css('#logOutbtn'));
 		const userPageLink = el.query(By.css('#userPageLink'));
+		const username = el.query(By.css('#username'));
 
 		expect(einloggenBtn).toBeTruthy();
 		expect(logOutbtn).not.toBeTruthy();
 		expect(userPageLink).not.toBeTruthy();
+		expect(username).not.toBeTruthy();
 		
 	});
 
 
-	it('should display userPageLink and logOutbtn button if logged in', () => {
+	it('should display userPageLink, username and logOutbtn button if logged in', () => {
 
 		authService.getAuthStatusListener.and.returnValue(of(true ));
 		authService.getIsAuth.and.returnValue(true);
@@ -63,10 +68,12 @@ describe('HeaderComponent', () => {
 		const einloggenBtn = el.query(By.css('#logInBtn'));
 		const logOutbtn = el.query(By.css('#logOutbtn'));
 		const userPageLink = el.query(By.css('#userPageLink'));
+		const username = el.query(By.css('#username'));
 
 		expect(einloggenBtn).not.toBeTruthy();
 		expect(logOutbtn).toBeTruthy();
 		expect(userPageLink).toBeTruthy();
+		expect(username).toBeTruthy();
 		
 	});
 

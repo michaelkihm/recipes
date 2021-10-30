@@ -4,6 +4,7 @@ import { User } from './../../../models/user.model';
 
 const userSchema = new Schema<User>({
    email: { type: String, required: true, unique: true },
+   username: { type: String, required: true },
    password: { type: String, required: true },
 });
 
