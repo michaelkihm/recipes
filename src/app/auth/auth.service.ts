@@ -67,7 +67,6 @@ export class AuthService {
                     this.usernameListener.next(username);
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresIn * 1000);
-                    console.log(expirationDate);
                     this.saveAuthData(token, expirationDate, userId, username);
                     this.router.navigate(['/']);
 				}
@@ -105,7 +104,7 @@ export class AuthService {
     }
     
     private setAuthTimer(duration: number) {
-        console.log('Setting timer: ' + duration);
+
         this.tokenTimer = setTimeout(() => {
           this.logout();
         }, duration * 1000);
