@@ -1,40 +1,49 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth/auth.service';
 import { HeaderComponent } from './header/header.component';
 
 describe('AppComponent', () => {
 
-  const authServiceSpy = jasmine.createSpyObj('AuthService', ['autoAuthUser']);
+	const authServiceSpy = jasmine.createSpyObj('AuthService', ['autoAuthUser', 'getIsAuth','getAuthStatusListener']);
+	authServiceSpy.getAuthStatusListener.and.returnValue(of(() => true ));
 
-  beforeEach(async () => {
+	let component: AppComponent;
+	let fixture: ComponentFixture<AppComponent>;
 
-		await TestBed.configureTestingModule({
-		imports: [
-			RouterTestingModule,
-		],
-		declarations: [
-			AppComponent,
-			HeaderComponent
-		],
-		providers: [
-			{ provide: AuthService, useValue: authServiceSpy }
-		]
-		}).compileComponents();
-  });
+	beforeEach(async () => {
 
-  it('should create the app', () => {
+			await TestBed.configureTestingModule({
+			imports: [
+				RouterTestingModule,
+			],
+			declarations: [
+				AppComponent,
+				HeaderComponent
+			],
+			providers: [
+				{ provide: AuthService, useValue: authServiceSpy }
+			]
+			})
+			.compileComponents();
+	});
 
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.componentInstance;
-		expect(app).toBeTruthy();
-  });
-
-  it('should have called autoAuthUser from AuthService', () => {
-
-		const fixture = TestBed.createComponent(AppComponent);
+	beforeEach(() => {
+		fixture = TestBed.createComponent(AppComponent);
+		component = fixture.componentInstance;
 		fixture.detectChanges();
-		expect(authServiceSpy.autoAuthUser).toHaveBeenCalled();
-  });
+	});
+
+	it('should create the app', () => {
+
+			expect(component).toBeTruthy();
+	});
+
+	it('should have called autoAuthUser from AuthService', () => {
+
+			fixture.detectChanges();
+			expect(authServiceSpy.autoAuthUser).toHaveBeenCalled();
+	});
 });

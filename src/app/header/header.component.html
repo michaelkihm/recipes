@@ -4,18 +4,16 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item m-1">
+        <li class="nav-item m-1 icon" *ngIf="isUserAuthenticated" id="userPageLink">
             <a routerLink="/login">
                 <i-bs name="person" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
             </a>
         </li>
-        <li class="nav-item m-1">
-            <a href="https://github.com/michaelkihm/recipes">
-                <i-bs name="github" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
-            </a>
+        <li class="nav-item m-1 icon" *ngIf="!isUserAuthenticated" id="logInBtn">
+            <a routerLink="/login" class="btn btn-light">Einloggen</a>
         </li>
-        <li class="nav-item m-1">
-            <a routerLink="/signup">Signup</a>
+        <li class="nav-item m-1 icon" (click)="onLogout()" *ngIf="isUserAuthenticated" id="logOutbtn">
+            <i-bs name="power" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
         </li>
       </ul>
 </nav>
