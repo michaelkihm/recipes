@@ -50,16 +50,18 @@ describe('HeaderComponent', () => {
 		const logOutbtn = el.query(By.css('#logOutbtn'));
 		const userPageLink = el.query(By.css('#userPageLink'));
 		const username = el.query(By.css('#username'));
+		const addLink = el.query(By.css('#addLink'));
 
 		expect(einloggenBtn).toBeTruthy();
 		expect(logOutbtn).not.toBeTruthy();
 		expect(userPageLink).not.toBeTruthy();
 		expect(username).not.toBeTruthy();
+		expect(addLink).not.toBeTruthy();
 		
 	});
 
 
-	it('should display userPageLink, username and logOutbtn button if logged in', () => {
+	it('should display addLink, userPageLink, username and logOutbtn button if logged in', () => {
 
 		authService.getAuthStatusListener.and.returnValue(of(true ));
 		authService.getIsAuth.and.returnValue(true);
@@ -69,11 +71,13 @@ describe('HeaderComponent', () => {
 		const logOutbtn = el.query(By.css('#logOutbtn'));
 		const userPageLink = el.query(By.css('#userPageLink'));
 		const username = el.query(By.css('#username'));
+		const addLink = el.query(By.css('#addLink'));
 
 		expect(einloggenBtn).not.toBeTruthy();
 		expect(logOutbtn).toBeTruthy();
 		expect(userPageLink).toBeTruthy();
 		expect(username).toBeTruthy();
+		expect(addLink).toBeTruthy();
 		
 	});
 

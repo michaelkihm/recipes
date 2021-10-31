@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 import { Category } from './category.type';
 import { Ingredient } from './ingredient.model';
 
-export const ALL_DURATION_UNITS = ['min' , 'h'];
+export const ALL_DURATION_UNITS = ['min' , 'h'] as const;
 type Unit = typeof ALL_DURATION_UNITS[number];
 export interface Duration {
     duration: number,

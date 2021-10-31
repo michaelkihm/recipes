@@ -92,14 +92,23 @@ describe('ReceipesService',() => {
     it('should add a recipe',() => {
 
         const newRecipe = RECIPES[0];
+        const recipeFormData = new FormData();
+        recipeFormData.append('name',newRecipe.name);
+        recipeFormData.append('userId', newRecipe.userId as string);
+        recipeFormData.append('description', JSON.stringify(newRecipe.description));
+        recipeFormData.append('id','');
+        recipeFormData.append('categories', JSON.stringify(newRecipe.categories));
+        recipeFormData.append('duration',JSON.stringify(newRecipe.duration));
+        recipeFormData.append('ingredients',JSON.stringify(newRecipe.ingredients));
+        recipeFormData.append('image',newRecipe.image as string);
 
-        recipesService.addRecipe(newRecipe).subscribe(result => {
-            expect(result).toEqual(newRecipe);
+        recipesService.addRecipe(recipeFormData).subscribe(result => {
+            expect(result.message.includes('Created recipe')).toBeTrue();
         });
 
         const req = httpTestingController.expectOne('http://localhost:4000/api/recipes');
         expect(req.request.method).toEqual('POST');
-        expect(req.request.body.recipe).toEqual(newRecipe);
+        expect(req.request.body).toEqual(recipeFormData);
         req.flush({
             recipe: newRecipe,
             message: 'Created recipe'

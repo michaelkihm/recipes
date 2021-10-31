@@ -4,7 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Data } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { RECIPES } from 'test_data/db-recipes';
+import { RecipeDetailComponent } from './../recipe-detail/recipe-detail.component';
 import { RecipesService } from './../recipes-service/recipes.service';
 import { RecipeEditComponent } from './recipe-edit.component';
 
@@ -16,13 +18,18 @@ describe('RecipeEditComponent', () => {
 	let el: DebugElement;
 	const { name, description, duration, ingredients, categories } = RECIPES[0];
 
-	beforeEach(async () => {
+	const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['updateRecipe', 'addRecipe']);
+	recipesServiceSpy.updateRecipe.and.returnValue(of({ message: 'Update recipe', recipe: RECIPES[0] }));
+	recipesServiceSpy.addRecipe.and.returnValue(of({ message: 'Created recipe', recipe: RECIPES[0] }));
 
-		const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['updateRecipe']);
+	beforeEach(async () => {
+		
 
 		await TestBed.configureTestingModule({
 			declarations: [ RecipeEditComponent ],
-			imports: [ReactiveFormsModule, RouterTestingModule,],
+			imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
+				{ path: 'recipes/:id', component: RecipeDetailComponent }
+			]),],
 			providers: [
 				{ provide: ActivatedRoute,
 					useValue: {
@@ -41,10 +48,13 @@ describe('RecipeEditComponent', () => {
 	});
 
 	beforeEach(() => {
+
 		fixture = TestBed.createComponent(RecipeEditComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 		el = fixture.debugElement;
+		recipesServiceSpy.addRecipe.calls.reset();
+		recipesServiceSpy.updateRecipe.calls.reset();
 	});
 
 	it('should create', () => {
@@ -103,5 +113,25 @@ describe('RecipeEditComponent', () => {
 		expect(component.recipeForm.value['categories']).toEqual(['pasta','indian']);
 		
 		
+	});
+
+	it('should call addRecipe if in add mode',() => {
+
+		component.currentMode = 'add';
+		component.onSubmit();
+		fixture.detectChanges();
+
+		expect(recipesServiceSpy.updateRecipe).not.toHaveBeenCalled();
+		expect(recipesServiceSpy.addRecipe).toHaveBeenCalled();
+	});
+
+	it('should call updateRecipe if in edit mode',() => {
+
+		component.currentMode = 'edit';
+		component.onSubmit();
+		fixture.detectChanges();
+
+		expect(recipesServiceSpy.updateRecipe).toHaveBeenCalled();
+		expect(recipesServiceSpy.addRecipe).not.toHaveBeenCalled();
 	});
 });

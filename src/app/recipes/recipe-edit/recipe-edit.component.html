@@ -1,5 +1,6 @@
 <div class="m-2">
-    <h2 id="title">Edit {{ recipe.name }}</h2>
+    <h2 *ngIf="currentMode === 'edit'"id="title">Edit {{ recipe.name }}</h2>
+    <h2 *ngIf="currentMode === 'add'"id="title">Rezept hinzufügen</h2>
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>
@@ -18,6 +19,7 @@
                 <div class="col"> 
                     <input 
                         type="number"
+                        placeholder="0"
                         id="durationValue"
                         [value]="recipe.duration.duration"
                         formControlName="durationValue"
@@ -107,6 +109,6 @@
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(recipeForm.get('image')).valid" >
             <img [src]="imagePreview" [alt]="recipeForm.value.name">
         </div>
-        <button class="btn btn-primary m-2" type="submit">Submit</button>
+        <button class="btn btn-primary m-2" type="submit" id="submitBtn">Submit</button>
     </form>
 </div>

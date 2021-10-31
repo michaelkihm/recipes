@@ -21,13 +21,30 @@ export class RecipeEditComponent implements OnInit {
 	durationUnits = ALL_DURATION_UNITS;
 	ingredientUnits = ALL_INGREDIENT_UNITS;
 	allowedCategories = ALL_CATEGORIES;
+	currentMode: 'add' | 'edit';
 
 	constructor(private route: ActivatedRoute, private router: Router, private recipesService: RecipesService) { }
 
 	ngOnInit(): void {
-		this.route.data.subscribe((data: Data) => {
-			this.recipe = data['recipe'];
-		});
+
+		this.setCurrentMode();
+
+		if(this.currentMode === 'edit') {
+			this.route.data.subscribe((data: Data) => {
+				this.recipe = data['recipe'];
+			});
+		} else {
+			this.recipe = {
+				name: '',
+				duration: { duration: 0, unit: 'min' },
+				categories: [],
+				description: [],
+				ingredients: [],
+				userId: '',
+				image: ''
+			};
+		}
+
 		this.recipeForm = new FormGroup({
 			'name': new FormControl(this.recipe.name, Validators.required),
 			'duration': new FormGroup({
@@ -41,6 +58,10 @@ export class RecipeEditComponent implements OnInit {
 			'image': new FormControl(this.recipe.image, { asyncValidators: [mimeType] })
 		});
 		this.imagePreview = this.recipe.image as string;
+	}
+
+	private setCurrentMode(): void {
+		this.currentMode = this.router.url.includes('add') ? 'add' : 'edit';
 	}
 
 	onAddDescriptionStep(): void {
@@ -97,9 +118,16 @@ export class RecipeEditComponent implements OnInit {
 
 	onSubmit(): void {
 		
-		this.recipesService.updateRecipe(this.recipeFormToFormData()).subscribe(result => {
-			if(result.message.includes('Updated recipe')) this.router.navigate(['recipes',this.recipe.id]);
-		});
+		console.log('LOG MODE', this.currentMode);
+		if(this.currentMode === 'edit'){
+			this.recipesService.updateRecipe(this.recipeFormToFormData()).subscribe(result => {
+				if(result.message.includes('Updated recipe')) this.router.navigate(['recipes',this.recipe.id]);
+			});
+		} else {
+			this.recipesService.addRecipe(this.recipeFormToFormData()).subscribe(result => {
+				if(result.message.includes('Created recipe')) this.router.navigate(['recipes',this.recipe.id]);
+			});
+		}
 	}
 
 	onImagePicked(event: Event): void {

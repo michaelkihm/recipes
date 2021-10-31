@@ -16,6 +16,10 @@ const routes: Routes = [
 		component: RecipeEditComponent,
 		resolve: { recipe: RecipeResolver },
 		canActivate: [AuthGuard] },
+	{ path: 'recipes/add',
+		component: RecipeEditComponent,
+		canActivate: [AuthGuard]
+	},
 	{ path: 'recipes/:id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'signup', component: SignupComponent },
