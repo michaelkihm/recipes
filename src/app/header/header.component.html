@@ -5,9 +5,9 @@
     </button>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item m-1 p-1 icon" *ngIf="isUserAuthenticated" id="userPageLink">
-            <a routerLink="/login" class="userAnchor">
+            <a [routerLink]="['user',currentUser.userId]" class="userAnchor">
                 <i-bs name="person" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
-                <span class="d-none d-sm-inline username" id="username">{{username}}</span>
+                <span class="d-none d-sm-inline username" id="username">{{currentUser.username}}</span>
             </a>   
         </li>
         <li class="nav-item m-1 icon" *ngIf="!isUserAuthenticated" id="logInBtn">

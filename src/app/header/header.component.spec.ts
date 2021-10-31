@@ -16,7 +16,7 @@ describe('HeaderComponent', () => {
 	beforeEach(waitForAsync(() => {
 
 		const authServiceSpy = jasmine.createSpyObj('AuthService',
-			['getIsAuth', 'getAuthStatusListener', 'getUsernameListener', 'getUsername']);
+			['getIsAuth', 'getAuthStatusListener', 'getUserListener', 'getUser']);
 
 		TestBed.configureTestingModule({
 			declarations: [
@@ -29,7 +29,7 @@ describe('HeaderComponent', () => {
 			component = fixture.componentInstance;
 			el = fixture.debugElement;
 			authService = TestBed.inject(AuthService);
-			authService.getUsernameListener.and.returnValue(of('TestUser'));
+			authService.getUserListener.and.returnValue(of({ username: 'TestUser', id: 1 }));
 		});
 		
 	}));

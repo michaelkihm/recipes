@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from './../auth/auth.service';
+import { AuthService, UserInfo } from './../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,8 @@ import { AuthService } from './../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
 	isUserAuthenticated: boolean = true;
-	username: string;
-	private usernameStatusListener: Subscription;
+	currentUser: UserInfo;
+	private currentUserListener: Subscription;
 	private logStatusListener: Subscription;
 
 	constructor(private authService: AuthService) { }
@@ -19,17 +19,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		
 		this.isUserAuthenticated = this.authService.getIsAuth();
-		this.username = this.authService.getUsername();
+		this.currentUser = this.authService.getUser();
 		this.logStatusListener = this.authService.getAuthStatusListener().subscribe(loggedIn => {
 			this.isUserAuthenticated = loggedIn;
 		});
-		this.usernameStatusListener = this.authService.getUsernameListener().subscribe(username =>
-			this.username = username);
+		this.currentUserListener = this.authService.getUserListener().subscribe(userInfo =>
+			this.currentUser = { ...userInfo });
 	}
 
 	ngOnDestroy(): void {
 		this.logStatusListener && this.logStatusListener.unsubscribe();
-		this.usernameStatusListener && this.usernameStatusListener.unsubscribe();
+		this.currentUserListener && this.currentUserListener.unsubscribe();
 	}
 
 	onLogout(): void {

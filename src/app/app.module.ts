@@ -15,6 +15,7 @@ import { RecipeCardComponent } from './recipes/recipe-card/recipe-card.component
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesComponent } from './recipes/recipes.component';
+import { UserpageComponent } from './userpage/userpage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RecipesComponent } from './recipes/recipes.component';
     CategoriesListComponent,
     RecipeEditComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UserpageComponent
   ],
   imports: [
     BrowserModule,

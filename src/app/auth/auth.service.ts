@@ -5,6 +5,10 @@ import { Observable, Subject } from 'rxjs';
 import { LoginResponse, UserSignupResponse } from '../../../backend/src/controllers/user.controller';
 import { User } from '../../../models/user.model';
 
+export type UserInfo = {
+    username: string,
+    userId: string
+};
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
@@ -15,7 +19,7 @@ export class AuthService {
     private tokenTimer: NodeJS.Timer;
     private userId: string;
     private username: string;
-    private usernameListener = new Subject<string>();
+    private usernameListener = new Subject<UserInfo>();
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -27,11 +31,14 @@ export class AuthService {
         return this.userId;
     }
 
-    getUsername(): string {
-        return this.username;
+    getUser(): UserInfo {
+        return {
+            username: this.username,
+            userId: this.userId
+        };
     }
 
-    getUsernameListener(): Observable<string> {
+    getUserListener(): Observable<UserInfo> {
         return this.usernameListener.asObservable();
     }
 
@@ -64,7 +71,7 @@ export class AuthService {
                     this.setAuthTimer(expiresIn);
                     this.isAuthenticated = true;
                     this.authStatusListener.next(true);
-                    this.usernameListener.next(username);
+                    this.usernameListener.next({ username, userId });
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresIn * 1000);
                     this.saveAuthData(token, expirationDate, userId, username);
@@ -87,7 +94,7 @@ export class AuthService {
             this.username = authInformation.username;
 			this.setAuthTimer(expiresIn / 1000);
 			this.authStatusListener.next(true);
-            this.usernameListener.next(this.username);
+            this.usernameListener.next({ username: authInformation.username, userId: authInformation.userId });
         }
     }
     
@@ -97,7 +104,7 @@ export class AuthService {
         this.userId = '';
         this.username = '';
         this.authStatusListener.next(false);
-        this.usernameListener.next('');
+        this.usernameListener.next({ username: '', userId: '' });
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
         this.router.navigate(['/']);

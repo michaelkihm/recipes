@@ -8,9 +8,9 @@ import { HeaderComponent } from './header/header.component';
 describe('AppComponent', () => {
 
 	const authServiceSpy = jasmine.createSpyObj('AuthService',
-		['autoAuthUser', 'getIsAuth','getAuthStatusListener','getUsernameListener', 'getUsername']);
+		['autoAuthUser', 'getIsAuth','getAuthStatusListener','getUserListener', 'getUser']);
 	authServiceSpy.getAuthStatusListener.and.returnValue(of(true));
-	authServiceSpy.getUsernameListener.and.returnValue(of('Test User'));
+	authServiceSpy.getUserListener.and.returnValue(of({ username: 'Test User', userId: 1 }));
 
 	let component: AppComponent;
 	let fixture: ComponentFixture<AppComponent>;
