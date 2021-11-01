@@ -25,13 +25,15 @@ describe('Recipes Controller', () => {
         _next = null;
     });
     
-    it('should return recipes with response 200 when calling getRecipes', async () => {
+    it('should call RecipeModel.find with req params when calling getRecipes', async () => {
         
         (RecipeModel.find as jest.Mock).mockReturnValue(Promise.resolve(RECIPES));
-        
+        const query = { userId: '2' };
+        req.query = query;
         await getRecipes(req, res);
         
         expect(res.statusCode).toBe(200);
+        expect(RecipeModel.find).toBeCalledWith(query);
         expect(RecipeModel.find).toBeCalledTimes(1);
         expect(res._isEndCalled()).toBeTruthy();
     });

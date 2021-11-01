@@ -16,6 +16,8 @@ export type SingleRecipeResponse = {
     recipe?: Recipe
 };
 
+type GetRecipesRequest = Request<never,never,never,{userId: string;}>;
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MongooseRecipeResult = Document<any, any, Recipe> & Recipe & {_id: Types.ObjectId;};
@@ -56,9 +58,9 @@ const storage = multer.diskStorage({
 export const multerMiddleware = multer({ storage }).single('image');
 const didMulterSaveImage = (req: Request | PutPostRequest) => req?.file?.filename ? true : false;
 
-export const getRecipes = (_req: Request, res: Response<RecipesGetResponse>): void => {
+export const getRecipes = (req: GetRecipesRequest, res: Response<RecipesGetResponse>): void => {
     
-    RecipeModel.find()
+    RecipeModel.find(req.query)
         .then(docs => res.status(200).json({
             message: `Have ${docs.length} recipes`,
             recipes: docs.map(doc => mongoDBResultToRecipe(doc)) }))

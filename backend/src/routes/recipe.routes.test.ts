@@ -43,6 +43,7 @@ describe('Recipes Routes',() => {
     });
 
     it('should have migrated test data successfully', async () => {
+
         const docs = await RecipeModel.countDocuments();
         const users = await UserModel.countDocuments();
 
@@ -50,15 +51,31 @@ describe('Recipes Routes',() => {
         expect(users).toBe(USERS.length);
     });
 
-    it('should return recipes when GET route /api/recipes',async() => {
-        const response = await appAgent.get('/api/recipes');
-        
+    it('should return recipes when GET route /api/recipes without params',async() => {
+
+        const response = await appAgent.get('/api/recipes').query({ });
         
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toEqual('Have 4 recipes');
         try { expect(response.body.recipes.length).toBe(RECIPES.length); }
         catch (e) {
             console.error('Did not fetch all recipes from db');
+        }
+    });
+
+    it('should return recipes from User when GET route /api/recipes with userId in params',async() => {
+
+        const user1Docs = RECIPES.filter(recipe => recipe.userId === user1Id);
+        const response = await appAgent.get('/api/recipes').query({
+            'userId': user1Id
+        });
+        
+        
+        expect(response.statusCode).toBe(200);
+        expect(response.body.message).toEqual(`Have ${user1Docs.length} recipes`);
+        try { expect(response.body.recipes.length).toBe(user1Docs.length); }
+        catch (e) {
+            console.error('Did not fetch all recipes of user1 from db');
         }
     });
 
