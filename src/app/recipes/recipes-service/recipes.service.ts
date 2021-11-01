@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Recipe } from 'models/recipe.model';
 import { Observable } from 'rxjs';
@@ -16,8 +16,15 @@ export class RecipesService {
 
     constructor(private http: HttpClient) {}
 
-    fetchRecipes(): Observable<Recipe[]> {
-        return this.http.get<RecipesGetResponse>(this.baseUrl).pipe(map(response => response.recipes));
+    fetchRecipes( userId?: string): Observable<Recipe[]> {
+        
+        let params = new HttpParams();
+        if(userId){
+            params = params.append('userId',userId);
+        }
+
+        return this.http.get<RecipesGetResponse>(this.baseUrl, { params })
+            .pipe(map(response => response.recipes));
     }
 
     fetchRecipe(id: string): Observable<Recipe | undefined> {
