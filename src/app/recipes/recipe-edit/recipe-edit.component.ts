@@ -118,14 +118,15 @@ export class RecipeEditComponent implements OnInit {
 
 	onSubmit(): void {
 		
-		console.log('LOG MODE', this.currentMode);
 		if(this.currentMode === 'edit'){
 			this.recipesService.updateRecipe(this.recipeFormToFormData()).subscribe(result => {
-				if(result.message.includes('Updated recipe')) this.router.navigate(['recipes',this.recipe.id]);
+				const recipeId = result.recipe?.id;
+				if(recipeId) this.router.navigate(['/recipes',recipeId]);
 			});
 		} else {
 			this.recipesService.addRecipe(this.recipeFormToFormData()).subscribe(result => {
-				if(result.message.includes('Created recipe')) this.router.navigate(['recipes',this.recipe.id]);
+				const recipeId = result.recipe?.id;
+				if(recipeId) this.router.navigate(['/recipes',recipeId]);
 			});
 		}
 	}

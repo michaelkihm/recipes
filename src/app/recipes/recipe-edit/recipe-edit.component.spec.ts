@@ -2,11 +2,9 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, Data } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { RECIPES } from 'test_data/db-recipes';
-import { RecipeDetailComponent } from './../recipe-detail/recipe-detail.component';
 import { RecipesService } from './../recipes-service/recipes.service';
 import { RecipeEditComponent } from './recipe-edit.component';
 
@@ -16,20 +14,24 @@ describe('RecipeEditComponent', () => {
 	let component: RecipeEditComponent;
 	let fixture: ComponentFixture<RecipeEditComponent>;
 	let el: DebugElement;
+	//let router: any;
 	const { name, description, duration, ingredients, categories } = RECIPES[0];
-
+	const newRecipeIdForAdd = '5';
 	const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['updateRecipe', 'addRecipe']);
 	recipesServiceSpy.updateRecipe.and.returnValue(of({ message: 'Update recipe', recipe: RECIPES[0] }));
-	recipesServiceSpy.addRecipe.and.returnValue(of({ message: 'Created recipe', recipe: RECIPES[0] }));
+	recipesServiceSpy.addRecipe.and.returnValue(
+		of({ message: 'Created recipe', recipe: { ...RECIPES[0], id: newRecipeIdForAdd } }));
+	const RouterSpy = {
+		navigate: jasmine.createSpy('navigate'),
+		url: '/recipes/6151e30732820d7c71705f24/edit'
+	};
 
 	beforeEach(async () => {
 		
 
 		await TestBed.configureTestingModule({
 			declarations: [ RecipeEditComponent ],
-			imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
-				{ path: 'recipes/:id', component: RecipeDetailComponent }
-			]),],
+			imports: [ReactiveFormsModule],
 			providers: [
 				{ provide: ActivatedRoute,
 					useValue: {
@@ -40,7 +42,8 @@ describe('RecipeEditComponent', () => {
 							}
 					}
 				},
-				{ provide: RecipesService, useValue: recipesServiceSpy }
+				{ provide: RecipesService, useValue: recipesServiceSpy },
+				{ provide: Router, useValue: RouterSpy }
 				]
 			}
 		)
@@ -55,6 +58,7 @@ describe('RecipeEditComponent', () => {
 		el = fixture.debugElement;
 		recipesServiceSpy.addRecipe.calls.reset();
 		recipesServiceSpy.updateRecipe.calls.reset();
+		RouterSpy.navigate.calls.reset();
 	});
 
 	it('should create', () => {
@@ -123,6 +127,7 @@ describe('RecipeEditComponent', () => {
 
 		expect(recipesServiceSpy.updateRecipe).not.toHaveBeenCalled();
 		expect(recipesServiceSpy.addRecipe).toHaveBeenCalled();
+		expect(RouterSpy.navigate).toHaveBeenCalledWith(['/recipes', newRecipeIdForAdd]);
 	});
 
 	it('should call updateRecipe if in edit mode',() => {
@@ -133,5 +138,6 @@ describe('RecipeEditComponent', () => {
 
 		expect(recipesServiceSpy.updateRecipe).toHaveBeenCalled();
 		expect(recipesServiceSpy.addRecipe).not.toHaveBeenCalled();
+		expect(RouterSpy.navigate).toHaveBeenCalledWith(['/recipes', RECIPES[0].id]);
 	});
 });
