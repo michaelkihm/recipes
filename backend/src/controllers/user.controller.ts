@@ -18,7 +18,8 @@ export const signup = (req: UserRequest, res: Response<UserSignupResponse>): voi
         .then(hash => {
             const user = new UserModel({
                 email: req.body.email,
-                password: hash
+                password: hash,
+                username: req.body.username
             });
             user.save()
                 .then((result: UserSaveResult) => {
