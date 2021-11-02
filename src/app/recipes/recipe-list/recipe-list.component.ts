@@ -16,7 +16,7 @@ export class RecipeListComponent implements OnInit {
 
 	}
 
-	onClick(recipeId: string | undefined){
+	onClick(recipeId: string | undefined): void {
 		
 		recipeId && this.router.navigate(['/recipes', recipeId]);
 	}
