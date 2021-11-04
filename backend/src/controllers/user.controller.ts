@@ -16,12 +16,12 @@ export const signup = (req: UserRequest, res: Response<UserSignupResponse>): voi
     
     hash(req.body.password, 10)
         .then(hash => {
-            const user = new UserModel({
+            const user: User = {
                 email: req.body.email,
                 password: hash,
                 username: req.body.username
-            });
-            user.save()
+            };
+            UserModel.create(user)
                 .then((result: UserSaveResult) => {
                     res.status(201).json({
                         message: 'User created',
@@ -52,7 +52,6 @@ export const login = (req: UserRequest, res: Response<LoginResponse>): void => {
                 { email: user.email, userId: user._id },
                 SECRET_STRING,
                 { expiresIn: '1h' });
-
             return res.status(200).json({
                 message: 'Logged in',
                 token,
