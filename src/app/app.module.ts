@@ -16,6 +16,7 @@ import { RecipeCardComponent } from './recipes/recipe-card/recipe-card.component
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
+import { RecipeCategoryTranslatorPipe } from './recipes/recipeCategoryTranslator/recipeCategoryTranslator.pipe';
 import { RecipesComponent } from './recipes/recipes.component';
 import { UserpageComponent } from './userpage/userpage.component';
 
@@ -31,7 +32,8 @@ import { UserpageComponent } from './userpage/userpage.component';
     LoginComponent,
     SignupComponent,
     UserpageComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    RecipeCategoryTranslatorPipe
   ],
   imports: [
     BrowserModule,
