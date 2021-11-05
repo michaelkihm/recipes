@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RecipeCategoryTranslatorPipe } from '../recipeCategoryTranslator/recipeCategoryTranslator.pipe';
 import { ALL_CATEGORIES } from './../../../../models/category.type';
 import { RecipesService } from './../recipes-service/recipes.service';
 import { CategoriesListComponent } from './categories-list.component';
@@ -16,7 +17,7 @@ describe('CategoriesListComponent', () => {
 		recipeServiceSpy.getCategories.and.returnValue(ALL_CATEGORIES);
 
 		await TestBed.configureTestingModule({
-			declarations: [ CategoriesListComponent ],
+			declarations: [ CategoriesListComponent, RecipeCategoryTranslatorPipe ],
 			providers: [{ provide: RecipesService, useValue: recipeServiceSpy }]
 		})
 		.compileComponents();

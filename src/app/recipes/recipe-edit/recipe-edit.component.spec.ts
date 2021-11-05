@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { RECIPES } from 'test_data/db-recipes';
+import { RecipeCategoryTranslatorPipe } from '../recipeCategoryTranslator/recipeCategoryTranslator.pipe';
 import { RecipesService } from './../recipes-service/recipes.service';
 import { RecipeEditComponent } from './recipe-edit.component';
 
@@ -30,7 +31,7 @@ describe('RecipeEditComponent', () => {
 		
 
 		await TestBed.configureTestingModule({
-			declarations: [ RecipeEditComponent ],
+			declarations: [ RecipeEditComponent, RecipeCategoryTranslatorPipe ],
 			imports: [ReactiveFormsModule],
 			providers: [
 				{ provide: ActivatedRoute,
