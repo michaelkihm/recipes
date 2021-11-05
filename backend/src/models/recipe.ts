@@ -19,7 +19,7 @@ const recipeSchema = new Schema<Recipe>({
             unit: String
         }],
         required: true },
-    image: { type: String, required: false },
+    image: { type: String, required: false, default: 'http://localhost:4000/images/recipe-dummy.png' },
 });
 
 export const RecipeModel = model<Recipe>('Recipe', recipeSchema);

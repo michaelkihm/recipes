@@ -216,7 +216,7 @@ const removeDummyFiles = () => {
         files.forEach(file => {
             const fileDir = path.join(imagePath, file);
             if (file !== 'test_burger.jpeg' && file !== 'test_falafel.jpeg' && file !== 'test_spaghetti.jpeg'
-                && file !== 'profile-dummy.jpg') {
+                && file !== 'profile-dummy.jpg' && file !== 'recipe-dummy.png') {
                 fs.unlinkSync(fileDir);
             }
         });
