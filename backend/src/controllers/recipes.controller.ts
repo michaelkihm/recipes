@@ -16,6 +16,10 @@ export type SingleRecipeResponse = {
     recipe?: Recipe
 };
 
+export type DeleteRecipeResponse = {
+    message: string;
+};
+
 type GetRecipesRequest = Request<never,never,never,{userId: string; ids: string}>;
 
 
@@ -162,4 +166,15 @@ const processImageDataAndFormData = (req: PutPostRequest): Recipe => {
         image = `${url}/images/${req?.file?.filename}`;
     }
     return { ...recipe, image };
+};
+
+export const deleteRecipe = (req: Request<never,{id: string}>, res: Response<DeleteRecipeResponse>): void => {
+
+    RecipeModel.findByIdAndRemove(req.body.id)
+        .then(_result => {
+            res.status(200).json({
+                message: `Deleted recipe ${req.body.id}`
+            });
+        })
+        .catch(err => res.status(404).json({ message: `Error while deleting recipe ${req.body.id}: ${err}` }));
 };

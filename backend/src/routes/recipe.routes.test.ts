@@ -206,6 +206,21 @@ describe('Recipes Routes',() => {
             expect(recipe.ingredients).toBeDefined();
         });
     });
+
+    it('should remove a recipe if user is authenticated by callen /api/recipes/delete', async () => {
+
+        const { id } = RECIPES[0];
+        const recipeBefore = await RecipeModel.findById(id);
+        expect(recipeBefore).not.toBeNull();
+
+        const response = await appAgent.delete('/api/recipes/delete')
+            .send({ id })
+            .set('authorization','Bearer token');
+        expect(response.statusCode).toBe(200);
+
+        const recipe = await RecipeModel.findById(id);
+        expect(recipe).toBeNull();
+    });
 });
 
 const removeDummyFiles = () => {

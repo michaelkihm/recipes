@@ -3,7 +3,7 @@ import { Recipe, RecipeStrings } from '../../../models/recipe.model';
 import { RECIPES } from '../../../test_data/db-recipes';
 import { RecipeModel } from '../models/recipe';
 import { user1Id } from './../../../test_data/db-users';
-import { getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
+import { deleteRecipe, getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
 
 
 jest.mock('../models/recipe');
@@ -13,6 +13,7 @@ jest.spyOn(RecipeModel, 'find');
 jest.spyOn(RecipeModel, 'create');
 jest.spyOn(RecipeModel, 'updateOne');
 jest.spyOn(RecipeModel, 'findById');
+jest.spyOn(RecipeModel, 'findByIdAndRemove');
 
 (RecipeModel.findById as jest.Mock).mockReturnValue(Promise.resolve(RECIPES[0]));
 
@@ -123,5 +124,18 @@ describe('Recipes Controller', () => {
 
         expect(RecipeModel.updateOne).toBeCalledWith({ _id: recipe.id, userId: recipe.userId as string }, recipe );
         expect(res._isEndCalled()).toBeTruthy();
+    });
+
+    it('should call findByIdAndRemove when calling deleteRecipe',async () => {
+
+        (RecipeModel.findByIdAndRemove as jest.Mock).mockReturnValue(Promise.resolve({ message: 'Deleted recipe' }));
+        const recipe = RECIPES[0];
+        req.body.id = recipe.id;
+
+        await deleteRecipe(req, res);
+
+        expect(RecipeModel.findByIdAndRemove).toBeCalledWith( recipe.id);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res.statusCode).toBe(200);
     });
 });
