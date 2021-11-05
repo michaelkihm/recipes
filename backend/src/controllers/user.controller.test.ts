@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 import { createRequest, createResponse } from 'node-mocks-http';
 import { UserModel } from '../models/user';
 import { User } from './../../../models/user.model';
-import { USERS } from './../../../test_data/db-users';
+import { user1Id, USERS } from './../../../test_data/db-users';
 import { SECRET_STRING } from './../constants';
-import { login, signup } from './user.controller';
+import { login, signup, updateBooksmarks } from './user.controller';
 
 jest.mock('../models/user');
 jest.mock('bcrypt');
@@ -13,12 +13,7 @@ jest.mock('jsonwebtoken');
 
 jest.spyOn(UserModel, 'create');
 jest.spyOn(UserModel, 'findOne');
-
-// const mockedHash = jest.spyOn(bcrypt, 'hash');
-// const mockedCompare = jest.spyOn(bcrypt, 'compare');
-
-// const mockedVerify = jest.spyOn(jwt, 'sign');
-    //verify.mockImplementation(() => ({ email: 'test@test.com', userId: user1Id }));
+jest.spyOn(UserModel,'findByIdAndUpdate');
 
 
 describe('User Controller', () => {
@@ -92,5 +87,17 @@ describe('User Controller', () => {
         await expect(bcrypt.compare).toBeCalledWith(user.password,USERS[0].password);
         expect(res.statusCode).toBe(401);
         expect(res._isEndCalled()).toBeTruthy();
+    });
+
+    it('should update the bookmarks of a user if updateBooksmarks is called and user is authenticated', async () => {
+
+        (UserModel.findByIdAndUpdate as jest.Mock).mockReturnValue(Promise.resolve(USERS[0]));
+        const body = { bookmarks: ['123', '456', '765'] };
+        req.userData = { userId: user1Id as string }; //login with adding userData to request
+        req.body = body;
+
+        await updateBooksmarks(req, res);
+
+        expect(UserModel.findByIdAndUpdate).toBeCalledWith(user1Id, { bookmarks: body.bookmarks }, { new: true });
     });
 });

@@ -10,7 +10,21 @@ type UserRequest = Request<never, never, User>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UserSaveResult = Document<any, any, User> & User & {_id: Types.ObjectId};
 export type UserSignupResponse = {message: string, result: UserSaveResult};
-export type LoginResponse = { message: string, token?: string, expiresIn?: number, userId?: string, username?: string };
+export type LoginResponse = {
+    message: string,
+    token?: string,
+    expiresIn?: number,
+    userId?: string,
+    username?: string,
+    bookmarks?: string[]
+};
+type UserUpdateResponse = {
+    message: string,
+    userId?: string,
+    username?: string,
+    bookmarks?: string[],
+};
+type BookmarkUpdateRequest = Request<never, never, { bookmarks: string[] }>;
 
 export const signup = (req: UserRequest, res: Response<UserSignupResponse>): void => {
     
@@ -47,7 +61,7 @@ export const login = (req: UserRequest, res: Response<LoginResponse>): void => {
             if(!user) return res.status(401).json({ message: 'Did not find user' });
             const result = await compare(req.body.password, user.password);
 
-            if(!result) return res.status(401).json({ message: 'Did not find user' });
+            if(!result) return res.status(401).json({ message: 'Wrong password' });
             const token = sign(
                 { email: user.email, userId: user._id },
                 SECRET_STRING,
@@ -57,8 +71,28 @@ export const login = (req: UserRequest, res: Response<LoginResponse>): void => {
                 token,
                 expiresIn: 3600,
                 userId: user._id,
-                username: user.username
+                username: user.username,
+                bookmarks: user.bookmarks,
             });
         })
         .catch(_err => res.status(401).json({ message: 'Did not find user' }));
+};
+
+
+export const updateBooksmarks = (req: BookmarkUpdateRequest, res: Response<UserUpdateResponse>): void => {
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const userId = (req as any).userData.userId;
+    UserModel.findByIdAndUpdate(userId, { bookmarks: req.body.bookmarks },{ new: true })
+        .then(user => {
+            if(!user) return res.status(401).json({ message: `Did not find user ${userId}` });
+            
+            return res.status(200).json({
+                message: 'Updated bookmarks',
+                userId: user._id,
+                username: user.username,
+                bookmarks: user.bookmarks,
+            });
+        })
+        .catch(err => res.status(404).json({ message: `Could not find user with id: ${userId}. Error: ${err}` }));
 };

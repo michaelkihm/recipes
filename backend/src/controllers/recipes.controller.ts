@@ -16,7 +16,7 @@ export type SingleRecipeResponse = {
     recipe?: Recipe
 };
 
-type GetRecipesRequest = Request<never,never,never,{userId: string;}>;
+type GetRecipesRequest = Request<never,never,never,{userId: string; ids: string}>;
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,11 +60,20 @@ const didMulterSaveImage = (req: Request | PutPostRequest) => req?.file?.filenam
 
 export const getRecipes = (req: GetRecipesRequest, res: Response<RecipesGetResponse>): void => {
     
-    RecipeModel.find(req.query)
-        .then(docs => res.status(200).json({
-            message: `Have ${docs.length} recipes`,
-            recipes: docs.map(doc => mongoDBResultToRecipe(doc)) }))
-        .catch(err => res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] }));
+   const createResponseBody = (docs: MongooseRecipeResult[]) => res.status(200).json({
+        message: `Have ${docs.length} recipes`,
+        recipes: docs.map(doc => mongoDBResultToRecipe(doc)) });
+
+    if(req.query.ids){
+        RecipeModel.find({ '_id': { $in: JSON.parse(req.query.ids) } })
+            .then(docs => createResponseBody(docs))
+            .catch(err => res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] }));
+    } else {
+        RecipeModel.find(req.query)
+            .then(docs => createResponseBody(docs))
+            .catch(err => res.status(404).json({ message: `Error getting all docs: ${err}`, recipes: [] }));
+    }
+    
 };
 
 

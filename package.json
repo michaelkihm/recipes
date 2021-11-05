@@ -9,7 +9,7 @@
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
     "setupTestDB:backend": "docker-compose -f docker-compose.test.yml up -d mongodb_container",
-    "test:backend": "jest backend --config=backend/jest.config.js",
+    "test:backend": "jest backend --config=backend/jest.config.js --runInBand",
     "stopTestDB:backend": "docker-compose -f docker-compose.test.yml stop",
     "start:server": "nodemon backend/dist/backend/src/app.js",
     "compile:server": "tsc -p backend -w",

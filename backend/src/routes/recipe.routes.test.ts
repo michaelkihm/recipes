@@ -63,7 +63,7 @@ describe('Recipes Routes',() => {
         }
     });
 
-    it('should return recipes from User when GET route /api/recipes with userId in params',async() => {
+    it('should return recipes from User when GET route /api/recipes with userId in query',async() => {
 
         const user1Docs = RECIPES.filter(recipe => recipe.userId === user1Id);
         const response = await appAgent.get('/api/recipes').query({
@@ -74,6 +74,24 @@ describe('Recipes Routes',() => {
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toEqual(`Have ${user1Docs.length} recipes`);
         try { expect(response.body.recipes.length).toBe(user1Docs.length); }
+        catch (e) {
+            console.error('Did not fetch all recipes of user1 from db');
+        }
+    });
+
+    it('should return recipes with ids given in query.ids',async() => {
+
+        const docs = [RECIPES[0], RECIPES[2]];
+        const ids = docs.map(recipe => recipe.id);
+        const response = await appAgent.get('/api/recipes').query({
+            ids: JSON.stringify(ids)
+        });
+        
+        
+        expect(response.statusCode).toBe(200);
+        expect(response.body.message).toEqual(`Have ${docs.length} recipes`);
+        expect(response.body.recipes).toEqual(docs);
+        try { expect(response.body.recipes.length).toBe(docs.length); }
         catch (e) {
             console.error('Did not fetch all recipes of user1 from db');
         }
