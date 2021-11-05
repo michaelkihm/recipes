@@ -12,7 +12,7 @@
             <div>
                 <p>Kategorien</p>
                 <ul>
-                    <li *ngFor="let category of recipe.categories">{{ category }}</li>
+                    <li *ngFor="let category of recipe.categories">{{ category | recipeCategoryTranslator}}</li>
                 </ul>
             </div>
             <p>Fertig in: {{ recipe.duration.duration }} {{ recipe.duration.unit }}</p>

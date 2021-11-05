@@ -97,7 +97,7 @@
                     (change)="onCheckboxChange($event)" 
                     [checked]="recipe.categories.includes(category)"
                     [id]="category"/>
-                  {{category}}
+                  {{category | recipeCategoryTranslator}}
                 </label>
             </div>
         </div>
