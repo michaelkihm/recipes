@@ -21,11 +21,18 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   	ngOnInit(): void {
 
 		this.user = this.authService.getUser();
-		this.isBookmarked = this.user.bookmarks.includes(this.recipe.id || '');
+		this.isBookmarked = this.isRecipeBookmarked();
 		this.userInfoListener = this.authService.getUserListener().subscribe(user => {
 			this.user = user;
-			this.isBookmarked = this.user.bookmarks.includes(this.recipe.id || '');
+			this.isBookmarked = this.isRecipeBookmarked();
 		});
+	}
+
+	private isRecipeBookmarked(): boolean {
+
+		const bookmarks = this.user.bookmarks;
+		if(!bookmarks) return false;
+		return bookmarks.includes(this.recipe.id || '');
 	}
 
 	onBookmark(event: Event): void {
