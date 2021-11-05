@@ -18,7 +18,7 @@ export type LoginResponse = {
     username?: string,
     bookmarks?: string[]
 };
-type UserUpdateResponse = {
+export type UserUpdateResponse = {
     message: string,
     userId?: string,
     username?: string,

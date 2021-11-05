@@ -1,5 +1,15 @@
 <div class="jumbotron" [routerLink]="['/recipes',recipe.id]">
-    <h2>{{ recipe.name }}</h2>
-    <img class="img-thumbnail" [src]="recipe.image" [alt]="recipe.name">
+    <div class="row">
+        <div class="col-10">
+            <h2>{{ recipe.name }}</h2>
+        </div>
+        <div class="col">
+            <i-bs            
+                (click)="onBookmark($event)" 
+                [name]="isBookmarked ? 'bookmark-fill' : 'bookmark'" class="bookmark" 
+                width="1.6rem" height="2.0rem"></i-bs>
+        </div>
+    </div>
+    <img class="img-thumbnail" [src]="recipe.image" alt="{{recipe.name}}">
     <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>
 </div>

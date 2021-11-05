@@ -16,13 +16,12 @@ export class RecipesService {
 
     constructor(private http: HttpClient) {}
 
-    fetchRecipes( userId?: string): Observable<Recipe[]> {
+    fetchRecipes( userId?: string, recipeIds?: string[]): Observable<Recipe[]> {
         
         let params = new HttpParams();
-        if(userId){
-            params = params.append('userId',userId);
-        }
-
+        if(userId) params = params.append('userId',userId);
+        if(recipeIds) params = params.append('ids',JSON.stringify(recipeIds));
+        
         return this.http.get<RecipesGetResponse>(this.baseUrl, { params })
             .pipe(map(response => response.recipes));
     }

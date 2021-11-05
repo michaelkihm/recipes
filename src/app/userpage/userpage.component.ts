@@ -11,6 +11,7 @@ import { RecipesService } from './../recipes/recipes-service/recipes.service';
 export class UserpageComponent implements OnInit {
 
 	myRecipes: Recipe[];
+	myBookmarks: Recipe[];
 	user: UserInfo;
 
 	constructor(private recipesService: RecipesService, private authService: AuthService) { }
@@ -21,6 +22,9 @@ export class UserpageComponent implements OnInit {
 		if(this.user) {
 			this.recipesService.fetchRecipes(this.user.userId).subscribe(recipes => {
 				this.myRecipes = recipes;
+			});
+			this.recipesService.fetchRecipes('', this.user.bookmarks).subscribe(recipes => {
+				this.myBookmarks = recipes;
 			});
 		}
 	}

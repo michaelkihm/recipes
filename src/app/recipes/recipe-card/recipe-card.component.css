@@ -1,0 +1,7 @@
+.bookmark {
+    color: #2962ff;
+}
+
+.bookmark:hover {
+    opacity: 0.8;
+}
