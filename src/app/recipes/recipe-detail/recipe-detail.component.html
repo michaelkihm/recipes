@@ -7,7 +7,7 @@
             <div class="row">
                 <h2>{{ recipe.name }}</h2>
                 <button *ngIf="userIsAuthenticated && userIsCreator" class="btn btn-primary m-1" [routerLink]="['/recipes',recipe.id,'edit']">Edit</button>
-                <button *ngIf="userIsAuthenticated && userIsCreator" class="btn btn-danger m-1">Remove</button>
+                <button *ngIf="userIsAuthenticated && userIsCreator" class="btn btn-danger m-1" (click)="openModal(template)">Remove</button>
             </div>
             <div>
                 <p>Kategorien</p>
@@ -35,3 +35,18 @@
         </div>
     </div>
 </div>
+
+<ng-template #template>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Rezept für {{recipe.name}} löschen</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="btn btn-danger mr-1" (click)="removeRecipe()">Ja</button>
+       <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Nein</button>
+    </div>
+ </ng-template>
+
+

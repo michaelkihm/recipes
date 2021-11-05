@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { allIcons, NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
@@ -14,9 +15,9 @@ import { CategoriesListComponent } from './recipes/categories-list/categories-li
 import { RecipeCardComponent } from './recipes/recipe-card/recipe-card.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { UserpageComponent } from './userpage/userpage.component';
-import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +40,12 @@ import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxBootstrapIconsModule.pick(allIcons)
+    NgxBootstrapIconsModule.pick(allIcons),
+    ModalModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor, multi: true },
+    BsModalService
   ],
   bootstrap: [AppComponent]
 })

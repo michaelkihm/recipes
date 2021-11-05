@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Recipe } from 'models/recipe.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
+import {
+    DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse
+} from './../../../../backend/src/controllers/recipes.controller';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 
 @Injectable({
@@ -47,6 +49,10 @@ export class RecipesService {
 
     addRecipe(recipe: FormData): Observable<SingleRecipeResponse> {
         return this.http.post<SingleRecipeResponse>(this.baseUrl, recipe);
+    }
+
+    deleteRecipe(recipeId: string): Observable<DeleteRecipeResponse> {
+        return this.http.delete<DeleteRecipeResponse>(`${this.baseUrl}/delete`,{ body: { id: recipeId } });
     }
 
 }

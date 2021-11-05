@@ -114,4 +114,19 @@ describe('ReceipesService',() => {
             message: 'Created recipe'
         });
     });
+
+    it('should remove a recipe correctly', () => {
+
+        const id = '3';
+        recipesService.deleteRecipe(id).subscribe(result => {
+            expect(result.message.includes(`Deleted recipe ${id}`)).toBeTrue();
+        });
+
+        const req = httpTestingController.expectOne('http://localhost:4000/api/recipes/delete');
+        expect(req.request.method).toEqual('DELETE');
+        req.flush({
+            message: `Deleted recipe ${id}`
+        });
+
+    });
 });
