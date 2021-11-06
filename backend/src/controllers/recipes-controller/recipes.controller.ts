@@ -14,7 +14,6 @@ type MongooseRecipeResult = Document<any, any, Recipe> & Recipe & {_id: Types.Ob
 
 type PutPostRequest = Request<{id: string},never, RecipeStrings>;
 
-const didMulterSaveImage = (req: Request | PutPostRequest) => req?.file?.filename ? true : false;
 
 export const getRecipes = (req: GetRecipesRequest, res: Response<RecipesGetResponse>): void => {
     
@@ -112,6 +111,8 @@ export const putRecipe = (req: PutPostRequest, res: Response<SingleRecipeRespons
 
 const processImageDataAndFormData = (req: PutPostRequest): Recipe => {
 
+    const didMulterSaveImage = (req: Request | PutPostRequest) => req?.file?.filename ? true : false;
+    
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const recipe = recipeFormDataToRecipe({ ...req.body, userId: (req as any).userData.userId });
     let image = recipe.image;
