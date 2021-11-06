@@ -5,7 +5,7 @@ import { multerMiddleware } from './../middleware/multer-image-save';
 
 export const userRouter = Router();
 
-userRouter.post('/signup',multerMiddleware,signup);
+userRouter.post('/signup', multerMiddleware, signup);
 
 userRouter.post('/login', login);
 

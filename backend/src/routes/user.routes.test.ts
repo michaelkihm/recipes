@@ -73,6 +73,7 @@ describe('User Routes', () => {
         expect(foundUser.email).toEqual(user.email);
         expect(foundUser.username).toEqual(user.username);
         expect(foundUser.password).toEqual(hashedPW);
+        expect(foundUser.image.includes('recipe-dummy')).toBeTruthy();
     });
 
     // eslint-disable-next-line max-len

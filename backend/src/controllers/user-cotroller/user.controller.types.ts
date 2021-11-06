@@ -13,6 +13,7 @@ export type LoginResponse = {
     userId?: string,
     username?: string,
     bookmarks?: string[]
+    image?: string
 };
 
 export type UserUpdateResponse = {

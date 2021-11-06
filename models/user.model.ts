@@ -13,9 +13,7 @@ export type UserStrings = HasKeys<User>;
 
 export const userFormDataToUser = (formData: UserStrings): User => {
 
-    const hasImageChanged = () => typeof formData.image !== 'string';
     const bookmarks = formData.bookmarks ? JSON.parse(formData.bookmarks) as string[] : [];
-    const image = hasImageChanged() ? '' : formData.image;
 
     return {
         email: formData.email,
@@ -23,6 +21,6 @@ export const userFormDataToUser = (formData: UserStrings): User => {
         username: formData.username,
         id: formData.id,
         bookmarks,
-        image,
+        image: formData.image,
     };
 };

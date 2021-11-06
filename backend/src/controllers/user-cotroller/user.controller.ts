@@ -23,7 +23,8 @@ export const signup = (req: UserAddRequest, res: Response<UserSignupResponse>): 
             const user: User = {
                 email: userData.email,
                 password: hash,
-                username: userData.username
+                username: userData.username,
+                image: userData.image
             };
             UserModel.create(user)
                 .then((result: UserSaveResult) => {
@@ -54,6 +55,7 @@ const processImageDataAndFormData = (req: UserAddRequest): User => {
         const url = `${req.protocol}://${req.get('host')}`;
         image = `${url}/images/${req?.file?.filename}`;
     }
+    
     return { ...user, image };
 };
 
@@ -78,6 +80,7 @@ export const login = (req: UserLoginRequest, res: Response<LoginResponse>): void
                 userId: user._id,
                 username: user.username,
                 bookmarks: user.bookmarks,
+                image: user.image
             });
         })
         .catch(_err => res.status(401).json({ message: 'Did not find user' }));
