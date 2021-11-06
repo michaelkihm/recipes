@@ -127,6 +127,8 @@ describe('Recipes Routes',() => {
         expect(response.body.recipe.categories).toEqual(recipe.categories);
         expect(response.body.recipe.userId).toEqual(recipe.userId);
         expect(response.body.recipe.ingredients).toEqual(recipe.ingredients);
+        expect(response.body.recipe.image).not.toEqual('http://localhost:4000/images/recipe-dummy.png');
+        expect(response.body.recipe.image.includes('test_burger')).toBeTruthy();
     });
 
     it('should update a recipe by calling PUT to /api/recipes/:id', async () => {
