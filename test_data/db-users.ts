@@ -9,7 +9,8 @@ export const USERS: User[] = [
         password: '$2a$10$2SQakBtWJ5tsA7uvjGbKleKO5GVNW81azMQFL1pS8FI/t6jIEp.qy', //123
         id: user1Id,
         username: 'User1',
-        bookmarks: ['6151e30732820d7c71705f24', '6151e318a81f71122c95f756']
+        bookmarks: ['6151e30732820d7c71705f24', '6151e318a81f71122c95f756'],
+        image: 'http://localhost:4000/images/User1.png',
     },
     {
         email: '12@gmail.com',
