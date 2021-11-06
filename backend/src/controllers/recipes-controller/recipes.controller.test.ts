@@ -1,12 +1,12 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import { Recipe, RecipeStrings } from '../../../models/recipe.model';
-import { RECIPES } from '../../../test_data/db-recipes';
-import { RecipeModel } from '../models/recipe';
-import { user1Id } from './../../../test_data/db-users';
+import { Recipe, RecipeStrings } from '../../../../models/recipe.model';
+import { RECIPES } from '../../../../test_data/db-recipes';
+import { user1Id } from '../../../../test_data/db-users';
+import { RecipeModel } from '../../models/recipe';
 import { deleteRecipe, getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe } from './recipes.controller';
 
 
-jest.mock('../models/recipe');
+jest.mock('../../models/recipe');
 
 
 jest.spyOn(RecipeModel, 'find');

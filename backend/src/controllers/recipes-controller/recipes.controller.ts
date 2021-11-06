@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { Document, Types } from 'mongoose';
-import { Category } from '../../../models/category.type';
-import { Recipe, recipeFormDataToRecipe, RecipeStrings } from '../../../models/recipe.model';
-import { RecipeModel } from '../models/recipe';
+import { Category } from '../../../../models/category.type';
+import { Recipe, recipeFormDataToRecipe, RecipeStrings } from '../../../../models/recipe.model';
+import { RecipeModel } from '../../models/recipe';
 import { DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse } from './recipes.controller.types';
 
 type GetRecipesRequest = Request<never,never,never,{userId: string; ids: string}>;
