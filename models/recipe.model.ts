@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose';
 import { Category } from './category.type';
+import { HasKeys } from './common.type';
 import { Ingredient } from './ingredient.model';
 
 export const ALL_DURATION_UNITS = ['min' , 'h'] as const;
@@ -19,10 +20,6 @@ export interface Recipe {
     duration: Duration,
     image?: string,
 }
-
-type HasKeys<T> = {
-    [P in keyof T]: string
-};
 
 export type RecipeStrings = HasKeys<Recipe>;
 
