@@ -1,24 +1,9 @@
 import { Request, Response } from 'express';
 import { Document, Types } from 'mongoose';
-import multer from 'multer';
 import { Category } from '../../../models/category.type';
 import { Recipe, recipeFormDataToRecipe, RecipeStrings } from '../../../models/recipe.model';
 import { RecipeModel } from '../models/recipe';
-
-export type RecipesGetResponse = {
-    message: string,
-    recipes: Recipe[]
-};
-
-
-export type SingleRecipeResponse = {
-    message: string,
-    recipe?: Recipe
-};
-
-export type DeleteRecipeResponse = {
-    message: string;
-};
+import { DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse } from './recipes.controller.types';
 
 type GetRecipesRequest = Request<never,never,never,{userId: string; ids: string}>;
 
@@ -29,37 +14,6 @@ type MongooseRecipeResult = Document<any, any, Recipe> & Recipe & {_id: Types.Ob
 
 type PutPostRequest = Request<{id: string},never, RecipeStrings>;
 
-const getMimeType = (type: string) => {
-
-    const MIME_TYPE_MAP: {[key:string]: string} = {
-        'image/png': 'png',
-        'image/jpeg': 'png',
-        'image/jpg': 'jpg'
-    };
-
-    if(type in MIME_TYPE_MAP){
-        return MIME_TYPE_MAP[type];
-    } else return '';
-};
-
-
-const storage = multer.diskStorage({
-
-    destination: (req, file, cb) => {
-        
-        const isValid = getMimeType(file.mimetype);
-        let error: Error | null = new Error('Invalid Mime type');
-        if(isValid) error = null;
-        cb(error, 'backend/images');
-    },
-    filename: (req, file, cb) => {
-        const name = file.originalname.toLowerCase().split(' ').join('-');
-        const ext = getMimeType(file.mimetype);
-        cb(null, name + '-' + Date.now() + '.' + ext);
-    }
-});
-
-export const multerMiddleware = multer({ storage }).single('image');
 const didMulterSaveImage = (req: Request | PutPostRequest) => req?.file?.filename ? true : false;
 
 export const getRecipes = (req: GetRecipesRequest, res: Response<RecipesGetResponse>): void => {

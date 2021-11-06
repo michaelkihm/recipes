@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import {
     deleteRecipe,
-    getRandomRecipes, getRecipe, getRecipes, multerMiddleware, postRecipe
+    getRandomRecipes, getRecipe, getRecipes, postRecipe
 } from '../controllers/recipes.controller';
+import { multerMiddleware } from '../middleware/multer-image-save';
 import { putRecipe } from './../controllers/recipes.controller';
 import { checkAuth } from './../middleware/check-auth';
 

@@ -2,7 +2,9 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { ALL_CATEGORIES } from 'models/category.type';
 import { RECIPES } from 'test_data/db-recipes';
-import { RecipesGetResponse, SingleRecipeResponse } from './../../../../backend/src/controllers/recipes.controller';
+import {
+    RecipesGetResponse, SingleRecipeResponse
+} from './../../../../backend/src/controllers/recipes.controller.types';
 import { RecipesService } from './recipes.service';
 
 describe('ReceipesService',() => {
