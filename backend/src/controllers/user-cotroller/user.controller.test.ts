@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { User } from '../../../../models/user.model';
+import { User, UserStrings } from '../../../../models/user.model';
 import { user1Id, USERS } from '../../../../test_data/db-users';
 import { SECRET_STRING } from '../../constants';
 import { UserModel } from '../../models/user';
@@ -31,10 +31,10 @@ describe('User Controller', () => {
         (UserModel.create as jest.Mock).mockReturnValue(Promise.resolve());
         (bcrypt.hash as jest.Mock).mockReturnValue(Promise.resolve(hashedPW));
 
-        const body: User = {
+        const body: UserStrings = {
             email: 'Test@test.com',
             password: '123',
-            username: 'Test User'
+            username: 'Test User',
         };
         req.body = body;
         

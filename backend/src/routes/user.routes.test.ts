@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import { connection } from 'mongoose';
 import path from 'path';
 import { agent, SuperAgentTest } from 'supertest';
-import { User } from '../../../models/user.model';
+import { UserStrings } from '../../../models/user.model';
 import { RECIPES } from '../../../test_data/db-recipes';
 import { USERS } from '../../../test_data/db-users';
 import { migrateRecipeData, migrateUserData } from '../../migration/migration-helpers';
@@ -54,12 +54,16 @@ describe('User Routes', () => {
 
         const hashedPW = 'hashedPW';
         (bcrypt.hash as jest.Mock).mockReturnValue(Promise.resolve(hashedPW));
-        const user: User = {
+        const user: UserStrings = {
             username: 'TestUser',
             email: 'hello@web.de',
             password: '123',
         };
-        const response = await appAgent.post('/api/user/signup').send({ ...user });
+        const response = await appAgent.post('/api/user/signup')
+                                    .field('username', user.username)
+                                    .field('email', user.email)
+                                    .field('password', user.password)
+                                    .attach('image','backend/images/recipe-dummy.png');
 
 
         expect(response.statusCode).toBe(201);

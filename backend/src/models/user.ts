@@ -7,6 +7,7 @@ const userSchema = new Schema<User>({
    username: { type: String, required: true },
    password: { type: String, required: true },
    bookmarks: { type: [String], required: true, default: [] },
+   image: { type: String, required: false, default: 'http://localhost:4000/images/profile-dummy.png' }
 });
 
 userSchema.plugin(mongooseUniqueValidator);

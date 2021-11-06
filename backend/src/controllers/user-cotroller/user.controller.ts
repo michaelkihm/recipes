@@ -1,24 +1,29 @@
 import { compare, hash } from 'bcrypt';
 import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { User } from '../../../../models/user.model';
+import { User, userFormDataToUser, UserStrings } from '../../../../models/user.model';
 import { SECRET_STRING } from '../../constants';
 import { UserModel } from '../../models/user';
-import { LoginResponse, UserSaveResult, UserSignupResponse, UserUpdateResponse } from './user.controller.types';
+import {
+    LoginResponse, UserSaveResult, UserSignupResponse, UserUpdateResponse
+} from './user.controller.types';
 
-type UserRequest = Request<never, never, User>;
-
+type UserLoginRequest = Request<never, never, User>;
+type UserAddRequest = Request<never, never, UserStrings>;
 
 type BookmarkUpdateRequest = Request<never, never, { bookmarks: string[] }>;
 
-export const signup = (req: UserRequest, res: Response<UserSignupResponse>): void => {
+
+export const signup = (req: UserAddRequest, res: Response<UserSignupResponse>): void => {
     
-    hash(req.body.password, 10)
+    const userData = processImageDataAndFormData(req);
+
+    hash(userData.password, 10)
         .then(hash => {
             const user: User = {
-                email: req.body.email,
+                email: userData.email,
                 password: hash,
-                username: req.body.username
+                username: userData.username
             };
             UserModel.create(user)
                 .then((result: UserSaveResult) => {
@@ -38,7 +43,22 @@ export const signup = (req: UserRequest, res: Response<UserSignupResponse>): voi
 };
 
 
-export const login = (req: UserRequest, res: Response<LoginResponse>): void => {
+const processImageDataAndFormData = (req: UserAddRequest): User => {
+
+    const didMulterSaveImage = (req: Request | UserAddRequest) => req?.file?.filename ? true : false;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user = userFormDataToUser(req.body);
+    let image = user.image;
+    if(didMulterSaveImage(req)){
+        const url = `${req.protocol}://${req.get('host')}`;
+        image = `${url}/images/${req?.file?.filename}`;
+    }
+    return { ...user, image };
+};
+
+
+export const login = (req: UserLoginRequest, res: Response<LoginResponse>): void => {
 
     UserModel.findOne({ email: req.body.email })
         .then(async user => {
