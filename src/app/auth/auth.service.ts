@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import {
     LoginResponse, UserSignupResponse, UserUpdateResponse
-} from '../../../backend/src/controllers/user.controller';
+} from '../../../backend/src/controllers/user-cotroller/user.controller.types';
 import { User } from '../../../models/user.model';
 
 export type UserInfo = {

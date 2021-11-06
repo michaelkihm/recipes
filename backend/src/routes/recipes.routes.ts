@@ -1,10 +1,8 @@
 import { Router } from 'express';
 import {
-    deleteRecipe,
-    getRandomRecipes, getRecipe, getRecipes, postRecipe
-} from '../controllers/recipes.controller';
+    deleteRecipe, getRandomRecipes, getRecipe, getRecipes, postRecipe, putRecipe
+} from '../controllers/recipes-controller/recipes.controller';
 import { multerMiddleware } from '../middleware/multer-image-save';
-import { putRecipe } from './../controllers/recipes.controller';
 import { checkAuth } from './../middleware/check-auth';
 
 export const recipeRouter = Router();

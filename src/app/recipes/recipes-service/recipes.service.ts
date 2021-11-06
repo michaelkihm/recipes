@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
     DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse
-} from './../../../../backend/src/controllers/recipes.controller.types';
+} from './../../../../backend/src/controllers/recipes-controller/recipes.controller.types';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 
 @Injectable({

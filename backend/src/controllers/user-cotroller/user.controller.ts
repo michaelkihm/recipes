@@ -1,29 +1,14 @@
 import { compare, hash } from 'bcrypt';
 import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { Document, Types } from 'mongoose';
-import { User } from '../../../models/user.model';
-import { SECRET_STRING } from '../constants';
-import { UserModel } from '../models/user';
+import { User } from '../../../../models/user.model';
+import { SECRET_STRING } from '../../constants';
+import { UserModel } from '../../models/user';
+import { LoginResponse, UserSaveResult, UserSignupResponse, UserUpdateResponse } from './user.controller.types';
 
 type UserRequest = Request<never, never, User>;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UserSaveResult = Document<any, any, User> & User & {_id: Types.ObjectId};
-export type UserSignupResponse = {message: string, result: UserSaveResult};
-export type LoginResponse = {
-    message: string,
-    token?: string,
-    expiresIn?: number,
-    userId?: string,
-    username?: string,
-    bookmarks?: string[]
-};
-export type UserUpdateResponse = {
-    message: string,
-    userId?: string,
-    username?: string,
-    bookmarks?: string[],
-};
+
+
 type BookmarkUpdateRequest = Request<never, never, { bookmarks: string[] }>;
 
 export const signup = (req: UserRequest, res: Response<UserSignupResponse>): void => {

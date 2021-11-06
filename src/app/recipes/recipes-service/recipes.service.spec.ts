@@ -4,7 +4,7 @@ import { ALL_CATEGORIES } from 'models/category.type';
 import { RECIPES } from 'test_data/db-recipes';
 import {
     RecipesGetResponse, SingleRecipeResponse
-} from './../../../../backend/src/controllers/recipes.controller.types';
+} from './../../../../backend/src/controllers/recipes-controller/recipes.controller.types';
 import { RecipesService } from './recipes.service';
 
 describe('ReceipesService',() => {

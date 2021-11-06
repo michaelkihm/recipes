@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { UserModel } from '../models/user';
-import { User } from './../../../models/user.model';
-import { user1Id, USERS } from './../../../test_data/db-users';
-import { SECRET_STRING } from './../constants';
+import { User } from '../../../../models/user.model';
+import { user1Id, USERS } from '../../../../test_data/db-users';
+import { SECRET_STRING } from '../../constants';
+import { UserModel } from '../../models/user';
 import { login, signup, updateBooksmarks } from './user.controller';
 
-jest.mock('../models/user');
+jest.mock('../../models/user');
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
 
