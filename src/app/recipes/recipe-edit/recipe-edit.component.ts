@@ -4,9 +4,9 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import { ALL_CATEGORIES, Category } from 'models/category.type';
 import { ALL_INGREDIENT_UNITS } from 'models/ingredient.model';
 import { ALL_DURATION_UNITS, Recipe } from 'models/recipe.model';
+import { mimeType } from '../../validators/mime-type.validator';
 import { Duration } from './../../../../models/recipe.model';
 import { RecipesService } from './../recipes-service/recipes.service';
-import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-recipe-edit',

@@ -11,6 +11,7 @@ export type UserInfo = {
     username: string,
     userId: string,
     bookmarks: string[];
+    image: string;
 };
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -22,6 +23,7 @@ export class AuthService {
     private tokenTimer: NodeJS.Timer;
     private userId: string;
     private username: string;
+    private image: string;
     private userInfoListener = new Subject<UserInfo>();
     private bookmarks: string[];
 
@@ -40,6 +42,7 @@ export class AuthService {
             username: this.username,
             userId: this.userId,
             bookmarks: this.bookmarks,
+            image: this.image
         };
     }
 
@@ -55,11 +58,14 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    createUser(email: string, password: string, username: string): void {
+    createUser(user: FormData): void {
         
-        const authData: User = { email, password, username, bookmarks: [] };
-        this.http.post<UserSignupResponse>(`${this.baseUrl}/signup`,authData)
-			.subscribe(res => console.log(res.message));
+        console.log('IMAGE',user.get('image'));
+        this.http.post<UserSignupResponse>(`${this.baseUrl}/signup`,user)
+			.subscribe(res => {
+                if(res.message === 'User created') this.router.navigate(['/']);
+                else console.error(res.message);
+            });
     }
 
     upateBookmarks(recipeId: string, action: 'add' | 'remove'): void {
@@ -78,6 +84,7 @@ export class AuthService {
                         username: this.username,
                         userId: this.userId,
                         bookmarks: bookmarks,
+                        image: this.image
                     });
                 }
                 
@@ -90,19 +97,20 @@ export class AuthService {
         this.http.post<LoginResponse>(`${this.baseUrl}/login`,authData)
           	.subscribe(response => {
 
-				const { token, userId, expiresIn, username, bookmarks } = response;
-				if (token && userId && expiresIn && username && bookmarks) {
+				const { token, userId, expiresIn, username, bookmarks, image } = response;
+				if (token && userId && expiresIn && username && bookmarks && image) {
                     this.token = token;
                     this.userId = userId;
                     this.username = username;
+                    this.image = image;
                     this.bookmarks = bookmarks;
                     this.setAuthTimer(expiresIn);
                     this.isAuthenticated = true;
                     this.authStatusListener.next(true);
-                    this.userInfoListener.next({ username, userId, bookmarks });
+                    this.userInfoListener.next({ username, userId, bookmarks, image });
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresIn * 1000);
-                    this.saveAuthData(token, expirationDate, userId, username, bookmarks);
+                    this.saveAuthData(token, expirationDate, userId, username, bookmarks, image);
                     this.router.navigate(['/']);
 				}
             });
@@ -127,6 +135,7 @@ export class AuthService {
                 username: authInformation.username,
                 userId: authInformation.userId,
                 bookmarks: authInformation.bookmarks,
+                image: authInformation.image
             });
         }
     }
@@ -138,7 +147,7 @@ export class AuthService {
         this.username = '';
         this.bookmarks = [];
         this.authStatusListener.next(false);
-        this.userInfoListener.next({ username: '', userId: '' ,bookmarks: [] });
+        this.userInfoListener.next({ username: '', userId: '' ,bookmarks: [], image: '' });
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
         this.router.navigate(['/']);
@@ -151,11 +160,14 @@ export class AuthService {
         }, duration * 1000);
     }
     
-    private saveAuthData(token: string, expirationDate: Date, userId: string, username: string, bookmarks: string[]) {
+    private saveAuthData(
+            token: string, expirationDate: Date, userId: string, username: string, bookmarks: string[], image: string) {
+
         localStorage.setItem('token', token);
         localStorage.setItem('expiration', expirationDate.toISOString());
         localStorage.setItem('userId', userId);
         localStorage.setItem('username', username);
+        localStorage.setItem('image', image);
         localStorage.setItem('bookmarks',JSON.stringify(bookmarks));
     }
     
@@ -165,6 +177,7 @@ export class AuthService {
         localStorage.removeItem('userId');
         localStorage.removeItem('username');
         localStorage.removeItem('bookmarks');
+        localStorage.removeItem('image');
     }
     
     private getAuthData() {
@@ -172,16 +185,18 @@ export class AuthService {
         const expirationDate = localStorage.getItem('expiration');
         const userId = localStorage.getItem('userId');
         const username = localStorage.getItem('username');
+        const image = localStorage.getItem('image');
         const bookmarksStorage = localStorage.getItem('bookmarks');
         const bookmarks = bookmarksStorage ? JSON.parse(bookmarksStorage) as string[] : [] ;
-        if (!token || !expirationDate || !userId || !username || !bookmarks) return;
+        if (!token || !expirationDate || !userId || !username || !bookmarks || !image) return;
         
         return {
           token,
           expirationDate: new Date(expirationDate),
           userId,
           username,
-          bookmarks
+          bookmarks,
+          image
         };
     }
 }

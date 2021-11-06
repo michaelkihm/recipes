@@ -1,36 +1,39 @@
 <div class="m-2">
     <h2>Signup</h2>
-    <form (submit)="onSignup(loginForm)" #loginForm="ngForm">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="username" class="mr-1">Username</label>
             <input 
-                type="username" 
+                type="text" 
+                id="username"
                 placeholder="Username" 
-                name="username"
-                ngModel
-                #passwordInput="ngModel"
-                required>
+                formControlName="username"
+            >
         </div>
         <div class="form-group">
             <label for="email" class="mr-1">Email</label>
             <input 
                 type="email" 
                 placeholder="Email" 
-                name="email" 
-                ngModel 
-                #emailInput="ngModel" 
-                required 
-                email>
+                id="email" 
+                formControlName="email"
+            >
         </div>
         <div class="form-group">
             <label for="password" class="mr-1">Password</label>
             <input 
                 type="password" 
                 placeholder="Password" 
-                name="password"
-                ngModel
-                #passwordInput="ngModel"
-                required>
+                id="password"
+                formControlName="password"
+            >
+        </div>
+        <div>
+            <button class="btn btn-primary" type="button" (click)="filePicker.click()">Bild hochladen</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)"/>
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(userForm.get('image')).valid" >
+            <img [src]="imagePreview" [alt]="userForm.value.username">
         </div>
         <button type="submit" class="btn btn-primary">Signup</button>
     </form>
