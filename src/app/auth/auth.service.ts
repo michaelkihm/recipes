@@ -128,6 +128,7 @@ export class AuthService {
 			this.isAuthenticated = true;
             this.userId = authInformation.userId;
             this.username = authInformation.username;
+            this.image = authInformation.image;
             this.bookmarks = authInformation.bookmarks;
 			this.setAuthTimer(expiresIn / 1000);
 			this.authStatusListener.next(true);
@@ -145,6 +146,7 @@ export class AuthService {
         this.isAuthenticated = false;
         this.userId = '';
         this.username = '';
+        this.image = '';
         this.bookmarks = [];
         this.authStatusListener.next(false);
         this.userInfoListener.next({ username: '', userId: '' ,bookmarks: [], image: '' });
