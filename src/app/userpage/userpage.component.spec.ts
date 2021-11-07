@@ -14,8 +14,9 @@ describe('UserpageComponent', () => {
 	const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['fetchRecipes']);
 	recipesServiceSpy.fetchRecipes.and.returnValue(of(RECIPES.filter(recipe => recipe.userId === user1Id)));
 
-	const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUser']);
+	const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUser','getUserListener']);
 	authServiceSpy.getUser.and.returnValue({ username: 'TestUser', userId: user1Id });
+	authServiceSpy.getUserListener.and.returnValue(of({ username: 'TestUser', userId: user1Id }));
 
 	beforeEach(async () => {
 

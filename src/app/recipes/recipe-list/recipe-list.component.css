@@ -1,0 +1,10 @@
+.close-button {
+    color: #D9381E;
+    position: absolute;
+    top: -0.8rem;
+    right: -0.5rem
+}
+
+.close-button:hover {
+    opacity: 0.8;
+}

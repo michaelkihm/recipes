@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Recipe } from 'models/recipe.model';
 
@@ -9,6 +9,8 @@ import { Recipe } from 'models/recipe.model';
 })
 export class RecipeListComponent implements OnInit {
 
+	@Output() removeItemEvent = new EventEmitter<string>();
+	@Input('removeBtn') removeBtn: boolean;
 	@Input('recipes') recipes: Recipe[];
 	constructor(private router: Router) { }
 
@@ -19,6 +21,12 @@ export class RecipeListComponent implements OnInit {
 	onClick(recipeId: string | undefined): void {
 		
 		recipeId && this.router.navigate(['/recipes', recipeId]);
+	}
+
+	removeRecipe(event: MouseEvent,recipeId: string | undefined): void {
+		
+		event.stopPropagation();
+		recipeId && this.removeItemEvent.emit(recipeId);
 	}
 
 }
