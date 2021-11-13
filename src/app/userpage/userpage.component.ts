@@ -7,7 +7,7 @@ import { RecipesService } from './../recipes/recipes-service/recipes.service';
 @Component({
 	selector: 'app-userpage',
 	templateUrl: './userpage.component.html',
-	styleUrls: ['./userpage.component.css']
+	styleUrls: ['./userpage.component.scss']
 })
 export class UserpageComponent implements OnInit, OnDestroy {
 
