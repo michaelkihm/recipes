@@ -1,25 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/recipes">Recipes</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item m-1 icon" *ngIf="isUserAuthenticated" id="addLink">
+<header class="header">
+    <ul class="header__nav">
+        <li class="header__nav-item" *ngIf="isUserAuthenticated" id="addLink">
             <a routerLink="/recipes/add">
-                <i-bs name="plus-square" style="color: whitesmoke;" width="1.6rem" height="1.6rem"></i-bs>
+                <i class="fas fa-plus-square"></i>
             </a>
         </li>
-        <li class="nav-item m-1 p-1 icon" *ngIf="isUserAuthenticated" id="userPageLink">
-            <a [routerLink]="['user',currentUser.userId]" class="userAnchor">
-                <i-bs name="person" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
-                <span class="d-none d-sm-inline username" id="username">{{currentUser.username}}</span>
-            </a>   
+        <li class="header__nav-item" *ngIf="isUserAuthenticated" id="userPageLink">
+            <a class="link" [routerLink]="['user',currentUser.userId]" >
+                <i class="fas fa-user-check"></i>
+                <span id="username">{{currentUser.username}}</span>
+            </a>
         </li>
-        <li class="nav-item m-1 icon" *ngIf="!isUserAuthenticated" id="logInBtn">
-            <a routerLink="/login" class="btn btn-light">Einloggen</a>
+        <li class="header__nav-item" (click)="onLogout()" *ngIf="isUserAuthenticated" id="logOutbtn">
+            <i class="fas fa-sign-out-alt"></i>
         </li>
-        <li class="nav-item m-1 icon" (click)="onLogout()" *ngIf="isUserAuthenticated" id="logOutbtn">
-            <i-bs name="power" style="color: whitesmoke" width="1.6rem" height="1.6rem"></i-bs>
+        <li class="header__nav-item" *ngIf="!isUserAuthenticated" id="logInBtn">
+            <a class="button" routerLink="/login">Einloggen</a>
         </li>
-      </ul>
-</nav>
+    </ul>
+    <a class="header__title" routerLink="/recipes">Recipes</a>
+</header>
