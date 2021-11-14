@@ -1,16 +1,16 @@
-<div class="jumbotron" [routerLink]="['/recipes',recipe.id]">
+<div class="card" [routerLink]="['/recipes',recipe.id]">
     <div class="row">
-        <div class="col-10">
-            <h2>{{ recipe.name }}</h2>
-        </div>
-        <div class="col">
-            <i-bs 
-                *ngIf="user.userId"           
-                (click)="onBookmark($event)" 
-                [name]="isBookmarked ? 'bookmark-fill' : 'bookmark'" class="bookmark" 
-                width="1.6rem" height="2.0rem"></i-bs>
-        </div>
+        <h2>{{ recipe.name }}</h2>
+        <i 
+            *ngIf="user.userId"  
+            (click)="onBookmark($event)" 
+            [class]="isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'">
+        </i>
     </div>
     <img class="img-thumbnail" [src]="recipe.image" alt="{{recipe.name}}">
-    <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>
+    <div class="duration">
+        <i class="far fa-clock"></i>
+        <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>  
+    </div>
+    
 </div>

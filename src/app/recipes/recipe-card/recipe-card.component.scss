@@ -1,7 +1,66 @@
-.bookmark {
-    color: #2962ff;
+$-card-primary-color: #098962;
+$-card-shadow-color: rgb(0, 226, 156);
+$-card-third-color: #36f536;
+
+.card {
+   
+    min-width: 12.5rem;
+    min-height: 16rem;
+    max-width: 16rem;
+    border: 1px solid $-card-primary-color;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 0.2rem $-card-shadow-color;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    transform: scale(1.0);
+    transition: transform ease-in-out 0.5s;
+    background-color: whitesmoke;
+
+    img {
+        width: 100%;
+        padding: 0.2rem;
+    }
+  
+
+    p {
+        padding: 0.2rem;
+    }
+
+    .row {
+        $-heading-font-size: 1.5rem;
+
+        color: whitesmoke;
+        background-color: $-card-primary-color;
+        padding: 0.2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        font-size: $-heading-font-size; 
+
+        h2 {
+            font-size: $-heading-font-size; 
+        }
+
+        i {
+            color: $-card-third-color;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+    .duration {
+        display: flex;
+        flex-direction: row;  
+        align-items: baseline;
+        padding: 1%;
+        column-gap: 0.5%;
+    }
 
     &:hover {
-        opacity: 0.8;
+        transform: scale(1.1);
     }
 }
