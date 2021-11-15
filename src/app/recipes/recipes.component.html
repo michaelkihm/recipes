@@ -1,14 +1,7 @@
-<div class="p-2">
-    <div class="row">
-        <div class="col-4">
-            <app-categories-list></app-categories-list>
-        </div>
-        <div class="col">
-        <div class="row">
-            <div class="col" *ngFor="let recipe of recipes">
-                <app-recipe-card  [recipe]="recipe"></app-recipe-card>
-            </div>
-        </div>
-        </div>
-    </div>
+<div class="container">
+        <app-categories-list></app-categories-list>
+        <app-recipe-card  
+            *ngFor="let recipe of recipes" 
+            [recipe]="recipe">
+        </app-recipe-card>
 </div>

@@ -1,20 +1,26 @@
+$-text-color: white;
+
 .container {
     padding: 1rem;
     border: 1px solid rgba(14, 13, 13, 0.692);
     margin-left: 0.5rem;
+    background-color: #098962;
+    color: $-text-color
 }
 
 .category {
     width: 60%;
+    padding: 0.2rem;
     display: flex;
     align-items: center;
+
+    .checkbox {
+        transform: scale(1.5)
+    }
+    
+    .label {
+        display: flex;
+        padding-left: 0.5rem;
+    }
 }
 
-.checkbox {
-    transform: scale(1.5)
-}
-
-.label {
-    display: flex;
-    padding-left: 0.5rem;
-}
