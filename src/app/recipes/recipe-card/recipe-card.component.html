@@ -1,4 +1,5 @@
 <div class="card" [routerLink]="['/recipes',recipe.id]">
+    <img  [src]="recipe.image" alt="{{recipe.name}}">
     <div class="row">
         <h2>{{ recipe.name }}</h2>
         <i 
@@ -6,8 +7,7 @@
             (click)="onBookmark($event)" 
             [class]="isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'">
         </i>
-    </div>
-    <img class="img-thumbnail" [src]="recipe.image" alt="{{recipe.name}}">
+    </div>   
     <div class="duration">
         <i class="far fa-clock"></i>
         <p>{{ recipe.duration.duration }} - {{ recipe.duration.unit }}</p>  

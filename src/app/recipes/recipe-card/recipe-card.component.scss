@@ -1,37 +1,41 @@
-$-card-primary-color: #098962;
-$-card-shadow-color: rgb(0, 226, 156);
-$-card-third-color: #36f536;
+$-text-opacity: rgb(0,0,0,0.5);
+$-card-background-color: white;
+$-font-color: black;
+
 
 .card {
-   
-    min-width: 12.5rem;
-    min-height: 16rem;
-    max-width: 16rem;
-    border: 1px solid $-card-primary-color;
-    border-radius: 0.2rem;
-    box-shadow: 0 0 0.2rem $-card-shadow-color;
+    width: 15rem;
+    height: 18rem;
+    // min-width: 12.5rem;
+    // min-height: 16rem;
+    // max-width: 16rem;
+    background-color: $-card-background-color;
+    box-shadow: 0 0 0.2rem rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
     margin: 1rem;
-    transform: scale(1.0);
-    transition: transform ease-in-out 0.5s;
-    background-color: whitesmoke;
+    transition: box-shadow ease-in-out 0.5s;
+    
+
+    &:hover {
+        box-shadow: 0 0 1rem rgba(0,0,0,0.5);
+    }
 
     img {
         width: 100%;
-        padding: 0.2rem;
+        height: 13rem;
     }
   
 
     p {
         padding: 0.2rem;
+        color: $-text-opacity;
     }
 
     .row {
-        $-heading-font-size: 1.5rem;
+        $-heading-font-size: 1.2rem;
 
-        color: whitesmoke;
-        background-color: $-card-primary-color;
+        color: $-font-color;
         padding: 0.2rem;
         display: flex;
         flex-direction: row;
@@ -44,7 +48,7 @@ $-card-third-color: #36f536;
         }
 
         i {
-            color: $-card-third-color;
+            color: blue;
 
             &:hover {
                 opacity: 0.7;
@@ -53,6 +57,7 @@ $-card-third-color: #36f536;
     }
 
     .duration {
+        color: $-text-opacity;
         display: flex;
         flex-direction: row;  
         align-items: baseline;
@@ -60,7 +65,5 @@ $-card-third-color: #36f536;
         column-gap: 0.5%;
     }
 
-    &:hover {
-        transform: scale(1.1);
-    }
+    
 }
