@@ -1,24 +1,16 @@
 <div 
     *ngFor="let recipe of recipes" 
     (click)="onClick(recipe.id)" 
-    class="card mb-3" 
+    class="container" 
     style="max-width: 540px;" 
     [id]="'listCardDiv' + '-' + recipe.id">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img [src]="recipe.image" [class]="recipe.name" [alt]="recipe.name" style="height: 100px; max-width: 80%;">
-            </div>
-            <div class="col-7">
-                <div class="card-body">
-                    <h5 class="card-title">{{recipe.name}}</h5>
-                </div>
-            </div>
-            <div class="col" *ngIf="removeBtn">
-                <i-bs 
-                    name="x-circle-fill" 
-                    width="25" height="25" 
-                    class="close-button" 
-                    (click)="removeRecipe($event,recipe.id)"></i-bs>
-            </div>
-        </div>
+        <img [src]="recipe.image" [alt]="recipe.name">
+        <h4 class="card-title">{{recipe.name}}</h4>      
+        <div class="col" *ngIf="removeBtn">
+            <i-bs 
+                name="x-circle-fill" 
+                width="25" height="25" 
+                class="close-button" 
+                (click)="removeRecipe($event,recipe.id)"></i-bs>
+        </div>   
 </div>
