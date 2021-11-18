@@ -1,0 +1,15 @@
+@mixin create-button($bkg_color, $color) {
+
+    text-decoration: none;
+    color: $color;
+    font-size: 1.1rem;
+    border: 0.0625rem solid $color;
+    padding: 0.2rem 0.5rem;
+    background-color: $bkg_color;
+    transition: background-color 0.5s;
+    margin: 0.5rem 0;
+    
+    &:hover {
+        background-color: rgba($color: $bkg_color, $alpha: 0.6)
+    }   
+}
