@@ -1,39 +1,47 @@
-<div>
-    <div class="row">
-        <div class="col">
-            <img class="img-thumbnail" [src]="recipe.image" [alt]="recipe.name">
-        </div>
-        <div class="col">
-            <div class="row">
-                <h2>{{ recipe.name }}</h2>
-                <button *ngIf="userIsAuthenticated && userIsCreator" class="btn btn-primary m-1" [routerLink]="['/recipes',recipe.id,'edit']">Edit</button>
-                <button *ngIf="userIsAuthenticated && userIsCreator" class="btn btn-danger m-1" (click)="openModal(template)">Remove</button>
+<div class="container">
+    <h2 class="header">{{ recipe.name }}</h2>
+    <div class="recipe-info-container">
+        <img [src]="recipe.image" [alt]="recipe.name">
+        <div class="duration-button-container">
+            <div class="duration">  
+                <i class="far fa-clock"></i>
+                <p>{{ recipe.duration.duration }} {{ recipe.duration.unit }}</p>
             </div>
-            <div>
-                <p>Kategorien</p>
-                <ul>
-                    <li *ngFor="let category of recipe.categories">{{ category | recipeCategoryTranslator}}</li>
-                </ul>
+            <div class="button-container">     
+                <button *ngIf="userIsAuthenticated && userIsCreator" class="button edit-button"  [routerLink]="['/recipes',recipe.id,'edit']">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button *ngIf="userIsAuthenticated && userIsCreator" class="button remove-button" (click)="openModal(template)">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
             </div>
-            <p>Fertig in: {{ recipe.duration.duration }} {{ recipe.duration.unit }}</p>
-            <hr>
-        </div>
+        </div>   
     </div>
-    <div class="row">
-        <div class="col">
-            <p>Zutaten</p>
+    
+    <hr>
+    <div class="ingerdients-howto-container">
+        <div class="ingredients-container">
+            <p class="section-header">Zutaten</p>
             <ul>
                 <li *ngFor="let ingredient of recipe.ingredients">
-                    {{ ingredient.name }}: {{ingredient.amount}} {{ingredient.unit}}
+                    {{ingredient.amount}} {{ingredient.unit}} {{ ingredient.name }}
                 </li>
             </ul>
         </div>
-        <div class="col">
-            <ul>
-                <li *ngFor="let step of recipe.description">{{ step }}</li>
-            </ul>
+        <div class="howto-container">
+            <p class="section-header">Zubereitung</p>
+            <div class="howto-step" *ngFor="let step of recipe.description; let i = index">
+                <p class="howto-step__header">Schritt {{i + 1}}</p>
+                <p>{{step}}</p>
+            </div>
         </div>
     </div>
+    <hr>
+    <ul class="categories-container">
+        <li *ngFor="let category of recipe.categories">
+            {{ category | recipeCategoryTranslator}}
+        </li>
+    </ul>
 </div>
 
 <ng-template #template>
