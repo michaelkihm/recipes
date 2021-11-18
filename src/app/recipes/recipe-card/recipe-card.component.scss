@@ -1,4 +1,4 @@
-$-text-opacity: rgb(0,0,0,0.5);
+@use "../../../sass/variables" as *;
 $-card-background-color: white;
 $-font-color: black;
 $-heading-font-size: 1.2rem;
@@ -28,7 +28,7 @@ $-bookmark-color: #0F4D92;
 
     p {
         padding: 0.2rem;
-        color: $-text-opacity;
+        color: $text-opacity;
     }
 
     .card--title {
@@ -49,14 +49,14 @@ $-bookmark-color: #0F4D92;
     }
 
     .far {
-        color: $-text-opacity;
+        color: $text-opacity;
         &:hover {
             color: $-bookmark-color;
         } 
     }
 
     .duration {
-        color: $-text-opacity;
+        color: $text-opacity;
         display: flex;
         flex-direction: row;  
         align-items: baseline;
