@@ -1,10 +1,11 @@
-$-text-color: white;
+$-text-color: black;
 
 .container {
     padding: 1rem;
+    box-shadow: 0 0 0.2rem rgba(0,0,0,0.5);
     border: 1px solid rgba(14, 13, 13, 0.692);
     margin-left: 0.5rem;
-    background-color: #098962;
+    background-color: white;
     color: $-text-color
 }
 
@@ -15,7 +16,12 @@ $-text-color: white;
     align-items: center;
 
     .checkbox {
-        transform: scale(1.5)
+        transform: scale(1.5);
+
+        &[type="checkbox"]:checked {
+            background-color: green;
+            color: blueviolet
+        }
     }
     
     .label {
