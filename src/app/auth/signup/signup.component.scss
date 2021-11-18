@@ -1,3 +1,36 @@
+@use "../../../sass/components/button" as *;
+
+.container {
+  	padding: 2rem;
+}
+
+.form--element {
+  	display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    width: 25%;
+    
+
+    input {
+        margin-top: 0.2rem;
+        border: none;
+        border-bottom: 1px solid rgba($color: black, $alpha: 0.5);
+        font-size: 1rem;
+
+        &:focus {
+            outline: none
+        }
+    }
+}
+
+.upload-button {
+	@include create-button(rgba($color: gray, $alpha: 0.2),black);
+}
+
+.signup-button {
+	@include create-button(#0F4D92,white);
+}
+
 input[type="file"] {
     visibility: hidden;
   }
@@ -5,8 +38,8 @@ input[type="file"] {
 .image-preview {
   height: 5rem;
   margin: 1rem 0;
-}
 
-.image-preview img {
-  height: 100%;
+  img {
+	height: 100%;
+  }
 }

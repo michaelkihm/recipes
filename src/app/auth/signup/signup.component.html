@@ -1,7 +1,7 @@
-<div class="m-2">
+<div class="container">
     <h2>Signup</h2>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
+        <div class="form--element">
             <label for="username" class="mr-1">Username</label>
             <input 
                 type="text" 
@@ -10,7 +10,7 @@
                 formControlName="username"
             >
         </div>
-        <div class="form-group">
+        <div class="form--element">
             <label for="email" class="mr-1">Email</label>
             <input 
                 type="email" 
@@ -19,7 +19,7 @@
                 formControlName="email"
             >
         </div>
-        <div class="form-group">
+        <div class="form--element">
             <label for="password" class="mr-1">Password</label>
             <input 
                 type="password" 
@@ -29,12 +29,15 @@
             >
         </div>
         <div>
-            <button class="btn btn-primary" type="button" (click)="filePicker.click()">Bild hochladen</button>
+            <button class="upload-button" type="button" (click)="filePicker.click()">
+                <i class="fas fa-file-upload"></i>
+                Bild hochladen
+            </button>
             <input type="file" #filePicker (change)="onImagePicked($event)"/>
         </div>
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(userForm.get('image')).valid" >
             <img [src]="imagePreview" [alt]="userForm.value.username">
         </div>
-        <button type="submit" class="btn btn-primary">Signup</button>
+        <button type="submit" class="signup-button">Signup</button>
     </form>
 </div>
