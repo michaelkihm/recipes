@@ -10,7 +10,7 @@ export class RecipeCategoryTranslatorPipe implements PipeTransform {
     transform(value: Category): string {
         
         switch(value){
-            case 'arabic': return 'Vegan';
+            case 'arabic': return 'Arabisch';
             case 'babyFriendly': return 'Für Babys';
             case 'bbq': return 'BBQ';
             case 'bowl': return 'Bowl';
