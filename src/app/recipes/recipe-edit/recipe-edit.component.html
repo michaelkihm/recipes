@@ -1,9 +1,9 @@
-<div class="m-2">
+<div class="container">
     <h2 *ngIf="currentMode === 'edit'"id="title">Edit {{ recipe.name }}</h2>
     <h2 *ngIf="currentMode === 'add'"id="title">Rezept hinzufügen</h2>
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Name</label>
+        <div class="form--element">
+            <label for="name" class="title">Name:</label>
             <input
                 type="text"
                 id="name"
@@ -11,87 +11,75 @@
                 formControlName="name"
                 class="form-control">
         </div>
-        <div formGroupName="duration">
-            <div class="form-row">
-                <div class="col">
-                    <label for="durationValue">Dauer</label>
-                </div>
-                <div class="col"> 
-                    <input 
-                        type="number"
-                        placeholder="0"
-                        id="durationValue"
-                        [value]="recipe.duration.duration"
-                        formControlName="durationValue"
-                        class="form-control"
-                    >
-                </div>
-                <div class="col">
-                    <select 
-                        name="durationUnit" 
-                        id="durationUnit" 
-                        formControlName="durationUnit" 
-                        class="form-control" >
-                        <option>---Wähle eine Einheit---</option>
-                        <option [selected]="recipe.duration.unit === unit" *ngFor="let unit of durationUnits" [value]="unit" >{{ unit }}</option>
-                    </select>
-                </div>
-            </div>    
+        <div formGroupName="duration" class="form--element">
+            <label for="durationValue" class="title">Dauer:</label>
+            <div>     
+                <input 
+                    type="number"
+                    placeholder="0"
+                    id="durationValue"
+                    [value]="recipe.duration.duration"
+                    formControlName="durationValue"
+                    class="form-control"
+                >     
+                <select 
+                    name="durationUnit" 
+                    id="durationUnit" 
+                    formControlName="durationUnit" 
+                    class="form-control" >
+                    <option>---Wähle eine Einheit---</option>
+                    <option [selected]="recipe.duration.unit === unit" *ngFor="let unit of durationUnits" [value]="unit" >{{ unit }}</option>
+                </select>   
+            </div>     
         </div>
         <!-- Description -->
-        <div formArrayName="description" style="border: 1px solid black;" class="p-1 m-1">
-            <p>Wie gehts</p>
+        <div formArrayName="description" class="description">
+            <p class="title">Wie gehts</p>
             <div 
-                class="form-row m-1"
-                *ngFor="let step of getDescriptionSteps(); let i = index">
-                <div class="col">
-                    <input type="text" class="form-control" [formControlName]="i" [id]="'descr_'+ i">
-                </div>
-                <div class="col">
-                    <button class="btn btn-danger" (click)="onRemoveDescriptionStep(i)" type="button">Del</button>
-                </div>
+                class="description__step"
+                *ngFor="let step of getDescriptionSteps(); let i = index"
+            >
+                <textarea [formControlName]="i" [id]="'descr_'+ i" rows="4"></textarea>
+                <button class="del_button" (click)="onRemoveDescriptionStep(i)" type="button">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
             </div>
             <button 
-                class="btn btn-primary" 
+                class="button" 
                 type="button"
                 (click)="onAddDescriptionStep()">
                 Schritt hinzufügen
             </button>
         </div>
         <!-- Ingredients -->
-        <div formArrayName="ingredients" style="border: 1px solid black;" class="p-1 m-1">
-            <p>Zutaten</p>
+        <div formArrayName="ingredients" class="ingredients">
+            <p class="title">Zutaten</p>
             <div *ngFor="let ingredient of getIngredients(); let i = index">
-                <div [formGroupName]="i" class="form-row m-1">
-                    <div class="col">
-                        <input type="number" class="form-control" formControlName="amount" [id]="'ingredientAmount_'+i" >
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" formControlName="name" [id]="'ingredientName_'+i">
-                    </div>
-                    <div class="col">
-                        <select formControlName="unit" class="form-control" [id]="'ingredientUnit_'+i">
-                            <option *ngFor="let unit of ingredientUnits" [value]="unit" >{{ unit }}</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-danger" (click)="onRemoveIngredient(i)" type="button">Del</button>
-                    </div>
+                <div [formGroupName]="i" class="ingredient">
+                    <input type="text" formControlName="name" [id]="'ingredientName_'+i">
+                    <input type="number" formControlName="amount" [id]="'ingredientAmount_'+i" >
+                    <select formControlName="unit" [id]="'ingredientUnit_'+i">
+                        <option *ngFor="let unit of ingredientUnits" [value]="unit" >{{ unit }}</option>
+                    </select>
+                    <button class="del_button" (click)="onRemoveIngredient(i)" type="button">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>            
                 </div>
             </div>
             <button 
-                class="btn btn-primary" 
+                class="button" 
                 type="button"
                 (click)="onAddIngredient()">
                 Zutat hinzufügen
             </button>
         </div>
         <!-- Categories -->
-        <div formArrayName="categories" class="m-1">
-            <h4>Kategorien</h4>
+        <div formArrayName="categories">
+            <p class="title">Kategorien</p>
             <div *ngFor="let category of allowedCategories; let i=index">
                 <label>
                   <input 
+                    class="category-item"
                     type="checkbox" 
                     [value]="category" 
                     (change)="onCheckboxChange($event)" 
@@ -103,12 +91,12 @@
         </div>
         <hr>
         <div>
-            <button class="btn btn-primary" type="button" (click)="filePicker.click()">Bild hochladen</button>
+            <button class="button" type="button" (click)="filePicker.click()">Bild hochladen</button>
             <input type="file" #filePicker (change)="onImagePicked($event)"/>
         </div>
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(recipeForm.get('image')).valid" >
             <img [src]="imagePreview" [alt]="recipeForm.value.name">
         </div>
-        <button class="btn btn-primary m-2" type="submit" id="submitBtn">Submit</button>
+        <button class="button" type="submit" id="submitBtn">Submit</button>
     </form>
 </div>

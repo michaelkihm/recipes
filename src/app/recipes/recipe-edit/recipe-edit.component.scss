@@ -1,9 +1,87 @@
+@use "../../../sass/components/button" as *;
+@use "../../../sass/variables" as *;
+
+@mixin -form-control-base() {
+    margin: 0 0.2rem;
+    border-bottom: 1px solid rgba($color: black, $alpha: 0.5);
+    font-size: 1rem;
+}
+
+.container {
+    padding: 2rem
+};
+
+.title {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+}
+
+.form--element {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    width: 30%;
+    
+
+    input, select {
+        border: none;
+        @include -form-control-base(); 
+        
+        &:focus {
+            outline: none
+        }
+    }
+
+};
+
+.description {
+
+    .description__step {
+        display: flex;
+        align-items: flex-end;
+        textarea {
+            @include -form-control-base(); 
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0.2rem;
+            width: 70%
+        };
+
+        
+    }
+}
+
+.button {
+    @include create-button(#0F4D92,white); 
+}
+
+.del_button {
+    @include create-button($color-danger,white); 
+}
+
+.ingredients {
+
+    .ingredient {
+
+        input, select {
+            border: none;
+            @include -form-control-base(); 
+        }
+    }
+}
+
+.category-item {
+    margin: 0.3rem;
+    font-size: 1rem;
+    
+}
+
 input[type="file"] {
     visibility: hidden;
-  }
+}
   
 .image-preview {
-  height: 5rem;
+  height: 12rem;
   margin: 1rem 0;
 }
 
