@@ -16,6 +16,8 @@ jobs:
           node-version: '15'
       - name: Install modules
         run: npm install
+      - name: Create .env file
+        run: mv .env.examale .env
       - name: Start test server
         run: npm run setupTestDB:backend
       - name: Unit test backend
