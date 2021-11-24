@@ -2,7 +2,6 @@ import { compare, hash } from 'bcrypt';
 import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { User, userFormDataToUser, UserStrings } from '../../../../models/user.model';
-import { SECRET_STRING } from '../../constants';
 import { UserModel } from '../../models/user';
 import {
     LoginResponse, UserSaveResult, UserSignupResponse, UserUpdateResponse
@@ -71,7 +70,7 @@ export const login = (req: UserLoginRequest, res: Response<LoginResponse>): void
             if(!result) return res.status(401).json({ message: 'Wrong password' });
             const token = sign(
                 { email: user.email, userId: user._id },
-                SECRET_STRING,
+                process.env.SECRET_STRING,
                 { expiresIn: '1h' });
             return res.status(200).json({
                 message: 'Logged in',

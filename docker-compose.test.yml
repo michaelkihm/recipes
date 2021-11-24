@@ -2,14 +2,9 @@ version: '3.7'
 services:
   mongodb_container:
     image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    env_file:
+      - .env
     ports:
       - 27017:27017
     volumes:
       - ./db_test:/data/db
-
-
-#docker-compose up -d
-#mongo admin -u root -p rootpassword

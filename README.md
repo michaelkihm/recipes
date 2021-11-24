@@ -33,6 +33,7 @@ Install all dependencies with
 ```
 npm i
 ```
+Create .env file or rename .env.example into .env
 ### Frontend
 ```
 ng serve

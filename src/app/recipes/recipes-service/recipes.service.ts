@@ -7,13 +7,14 @@ import {
     DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse
 } from './../../../../backend/src/controllers/recipes-controller/recipes.controller.types';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RecipesService {
 
-    private baseUrl = 'http://localhost:4000/api/recipes';
+    private baseUrl = `${environment.apiURL}/api/recipes`;
     private randomRecipesAmount = 2;
 
     constructor(private http: HttpClient) {}

@@ -6,6 +6,7 @@ import {
     LoginResponse, UserSignupResponse, UserUpdateResponse
 } from '../../../backend/src/controllers/user-cotroller/user.controller.types';
 import { User } from '../../../models/user.model';
+import { environment } from './../../environments/environment';
 
 export type UserInfo = {
     username: string,
@@ -16,7 +17,7 @@ export type UserInfo = {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private baseUrl = 'http://localhost:4000/api/user';
+    private baseUrl = `${environment.apiURL}/api/user`;
     private token: string;
     private isAuthenticated = false;
     private authStatusListener = new Subject<boolean>();

@@ -1,14 +1,17 @@
 import bodyParser from 'body-parser';
+import { config } from 'dotenv';
 import express from 'express';
 import { connect } from 'mongoose';
 import { recipeRouter } from './routes/recipes.routes';
 import { userRouter } from './routes/user.routes';
 
-const testDBPath = 'mongodb://root:rootpassword@localhost:27017/admin';
+
+config({ path: `${process.cwd()}/.env` });
 
 export const app = express();
 
-connect(testDBPath)
+// eslint-disable-next-line max-len
+connect(`mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@localhost:27017/admin`)
   .then(() => console.log('Connected to Database'))
   .catch(err => console.log(err));
 

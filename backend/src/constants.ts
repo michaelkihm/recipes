@@ -1,1 +1,0 @@
-export const SECRET_STRING = 'secret_this_should_be_longer';

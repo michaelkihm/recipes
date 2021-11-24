@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import { createRequest, createResponse } from 'node-mocks-http';
 import { User, UserStrings } from '../../../../models/user.model';
 import { user1Id, USERS } from '../../../../test_data/db-users';
-import { SECRET_STRING } from '../../constants';
 import { UserModel } from '../../models/user';
 import { login, signup, updateBooksmarks } from './user.controller';
 
@@ -65,7 +64,7 @@ describe('User Controller', () => {
         await expect(bcrypt.compare).toBeCalledWith(user.password,USERS[0].password);
         expect(jwt.sign).toBeCalledWith(
             { email: USERS[0].email, userId: USERS[0].id },
-            SECRET_STRING, { expiresIn: '1h' });
+            process.env.SECRET_STRING, { expiresIn: '1h' });
         expect(res.statusCode).toBe(200);
         expect(res._isEndCalled()).toBeTruthy();
     });
