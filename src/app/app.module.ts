@@ -19,6 +19,8 @@ import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component
 import { RecipeCategoryTranslatorPipe } from './recipes/recipeCategoryTranslator/recipeCategoryTranslator.pipe';
 import { RecipesComponent } from './recipes/recipes.component';
 import { UserpageComponent } from './userpage/userpage.component';
+import { VeganIconComponent } from './recipes/icons/vegan-icon/vegan-icon.component';
+import { VegetarianIconComponent } from './recipes/icons/vegetarian-icon/vegetarian-icon.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { UserpageComponent } from './userpage/userpage.component';
     SignupComponent,
     UserpageComponent,
     RecipeListComponent,
-    RecipeCategoryTranslatorPipe
+    RecipeCategoryTranslatorPipe,
+    VeganIconComponent,
+    VegetarianIconComponent
   ],
   imports: [
     BrowserModule,
