@@ -11,6 +11,11 @@ export type SingleRecipeResponse = {
     recipe?: Recipe
 };
 
+export type SingleRecipeAddUpdate = {
+    message: string;
+    id: string;
+};
+
 export type DeleteRecipeResponse = {
     message: string;
 };

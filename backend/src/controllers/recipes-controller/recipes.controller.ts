@@ -3,7 +3,9 @@ import { Document, Types } from 'mongoose';
 import { Category } from '../../../../models/category.type';
 import { Recipe, recipeFormDataToRecipe, RecipeStrings } from '../../../../models/recipe.model';
 import { RecipeModel } from '../../models/recipe';
-import { DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse } from './recipes.controller.types';
+import {
+    DeleteRecipeResponse, RecipesGetResponse, SingleRecipeAddUpdate, SingleRecipeResponse
+} from './recipes.controller.types';
 
 type GetRecipesRequest = Request<never,never,never,{userId: string; ids: string}>;
 
@@ -97,16 +99,22 @@ const mongoDBResultToRecipe = (doc: MongooseRecipeResult ): Recipe => ({
 
 
 // eslint-disable-next-line max-len
-export const putRecipe = (req: PutPostRequest, res: Response<SingleRecipeResponse>): void => {
+export const putRecipe = (req: PutPostRequest, res: Response<SingleRecipeAddUpdate>): void => {
     
     const recipe = processImageDataAndFormData(req);
   
     RecipeModel.updateOne({ _id: req.params.id, userId: recipe.userId }, recipe)
         .then(result => {
-            if(result.modifiedCount > 0) return res.status(200).json({ message: `Updated recipe ${req.params.id}` });
-            else return res.status(401).json({ message: `Not Authorized!! Could not update recipe ${req.params.id}.` });
+            if(result.modifiedCount > 0) return res.status(200).json({
+                message: `Updated recipe ${req.params.id}`,
+                id: req.params.id });
+            else return res.status(401).json({
+                message: `Not Authorized!! Could not update recipe ${req.params.id}.`,
+                id: req.params.id });
         })
-        .catch(err => res.status(404).json({ message: `Error while updating recipe ${req.params.id}: ${err}` }));
+        .catch(err => res.status(404).json({
+            message: `Error while updating recipe ${req.params.id}: ${err}`,
+            id: req.params.id }));
 };
 
 const processImageDataAndFormData = (req: PutPostRequest): Recipe => {

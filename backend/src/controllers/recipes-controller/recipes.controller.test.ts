@@ -111,10 +111,9 @@ describe('Recipes Controller', () => {
             userId: recipe.userId as string,
             image: recipe.image
         };
-        const newName = 'Test name';
         (RecipeModel.updateOne as jest.Mock).mockReturnValue(Promise.resolve({
             message: 'ahhelo',
-            recipe: { ...recipe, name: newName }
+            id: recipe.id
         }));
         req.params.id = recipe.id;
         req.body = recipeStrings;

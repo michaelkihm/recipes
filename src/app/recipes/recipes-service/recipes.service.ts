@@ -4,7 +4,7 @@ import { Recipe } from 'models/recipe.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    DeleteRecipeResponse, RecipesGetResponse, SingleRecipeResponse
+    DeleteRecipeResponse, RecipesGetResponse, SingleRecipeAddUpdate, SingleRecipeResponse
 } from './../../../../backend/src/controllers/recipes-controller/recipes.controller.types';
 import { ALL_CATEGORIES, Category } from './../../../../models/category.type';
 import { environment } from './../../../environments/environment';
@@ -42,10 +42,10 @@ export class RecipesService {
         return ALL_CATEGORIES;
     }
 
-    updateRecipe(recipe: FormData): Observable<SingleRecipeResponse> {
+    updateRecipe(recipe: FormData): Observable<SingleRecipeAddUpdate> {
 
         const id = recipe.get('id') as string;
-        return this.http.put<SingleRecipeResponse>(`${this.baseUrl}/${id}`, recipe );
+        return this.http.put<SingleRecipeAddUpdate>(`${this.baseUrl}/${id}`, recipe );
     }
 
     addRecipe(recipe: FormData): Observable<SingleRecipeResponse> {

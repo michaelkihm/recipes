@@ -19,7 +19,7 @@ describe('RecipeEditComponent', () => {
 	const { name, description, duration, ingredients, categories } = RECIPES[0];
 	const newRecipeIdForAdd = '5';
 	const recipesServiceSpy = jasmine.createSpyObj('RecipesService', ['updateRecipe', 'addRecipe']);
-	recipesServiceSpy.updateRecipe.and.returnValue(of({ message: 'Update recipe', recipe: RECIPES[0] }));
+	recipesServiceSpy.updateRecipe.and.returnValue(of({ message: 'Update recipe', id: RECIPES[0].id }));
 	recipesServiceSpy.addRecipe.and.returnValue(
 		of({ message: 'Created recipe', recipe: { ...RECIPES[0], id: newRecipeIdForAdd } }));
 	const RouterSpy = {
