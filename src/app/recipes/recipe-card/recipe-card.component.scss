@@ -55,12 +55,30 @@ $-bookmark-color: #0F4D92;
         } 
     }
 
-    .duration {
-        color: $text-opacity;
+    .duration__plant-icons {
+
         display: flex;
-        flex-direction: row;  
-        align-items: baseline;
-        padding: 1%;
-        column-gap: 0.5%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .duration {
+            color: $text-opacity;
+            display: flex;
+            flex-direction: row;  
+            align-items: baseline;
+            padding: 1%;
+            column-gap: 0.5%;
+            flex-grow: 1;
+        }
+
+        .plant-icons {
+            display: flex;
+            flex-direction: row;
+            column-gap: 0.16rem;
+            flex-grow: 0;
+            padding-right: 0.25rem;
+        }
     }
+    
 }

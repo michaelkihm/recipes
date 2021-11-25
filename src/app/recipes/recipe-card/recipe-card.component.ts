@@ -41,6 +41,14 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
 		recipeId && this.authService.upateBookmarks(recipeId, this.isBookmarked ? 'remove' : 'add');
 	}
 
+	isVegan(): boolean {
+		return this.recipe.categories.includes('vegan');
+	}
+
+	isVegetarian(): boolean {
+		return this.recipe.categories.includes('vegetarian') && !this.isVegan();
+	}
+
 	ngOnDestroy(): void {
 
 		this.userInfoListener && this.userInfoListener.unsubscribe();
