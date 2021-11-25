@@ -1,11 +1,21 @@
 @use "../../../sass/variables" as *;
 
 .container {
-    padding: 2rem;
+    padding: 2rem; 
+}
+
+.header__plant-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
 
     .header {
         padding-bottom: 0.5rem;
         font-size: 2rem;
+    }
+
+    .plant-icons {
+        margin-left: 0.8rem;
     }
 }
 

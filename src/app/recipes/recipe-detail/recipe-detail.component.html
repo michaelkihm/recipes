@@ -1,5 +1,12 @@
 <div class="container">
-    <h2 class="header">{{ recipe.name }}</h2>
+    <div class="header__plant-icons">
+        <h2 class="header">{{ recipe.name }}</h2>
+        <div class="plant-icons">
+            <app-vegan-icon size="2.5" *ngIf="isVegan()"></app-vegan-icon>
+            <app-vegetarian-icon size="2.5" *ngIf="isVegetarian()"></app-vegetarian-icon>
+        </div>
+    </div>
+    
     <div class="recipe-info-container">
         <img [src]="recipe.image" [alt]="recipe.name">
         <div class="duration-button-container">

@@ -47,4 +47,12 @@ export class RecipeDetailComponent implements OnInit {
 			}
 		});
 	}
+
+	isVegan(): boolean {
+		return this.recipe.categories.includes('vegan');
+	}
+
+	isVegetarian(): boolean {
+		return this.recipe.categories.includes('vegetarian') && !this.isVegan();
+	}
 }
