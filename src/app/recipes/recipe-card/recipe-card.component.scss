@@ -2,7 +2,6 @@
 $-card-background-color: white;
 $-font-color: black;
 $-heading-font-size: 1.2rem;
-$-bookmark-color: #0F4D92;
 
 .card {
     width: 15rem;
@@ -44,13 +43,13 @@ $-bookmark-color: #0F4D92;
     };
 
     .fas {
-        color: $-bookmark-color;
+        color: $bookmark-color;
     }
 
     .far {
         color: $text-opacity;
         &:hover {
-            color: $-bookmark-color;
+            color: $bookmark-color;
         } 
     }
 

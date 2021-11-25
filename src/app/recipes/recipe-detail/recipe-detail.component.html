@@ -1,12 +1,16 @@
 <div class="container">
-    <div class="header__plant-icons">
-        <h2 class="header">{{ recipe.name }}</h2>
+    <div class="header__bookmark__plant-icons">
         <div class="plant-icons">
             <app-vegan-icon size="2.5" *ngIf="isVegan()"></app-vegan-icon>
             <app-vegetarian-icon size="2.5" *ngIf="isVegetarian()"></app-vegetarian-icon>
         </div>
-    </div>
-    
+        <h2 class="header">{{ recipe.name }}</h2>
+        <i 
+            *ngIf="user.userId"  
+            (click)="onBookmark($event)" 
+            [class]="isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark'">
+        </i>
+    </div> 
     <div class="recipe-info-container">
         <img [src]="recipe.image" [alt]="recipe.name">
         <div class="duration-button-container">
