@@ -49,7 +49,7 @@ const processImageDataAndFormData = (req: UserAddRequest): User => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user = userFormDataToUser(req.body);
-    let image = user.image;
+    let image: string;
     if(didMulterSaveImage(req)){
         const url = `${req.protocol}://${req.get('host')}`;
         image = `${url}/images/${req?.file?.filename}`;
