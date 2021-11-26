@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { mimeType } from 'src/app/validators/mime-type.validator';
 import { AuthService } from './../auth.service';
+import { matchPassword } from './match-password.validator';
 
 @Component({
 	selector: 'app-signup',
@@ -17,9 +18,10 @@ export class SignupComponent implements OnInit {
 	ngOnInit(): void {
 
 		this.userForm = new FormGroup({
-			'email': new FormControl('', Validators.required),
+			'email': new FormControl('', [Validators.required, Validators.email]),
 			'username': new FormControl('',Validators.required),
-			'password': new FormControl('',Validators.required),
+			'password_1': new FormControl('',Validators.required),
+			'password_2': new FormControl('',[Validators.required, matchPassword]),
 			'image': new FormControl('',{ asyncValidators: [mimeType] })
 		});
 	}
@@ -38,7 +40,7 @@ export class SignupComponent implements OnInit {
 
 		userData.append('email',values.email);
 		userData.append('username',values.username);
-		userData.append('password',values.password);
+		userData.append('password',values.password_1);
 		userData.append('image',values.image);
 
 		return userData;
@@ -57,4 +59,11 @@ export class SignupComponent implements OnInit {
 		reader.onload = () => this.imagePreview = reader.result as string;
 		reader.readAsDataURL(file);
 	}
-}
+
+	doPasswordsMatch(): boolean {
+		const passw2 = this.userForm.get('password_2');
+		if(passw2?.errors){
+			return passw2.errors['matchPassword'] && passw2.touched ? false : true;
+		} else return true;
+	}
+ }

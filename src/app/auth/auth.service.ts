@@ -61,7 +61,6 @@ export class AuthService {
 
     createUser(user: FormData): void {
         
-        console.log('IMAGE',user.get('image'));
         this.http.post<UserSignupResponse>(`${this.baseUrl}/signup`,user)
 			.subscribe(res => {
                 if(res.message === 'User created') this.router.navigate(['/']);

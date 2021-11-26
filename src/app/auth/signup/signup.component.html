@@ -20,14 +20,22 @@
             >
         </div>
         <div class="form--element">
-            <label for="password">Password</label>
+            <label for="password_1">Password</label>
             <input 
                 type="password" 
-                placeholder="Password" 
-                id="password"
-                formControlName="password"
+                id="password_1"
+                formControlName="password_1"
             >
         </div>
+        <div class="form--element">
+            <label for="password_2">Password wiederholen</label>
+            <input 
+                type="password" 
+                id="password_2"
+                formControlName="password_2"
+            >
+        </div>
+        <p *ngIf="!doPasswordsMatch()" class="error-message">Passwörter stimmen nicht überein!</p>
         <div>
             <button class="upload-button" type="button" (click)="filePicker.click()">
                 <i class="fas fa-file-upload"></i>
@@ -38,6 +46,6 @@
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && $any(userForm.get('image')).valid" >
             <img [src]="imagePreview" [alt]="userForm.value.username">
         </div>
-        <button type="submit" class="signup-button">Signup</button>
+        <button type="submit" class="signup-button" [disabled]="userForm.invalid">Signup</button>
     </form>
 </div>
