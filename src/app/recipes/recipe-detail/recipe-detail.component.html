@@ -22,7 +22,7 @@
                 <button *ngIf="userIsAuthenticated && userIsCreator" class="button edit-button"  [routerLink]="['/recipes',recipe.id,'edit']">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button *ngIf="userIsAuthenticated && userIsCreator" class="button remove-button" (click)="openModal(template)">
+                <button *ngIf="userIsAuthenticated && userIsCreator" class="button remove-button" (click)="openModal()">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
@@ -54,18 +54,18 @@
         </li>
     </ul>
 </div>
-
-<ng-template #template>
-    <div class="modal-header">
-       <h4 class="modal-title pull-left">Rezept für {{recipe.name}} löschen</h4>
-       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">×</span>
-       </button>
+<!-- Modal -->
+<div class="modal" #modal>
+    <div class="modal__content">
+        <div class="modal__content-header">
+            <p>{{recipe.name}} löschen</p>
+            <div class="modal__content-btn_container">
+                <i class="far fa-check-square" (click)="removeRecipe()"></i>
+                <i class="far fa-window-close" (click)="closeModal()"></i>
+            </div>
+        </div>
+        <hr>
     </div>
-    <div class="modal-body">
-        <button type="button" class="btn btn-danger mr-1" (click)="removeRecipe()">Ja</button>
-       <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Nein</button>
-    </div>
- </ng-template>
+</div>
 
 

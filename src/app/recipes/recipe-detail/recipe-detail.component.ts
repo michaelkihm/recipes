@@ -1,6 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { RecipesService } from '../recipes-service/recipes.service';
 import { Recipe } from './../../../../models/recipe.model';
@@ -16,7 +15,7 @@ export class RecipeDetailComponent implements OnInit {
 	userIsAuthenticated = false;
 	userIsCreator = false;
 	recipe: Recipe;
-	modalRef: BsModalRef;
+	@ViewChild('modal') modalRef: ElementRef;
 	user: UserInfo;
 	isBookmarked = false;
 	userInfoListener: Subscription;
@@ -25,8 +24,7 @@ export class RecipeDetailComponent implements OnInit {
 		  private route: ActivatedRoute,
 		  private router: Router,
 		  private recipesService: RecipesService,
-		  private authService: AuthService,
-		  private modalService: BsModalService) { }
+		  private authService: AuthService) { }
 
 	ngOnInit(): void {
 		
@@ -44,17 +42,24 @@ export class RecipeDetailComponent implements OnInit {
 		});
     }
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	openModal(template: TemplateRef<any>): void {
-		this.modalRef = this.modalService.show(template);
+
+	openModal(): void {
+		
+		this.modalRef.nativeElement.style.display = 'block';
+	}
+
+	closeModal(): void {
+
+		this.modalRef.nativeElement.style.display = 'none';
 	}
 
 	removeRecipe(): void {
-		this.modalRef.hide();
+
+		this.closeModal();
 		const recipeId = this.recipe.id;
 		recipeId && this.recipesService.deleteRecipe(recipeId).subscribe(result => {
 			
-			if(result.message.includes('Deleted')) {
+			if(result.message.includes('Deleted')){
 				this.router.navigate(['/']);
 			}
 		});
