@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: cygnetops/auth
+    - image: mickenhos90/recipes-auth
       context: auth
       docker:
         dockerfile: Dockerfile
