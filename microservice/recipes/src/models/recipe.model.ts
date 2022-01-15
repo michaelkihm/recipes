@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Recipe } from './recipe.type';
 import { Ingredient } from './ingredient.type';
 
-interface RecipeDoc extends mongoose.Document, Recipe {}
+export interface RecipeDoc extends mongoose.Document, Recipe {}
 
 interface RecipeModel extends mongoose.Model<RecipeDoc> {
     build(attrs: Recipe): RecipeDoc;

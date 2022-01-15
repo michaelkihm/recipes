@@ -4,6 +4,7 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { NotFoundError, errorHandler, currentUser } from '@mickenhosrecipes/common';
 import { newRecipeRouter } from './routes/new';
+import { indexRecipeRouter } from './routes';
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(
 app.use(currentUser);
 
 app.use(newRecipeRouter);
+app.use(indexRecipeRouter);
 
 app.all('*', async (_req, _res) => {
   throw new NotFoundError();
