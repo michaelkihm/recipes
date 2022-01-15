@@ -1,8 +1,8 @@
-import { requireAuth, validateRequest } from '@mickenhosrecipes/common';
+import { Recipe, requireAuth, validateRequest } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { RecipeModel } from '../models/recipe.model';
-import { Recipe } from '../models/recipe.type';
+
 
 const router = express.Router();
 

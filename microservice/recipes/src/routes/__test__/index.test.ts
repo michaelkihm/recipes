@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Recipe } from '../../models/recipe.type';
+import { Recipe } from '@mickenhosrecipes/common';
 import { RECIPES } from './dummy-recipes';
 
 const createRecipe = (recipe: Recipe) => {

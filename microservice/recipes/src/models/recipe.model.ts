@@ -1,6 +1,5 @@
+import { Ingredient, Recipe } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
-import { Recipe } from './recipe.type';
-import { Ingredient } from './ingredient.type';
 
 export interface RecipeDoc extends mongoose.Document, Recipe {}
 
