@@ -2,7 +2,8 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
-import { NotFoundError, errorHandler } from '@mickenhosrecipes/common';
+import { NotFoundError, errorHandler, currentUser } from '@mickenhosrecipes/common';
+import { newRecipeRouter } from './routes/new';
 
 
 const app = express();
@@ -14,11 +15,9 @@ app.use(
     secure: process.env.NODE_ENV !== 'test'
   })
 );
+app.use(currentUser);
 
-// app.use(currentUserRouter);
-// app.use(signinRouter);
-// app.use(signoutRouter);
-// app.use(signupRouter);
+app.use(newRecipeRouter);
 
 app.all('*', async (_req, _res) => {
   throw new NotFoundError();
