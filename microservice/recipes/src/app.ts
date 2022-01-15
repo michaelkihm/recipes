@@ -5,6 +5,7 @@ import cookieSession from 'cookie-session';
 import { NotFoundError, errorHandler, currentUser } from '@mickenhosrecipes/common';
 import { newRecipeRouter } from './routes/new';
 import { indexRecipeRouter } from './routes';
+import { deleteRecipeRouter } from './routes/delete';
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(currentUser);
 
 app.use(newRecipeRouter);
 app.use(indexRecipeRouter);
+app.use(deleteRecipeRouter);
 
 app.all('*', async (_req, _res) => {
   throw new NotFoundError();
