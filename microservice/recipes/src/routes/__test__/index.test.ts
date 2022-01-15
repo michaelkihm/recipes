@@ -1,11 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Recipe } from '@mickenhosrecipes/common';
 import { RECIPES } from './dummy-recipes';
+import { createRecipe } from './shared';
 
-const createRecipe = (recipe: Recipe) => {
-    return request(app).post('/api/recipes').set('Cookie', global.signin()).send(recipe);
-}
 
 describe('Get recipes - /api/recipes', () => {
 
