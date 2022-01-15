@@ -28,6 +28,9 @@ describe('Get recipes - /api/recipes', () => {
             expect(recipe.categories).toEqual(RECIPES[i].categories);
             expect(recipe.ingredients).toEqual(RECIPES[i].ingredients);
             expect(recipe.duration).toEqual(RECIPES[i].duration);
+            expect(recipe.id).toBeDefined();
+            expect(recipe._id).not.toBeDefined();
+
         });
     });
 });
