@@ -6,6 +6,7 @@ import { NotFoundError, errorHandler, currentUser } from '@mickenhosrecipes/comm
 import { newRecipeRouter } from './routes/new';
 import { indexRecipeRouter } from './routes';
 import { deleteRecipeRouter } from './routes/delete';
+import { getRecipeRouter } from './routes/get';
 
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(currentUser);
 app.use(newRecipeRouter);
 app.use(indexRecipeRouter);
 app.use(deleteRecipeRouter);
+app.use(getRecipeRouter);
 
 app.all('*', async (_req, _res) => {
   throw new NotFoundError();
