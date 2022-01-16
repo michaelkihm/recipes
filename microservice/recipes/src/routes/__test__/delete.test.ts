@@ -5,7 +5,7 @@ import { RECIPES } from './dummy-recipes';
 import { createRecipe } from './shared';
 
 
-describe('Delete recipes - /api/recipes/4556', () => {
+describe('Delete recipes - /api/recipes/:id', () => {
 
     it('has a route handler listening to DELETE /api/recipes/:id', async () => {
 
