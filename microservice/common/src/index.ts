@@ -14,3 +14,4 @@ export * from './types/category.type';
 export * from './types/duration.type';
 export * from './types/ingredient.type';
 export * from './types/recipe.type';
+export * from './types/new-recipe.type';
