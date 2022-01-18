@@ -1,13 +1,6 @@
-import { Category } from './category.type';
-import { Duration } from './duration.type';
-import { Ingredient } from './ingredient.type';
+import { NewRecipe } from './new-recipe.type';
 
-export interface Recipe {
-    name: string,
-    description: string[],
-    ingredients: Ingredient[],
+export interface Recipe extends NewRecipe {
     userId: string,
-    categories: Category[],
-    duration: Duration,
-    image?: string,
+    id: string
 }
