@@ -139,7 +139,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     });
 
 
-    it('Can NOT update duration of a recipe', async () => {
+    it('Can NOT update userId of a recipe', async () => {
 
         const newUserId: string = new mongoose.Types.ObjectId().toHexString();
         const recipe = RECIPES[1];
