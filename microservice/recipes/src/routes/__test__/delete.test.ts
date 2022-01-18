@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
-import { RECIPES } from './dummy-recipes';
+import { NEW_RECIPES } from './dummy-new-recipes';
 import { createRecipe } from './shared';
 
 
@@ -34,7 +34,7 @@ describe('Delete recipes - /api/recipes/:id', () => {
 
     it('deletes a recipe if the user is signed in and provides a valid id in the url', async () => {
         
-        const recipe = RECIPES[0];
+        const recipe = NEW_RECIPES[0];
         let recipes: RecipeDoc[];
         await createRecipe(recipe);
 

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
-import { RECIPES } from './dummy-recipes';
+import { NEW_RECIPES } from './dummy-new-recipes';
 import { createRecipe } from './shared';
 
 
@@ -56,7 +56,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     it('Can update name of a recipe and returns updated recipe', async () => {
 
         const newName = 'test';
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -72,7 +72,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     it('Can update description of a recipe returns updated recipe', async () => {
 
         const newDescription: string[] = ['test', 'test2', 'test3'];
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -90,7 +90,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     it('Can update categories of a recipe returns updated recipe', async () => {
 
         const newCategories: Category[] = ['arabic', 'quick'];
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -109,7 +109,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         const newIngredients: Ingredient[] = [
             { name: 'tomato', amount: 4, unit: 'g' },
             { name: 'water', amount: 500, unit: 'ml' }];
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -126,7 +126,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     it('Can update duration of a recipe returns updated recipe', async () => {
 
         const newDuration: Duration = { duration: 5, unit: 'min' };
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -142,7 +142,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
     it('Can NOT update userId of a recipe', async () => {
 
         const newUserId: string = new mongoose.Types.ObjectId().toHexString();
-        const recipe = RECIPES[1];
+        const recipe = NEW_RECIPES[1];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 

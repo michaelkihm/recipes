@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
-import { RECIPES } from './dummy-recipes';
+import { NEW_RECIPES } from './dummy-new-recipes';
 
 
 describe('Add recipes - /api/recipes', () => {
@@ -35,7 +35,7 @@ describe('Add recipes - /api/recipes', () => {
             .post('/api/recipes')
             .set('Cookie', global.signin())
             .send({
-                ...RECIPES[0],
+                ...NEW_RECIPES[0],
                 name: ''
             })
             .expect(400);
@@ -47,7 +47,7 @@ describe('Add recipes - /api/recipes', () => {
             .post('/api/recipes')
             .set('Cookie', global.signin())
             .send({
-                ...RECIPES[0],
+                ...NEW_RECIPES[0],
                 description: ''
             })
             .expect(400);
@@ -60,7 +60,7 @@ describe('Add recipes - /api/recipes', () => {
             .post('/api/recipes')
             .set('Cookie', global.signin())
             .send({
-                ...RECIPES[0],
+                ...NEW_RECIPES[0],
                 duration: ''
             })
             .expect(400);
@@ -73,7 +73,7 @@ describe('Add recipes - /api/recipes', () => {
             .post('/api/recipes')
             .set('Cookie', global.signin())
             .send({
-                ...RECIPES[0],
+                ...NEW_RECIPES[0],
                 categories: ''
             })
             .expect(400);
@@ -86,7 +86,7 @@ describe('Add recipes - /api/recipes', () => {
             .post('/api/recipes')
             .set('Cookie', global.signin())
             .send({
-                ...RECIPES[0],
+                ...NEW_RECIPES[0],
                 ingredients: ''
             })
             .expect(400);
@@ -101,21 +101,21 @@ describe('Add recipes - /api/recipes', () => {
         await request(app)
             .post('/api/recipes')
             .set('Cookie', global.signin())
-            .send(RECIPES[0])
+            .send(NEW_RECIPES[0])
             .expect(201);
 
         recipes = await RecipeModel.find({});
 
         expect(recipes.length).toEqual(1);
-        expect(recipes[0].name).toEqual(RECIPES[0].name);
-        expect([...recipes[0].description]).toEqual(RECIPES[0].description);
+        expect(recipes[0].name).toEqual(NEW_RECIPES[0].name);
+        expect([...recipes[0].description]).toEqual(NEW_RECIPES[0].description);
         expect(recipes[0].userId).toBeDefined();
-        expect(recipes[0].duration).toEqual(RECIPES[0].duration);
-        expect([...recipes[0].categories]).toEqual(RECIPES[0].categories);
+        expect(recipes[0].duration).toEqual(NEW_RECIPES[0].duration);
+        expect([...recipes[0].categories]).toEqual(NEW_RECIPES[0].categories);
         recipes[0].ingredients.forEach((ingredient, i) => {
-            expect(ingredient.name).toEqual(RECIPES[0].ingredients[i].name);
-            expect(ingredient.amount).toEqual(RECIPES[0].ingredients[i].amount);
-            expect(ingredient.unit).toEqual(RECIPES[0].ingredients[i].unit);
+            expect(ingredient.name).toEqual(NEW_RECIPES[0].ingredients[i].name);
+            expect(ingredient.amount).toEqual(NEW_RECIPES[0].ingredients[i].amount);
+            expect(ingredient.unit).toEqual(NEW_RECIPES[0].ingredients[i].unit);
         });
 
     });

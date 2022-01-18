@@ -1,10 +1,10 @@
-import { Ingredient, Recipe } from '@mickenhosrecipes/common';
+import { Ingredient, NewRecipe, Recipe } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 
-export interface RecipeDoc extends mongoose.Document, Recipe {}
+export interface RecipeDoc extends mongoose.Document, NewRecipe {}
 
 interface RecipeModel extends mongoose.Model<RecipeDoc> {
-    build(attrs: Recipe): RecipeDoc;
+    build(attrs: NewRecipe): RecipeDoc;
 }
 
 const IngredientSchema = new mongoose.Schema<Ingredient>({

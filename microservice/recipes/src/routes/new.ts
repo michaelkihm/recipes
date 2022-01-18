@@ -1,4 +1,4 @@
-import { Recipe, requireAuth, validateRequest } from '@mickenhosrecipes/common';
+import { NewRecipe, requireAuth, validateRequest } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { RecipeModel } from '../models/recipe.model';
@@ -7,13 +7,13 @@ import { RecipeModel } from '../models/recipe.model';
 const router = express.Router();
 
 
-const postHandler = async (req: Request<never,never,Recipe>, res: Response): Promise<void> => {
+const postHandler = async (req: Request<never,never,NewRecipe>, res: Response): Promise<void> => {
 
     const { name, description, duration, categories, ingredients } = req.body;
 
     const recipe = RecipeModel.build({ name, description, duration, categories, ingredients,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        userId: req.currentUser!.id,
+        userId: req.currentUser!.id
     });
     await recipe.save();
 

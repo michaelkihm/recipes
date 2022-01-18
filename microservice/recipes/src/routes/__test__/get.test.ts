@@ -2,7 +2,7 @@ import { app } from '../../app';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { createRecipe } from './shared';
-import { RECIPES } from './dummy-recipes';
+import { NEW_RECIPES } from './dummy-new-recipes';
 import { RecipeModel } from '../../models/recipe.model';
 
 describe('Get recipe - /api/recipes/:id', () => {
@@ -29,7 +29,7 @@ describe('Get recipe - /api/recipes/:id', () => {
     
     it('returns a recipe if available in the db', async () => {
 
-        const recipe = RECIPES[0];
+        const recipe = NEW_RECIPES[0];
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
@@ -40,6 +40,7 @@ describe('Get recipe - /api/recipes/:id', () => {
 
         expect(response.body.name).toBe(recipe.name);
         expect(response.body.userId).toBeDefined();
+        expect(response.body.id).toBeDefined();
         expect(response.body.description).toEqual(recipe.description);
         expect(response.body.categories).toEqual(recipe.categories);
         expect(response.body.ingredients).toEqual(recipe.ingredients);
