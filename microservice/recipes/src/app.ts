@@ -13,6 +13,8 @@ import { updateRecipeRouter } from './routes/update';
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
+app.use('/images', express.static('/images'));
+
 app.use(
   cookieSession({
     signed: false,
@@ -20,7 +22,6 @@ app.use(
   })
 );
 app.use(currentUser);
-
 app.use(newRecipeRouter);
 app.use(indexRecipeRouter);
 app.use(deleteRecipeRouter);
