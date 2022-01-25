@@ -1,12 +1,10 @@
 import { requireAuth, validateRequest } from '@mickenhosrecipes/common';
-import express, { Request, Response } from 'express';
+import express, { Response } from 'express';
 import { body } from 'express-validator';
 import { multerMiddleware } from '../middlewares/multer-image-save';
 import { RecipeModel } from '../models/recipe.model';
-import { processImageDataAndFormData } from './shared';
-import { BaseRecipeStrings } from './types';
+import { PostRequest, processImageDataAndFormData } from './shared';
 
-export type PostRequest = Request<{id: string}, never, BaseRecipeStrings>;
 
 const router = express.Router();
 
