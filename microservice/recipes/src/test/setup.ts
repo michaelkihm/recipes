@@ -1,6 +1,8 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -32,6 +34,7 @@ beforeEach(async () => {
 afterAll(async () => {
   await mongo.stop();
   await mongoose.connection.close();
+  removeTestImages();
 });
 
 global.signin = () => {
@@ -56,4 +59,21 @@ global.signin = () => {
 
 	// return a string thats the cookie with the encoded data
 	return [`express:sess=${base64}`];
+};
+
+
+const removeTestImages = ( ) => {
+    
+    const imagePath = './images';
+    fs.readdir(imagePath, (err, files) => {
+    
+        files.forEach(file => {
+            const fileDir = path.join(imagePath, file);
+            if (file !== 'recipe-dummy.png' 
+				&& file !== 'salmon-g856c1740c_640.jpg' 
+				&& file !== 'vegetables-g1e5fb0e84_640.jpg') {
+                	fs.unlinkSync(fileDir);
+            }
+        });
+    });
 };

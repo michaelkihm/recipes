@@ -3,8 +3,6 @@ import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
 import { NEW_RECIPES } from './dummy-new-recipes';
-import fs from 'fs';
-import path from 'path';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postNewRecipe = (recipe: any) => {
@@ -24,7 +22,6 @@ const postNewRecipe = (recipe: any) => {
 
 describe('Add recipes - /api/recipes', () => {
 
-    afterAll(() => removeDummyFiles());
 
     it('has a route handler listening to POST /api/recipes', async () => {
 
@@ -118,18 +115,3 @@ describe('Add recipes - /api/recipes', () => {
         });
     });
 });
-
-
-const removeDummyFiles = ( ) => {
-    
-    const imagePath = './images';
-    fs.readdir(imagePath, (err, files) => {
-    
-        files.forEach(file => {
-            const fileDir = path.join(imagePath, file);
-            if (file !== 'recipe-dummy.png') {
-                fs.unlinkSync(fileDir);
-            }
-        });
-    });
-};

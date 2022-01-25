@@ -1,3 +1,5 @@
-images
+images/*
 
 !images/recipe-dummy.png
+!images/salmon-g856c1740c_640.jpg
+!images/vegetables-g1e5fb0e84_640.jpg

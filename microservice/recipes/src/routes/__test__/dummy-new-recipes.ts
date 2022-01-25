@@ -20,7 +20,7 @@ export const NEW_RECIPES: BaseRecipe[] = [
             { name: 'parsley', amount: 1, unit: 'pieces' }
         ],
         duration: { duration: 100, unit: 'min' },
-        image: 'http://localhost:4000/images/test_spaghetti.jpeg',
+        image: 'images/salmon-g856c1740c_640.jpg',
     },
     {
         name: 'Burger',
@@ -36,7 +36,7 @@ export const NEW_RECIPES: BaseRecipe[] = [
             { name: 'salat', amount: 3, unit: 'pieces' }
         ],
         duration: { duration: 1, unit: 'min' },
-        image: 'http://localhost:4000/images/test_burger.jpeg',
+        image: 'images/vegetables-g1e5fb0e84_640.jpg',
     },
     {
         name: 'Falafel',
@@ -52,7 +52,7 @@ export const NEW_RECIPES: BaseRecipe[] = [
             { name: 'tahin', amount: 1, unit: 'ml' }
         ],
         duration: { duration: 12, unit: 'min' },
-        image: 'http://localhost:4000/images/test_falafel.jpeg',
+        image: 'images/vegetables-g1e5fb0e84_640.jpg',
     },
     {
         name: 'Rezept',
