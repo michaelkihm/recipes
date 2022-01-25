@@ -1,9 +1,9 @@
 import { newRecipeStringToNewRecipe } from './types';
-import { NewRecipe } from '@mickenhosrecipes/common';
+import { BaseRecipe } from '@mickenhosrecipes/common';
 import { PostRequest } from './new';
 
 
-export const processImageDataAndFormData = (req: PostRequest): NewRecipe => {
+export const processImageDataAndFormData = (req: PostRequest): BaseRecipe => {
 
     const didMulterSaveImage = (req: PostRequest) => req?.file?.filename ? true : false;
     

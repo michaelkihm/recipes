@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
-import { NewRecipe } from '@mickenhosrecipes/common';
+import { BaseRecipe } from '@mickenhosrecipes/common';
 
 const user1Id = '137ce4177ef1da711f08a4f6';
 const user2Id = '1cf1dec6b41f85794acd20bc';
 
 
-export const NEW_RECIPES: NewRecipe[] = [
+export const NEW_RECIPES: BaseRecipe[] = [
     {
         name: 'Spaghetti aglio',
         description: [

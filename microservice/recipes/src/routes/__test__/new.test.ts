@@ -1,4 +1,4 @@
-import { NewRecipe } from '@mickenhosrecipes/common';
+import { BaseRecipe } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
@@ -85,7 +85,7 @@ describe('Add recipes - /api/recipes', () => {
 
     it('creates a ticket with valid inputs', async () => {
 
-        const recipe: NewRecipe = {
+        const recipe: BaseRecipe = {
             name: 'Test recipe',
             description: ['Fast to cook'],
             duration: { unit: 'min', duration: 15 },

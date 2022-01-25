@@ -1,4 +1,4 @@
-import { Ingredient, Recipe, Category, Duration, NewRecipe } from '@mickenhosrecipes/common';
+import { Ingredient, Recipe, Category, Duration, BaseRecipe } from '@mickenhosrecipes/common';
 
 export type HasKeys<T> = {
     [P in keyof T]: string
@@ -6,10 +6,10 @@ export type HasKeys<T> = {
 
 export type RecipeStrings = HasKeys<Recipe>;
 
-export type NewRecipeStrings = HasKeys<NewRecipe>;
+export type BaseRecipeStrings = HasKeys<BaseRecipe>;
 
 
-export const newRecipeStringToNewRecipe = (recipeString: NewRecipeStrings): NewRecipe => {
+export const newRecipeStringToNewRecipe = (recipeString: BaseRecipeStrings): BaseRecipe => {
     
     const hasImageChanged = () => typeof recipeString.image !== 'string';
 
