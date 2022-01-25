@@ -2,6 +2,8 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import fs from 'fs';
+import path from 'path';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -33,6 +35,7 @@ beforeEach(async () => {
 afterAll(async () => {
   await mongo.stop();
   await mongoose.connection.close();
+  removeTestImages();
 });
 
 global.signin = async () => {
@@ -50,4 +53,18 @@ global.signin = async () => {
   const cookie = response.get('Set-Cookie');
 
   return cookie;
+};
+
+const removeTestImages = ( ) => {
+    
+  const imagePath = './images';
+  fs.readdir(imagePath, (err, files) => {
+  
+      files.forEach(file => {
+          const fileDir = path.join(imagePath, file);
+          if (file !== 'profile-dummy.jpg') {
+                fs.unlinkSync(fileDir);
+          }
+      });
+  });
 };
