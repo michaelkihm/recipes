@@ -1,5 +1,5 @@
-import { BadRequestError } from '@mickenhosrecipes/common';
 import multer from 'multer';
+import { BadRequestError } from '..';
 
 const getMimeType = (type: string) => {
 
@@ -14,14 +14,14 @@ const getMimeType = (type: string) => {
     } else return '';
 };
 
-const storage = multer.diskStorage({
+const getStorage = (dirName: string) => multer.diskStorage({
 
     destination: (req, file, cb) => {
         
         const isValid = getMimeType(file.mimetype);
         let error: Error | null = new BadRequestError('Invalid Mime type');
         if(isValid) error = null;
-        cb(error, 'images');
+        cb(error, dirName);
     },
     filename: (req, file, cb) => {
         const name = file.originalname.toLowerCase().split(' ').join('-');
@@ -31,4 +31,6 @@ const storage = multer.diskStorage({
 });
 
 
-export const multerMiddleware = multer({ storage }).single('image');
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const multerMiddleware = ( imageDir: string ) =>
+    multer({ storage:  getStorage(imageDir) }).single('image');

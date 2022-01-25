@@ -9,6 +9,7 @@ export * from './middlewares/current-user';
 export * from './middlewares/error-handler';
 export * from './middlewares/require-auth';
 export * from './middlewares/validate-request';
+export * from './middlewares/multer-image-save';
 
 export * from './types/category.type';
 export * from './types/duration.type';
