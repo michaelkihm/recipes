@@ -69,8 +69,8 @@ const removeTestImages = ( ) => {
     
         files.forEach(file => {
             const fileDir = path.join(imagePath, file);
-            if (file !== 'recipe-dummy.png' 
-				&& file !== 'salmon-g856c1740c_640.jpg' 
+            if (file !== 'recipe-dummy.png'
+				&& file !== 'salmon-g856c1740c_640.jpg'
 				&& file !== 'vegetables-g1e5fb0e84_640.jpg') {
                 	fs.unlinkSync(fileDir);
             }
