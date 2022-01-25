@@ -1,14 +1,17 @@
-import { BadRequestError, requireAuth, Recipe } from '@mickenhosrecipes/common';
-import express, { Request, Response } from 'express';
+import { BadRequestError, requireAuth, validateRequest } from '@mickenhosrecipes/common';
+import express, { Response } from 'express';
+import { multerMiddleware } from '../middlewares/multer-image-save';
 import { RecipeDoc, RecipeModel } from '../models/recipe.model';
+import { processImageDataAndFormData, PutRequest } from './shared';
+import { body } from 'express-validator';
 
 const router = express.Router();
 
-const updateRecipe = async (req: Request<{id: string},Recipe>, res: Response<RecipeDoc>) => {
+const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
 
-    const body = { ...req.body };
-    delete body.userId;
-    const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, body, { new: true });
+    const updatedRecipe = processImageDataAndFormData(req);
+
+    const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, updatedRecipe, { new: true });
     if(recipe) res.send(recipe);
     else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
 
@@ -17,6 +20,15 @@ const updateRecipe = async (req: Request<{id: string},Recipe>, res: Response<Rec
 router.put(
     '/api/recipes/:id',
     requireAuth,
+    multerMiddleware,
+    [
+        body('name').not().isEmpty().withMessage('Recipe requires property name'),
+        body('description').not().isEmpty().withMessage('Recipe requires property description'),
+        body('duration').not().isEmpty().withMessage('Recipe requires property duration'),
+        body('categories').not().isEmpty().withMessage('Recipe requires property categories'),
+        body('ingredients').not().isEmpty().withMessage('Recipe requires property ingredients'),
+    ],
+    validateRequest,
     updateRecipe);
 
 export { router as updateRecipeRouter };

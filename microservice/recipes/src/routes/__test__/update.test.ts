@@ -1,4 +1,4 @@
-import { Category, Duration, Ingredient } from '@mickenhosrecipes/common';
+import { BaseRecipe, Category, Duration, Ingredient } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
@@ -6,6 +6,20 @@ import { RecipeModel } from '../../models/recipe.model';
 import { NEW_RECIPES } from './dummy-new-recipes';
 import { createRecipe } from './shared';
 
+const putRecipe = (recipe: BaseRecipe, id: string) => {
+  
+    return request(app)
+            .put(`/api/recipes/${id}`)
+            .attach('image',recipe.image || '')
+            .set('Cookie', global.signin())
+            .set('Content-type', 'multipart/form-data')
+            .field('name',recipe.name )
+            .field('userId', recipe.userId)
+            .field('description', recipe.description ? JSON.stringify(recipe.description) : '')
+            .field('categories', recipe.categories ? JSON.stringify(recipe.categories) : '')
+            .field('duration',recipe.duration ? JSON.stringify(recipe.duration) : '')
+            .field('ingredients',recipe.ingredients ? JSON.stringify(recipe.ingredients) : '');
+};
 
 describe('Update recipe - PUT /api/recipes/:id', () => {
 
@@ -57,15 +71,13 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
 
         const newName = 'test';
         const recipe = NEW_RECIPES[1];
-        await createRecipe(recipe);
+        await createRecipe({ ...recipe, image: undefined });
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, name: newName });
- 
+        const response = await putRecipe({ ...recipe, image: undefined, name: newName }, foundRecipe[0].id);
+
         expect(response.body.name).toBe(newName);
+        expect(response.statusCode).toBe(200);
     });
 
 
@@ -76,10 +88,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, description: newDescription });
+        const response = await putRecipe({ ...recipe, description: newDescription }, foundRecipe[0].id);
  
         expect(response.body.description.length).toBe(newDescription.length);
         expect(response.body.description).toEqual(newDescription);
@@ -94,10 +103,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, categories: newCategories });
+        const response = await putRecipe({ ...recipe, categories: newCategories }, foundRecipe[0].id);
  
         expect(response.body.categories.length).toBe(newCategories.length);
         expect(response.body.categories).toEqual(newCategories);
@@ -113,10 +119,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, ingredients: newIngredients });
+        const response = await putRecipe({ ...recipe, ingredients: newIngredients }, foundRecipe[0].id);
  
         expect(response.body.ingredients.length).toBe(newIngredients.length);
         expect(response.body.ingredients).toEqual(newIngredients);
@@ -130,10 +133,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, duration: newDuration });
+        const response = await putRecipe({ ...recipe, duration: newDuration }, foundRecipe[0].id);
  
         expect(response.body.duration).toEqual(newDuration);
     });
@@ -146,13 +146,22 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         await createRecipe(recipe);
         const foundRecipe = await RecipeModel.find({ name: recipe.name });
 
-        const response = await request(app)
-            .put(`/api/recipes/${foundRecipe[0].id}`)
-            .set('Cookie', global.signin())
-            .send({ ...recipe, userId: newUserId });
+        const response = await putRecipe({ ...recipe, userId: newUserId }, foundRecipe[0].id);
  
         expect(response.body.userId).not.toEqual(newUserId);
 
     });
 
+
+    it('Can update the image of a recipe', async () => {
+
+        const recipe = NEW_RECIPES[2];
+        await createRecipe(recipe);
+        const foundRecipe = await RecipeModel.find({ name: recipe.name });
+
+        const response = await putRecipe(recipe, foundRecipe[0].id);
+
+        expect(response.body.image).not.toEqual(recipe.image);
+        expect(response.body.image.includes(recipe.image)).toBeTruthy();
+    });
 });
