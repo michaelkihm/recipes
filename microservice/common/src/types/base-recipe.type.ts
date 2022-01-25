@@ -2,7 +2,7 @@ import { Category } from './category.type';
 import { Duration } from './duration.type';
 import { Ingredient } from './ingredient.type';
 
-export interface NewRecipe {
+export interface BaseRecipe {
     name: string,
     description: string[],
     ingredients: Ingredient[],

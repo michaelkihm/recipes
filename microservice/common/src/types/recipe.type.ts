@@ -1,6 +1,6 @@
-import { NewRecipe } from './new-recipe.type';
+import { BaseRecipe } from './base-recipe.type';
 
-export interface Recipe extends NewRecipe {
+export interface Recipe extends BaseRecipe {
     userId: string,
     id: string
 }
