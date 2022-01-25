@@ -1,6 +1,5 @@
-import { BadRequestError, requireAuth, validateRequest } from '@mickenhosrecipes/common';
+import { BadRequestError, multerMiddleware, requireAuth, validateRequest } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
-import { multerMiddleware } from '../middlewares/multer-image-save';
 import { RecipeDoc, RecipeModel } from '../models/recipe.model';
 import { processImageDataAndFormData, PutRequest } from './shared';
 import { body } from 'express-validator';
@@ -20,7 +19,7 @@ const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
 router.put(
     '/api/recipes/:id',
     requireAuth,
-    multerMiddleware,
+    multerMiddleware('images'),
     [
         body('name').not().isEmpty().withMessage('Recipe requires property name'),
         body('description').not().isEmpty().withMessage('Recipe requires property description'),
