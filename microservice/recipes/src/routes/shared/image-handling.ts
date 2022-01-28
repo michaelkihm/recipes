@@ -12,5 +12,6 @@ export const processImageDataAndFormData = (req: PostRequest | PutRequest): Base
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         image = `${url}/images/${(req as any)?.file?.filename}`;
     }
-    return { ...recipe, image };
+
+    return { ...recipe, image: image || undefined };
 };

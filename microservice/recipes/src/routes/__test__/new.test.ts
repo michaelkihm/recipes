@@ -114,4 +114,27 @@ describe('Add recipes - /api/recipes', () => {
             expect(ingredient.unit).toEqual(recipe.ingredients[i].unit);
         });
     });
+
+    it('adds the default image if image is not given', async () => {
+
+        const recipe: BaseRecipe = {
+            name: 'Test recipe',
+            description: ['Fast to cook'],
+            duration: { unit: 'min', duration: 15 },
+            ingredients:
+                [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
+            userId: '',
+            categories: ['italian'],
+            image: '',
+        };
+
+        await postNewRecipe(recipe)
+            .expect(201);
+
+        const recipes = await RecipeModel.find({});
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(recipes[0].image!.includes('recipe-dummy')).toBeTruthy();
+
+    });
 });
