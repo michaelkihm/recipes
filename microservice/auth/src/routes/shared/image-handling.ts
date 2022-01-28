@@ -8,7 +8,8 @@ export const processImageDataAndFormData = (req: UserAddRequest): User => {
     let image = user.image;
     if(didMulterSaveImage(req)){
         const url = `${req.protocol}://${req.get('host')}`;
-        image = `${url}/images/${req?.file?.filename}`;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        image = `${url}/images/${(req as any)?.file?.filename}`;
     }
     
     return { ...user, image };

@@ -14,7 +14,8 @@ export const processImageDataAndFormData = (req: PostRequest | PutRequest): Base
     let image = recipe.image;
     if(didMulterSaveImage(req)){
         const url = `${req.protocol}://${req.get('host')}`;
-        image = `${url}/images/${req?.file?.filename}`;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        image = `${url}/images/${(req as any)?.file?.filename}`;
     }
     return { ...recipe, image };
 };
