@@ -12,6 +12,18 @@
 			"targetCluster": "docker-desktop",
 			"targetNamespace": "default",
 			"useKubernetesServiceEnvironmentVariables": true,
+		},
+		{
+			"label": "bridge-to-kubernetes.resource",
+			"type": "bridge-to-kubernetes.resource",
+			"resource": "recipes-srv",
+			"resourceType": "service",
+			"ports": [
+				3001
+			],
+			"targetCluster": "docker-desktop",
+			"targetNamespace": "default",
+			"useKubernetesServiceEnvironmentVariables": true,
 		}
 	]
 }

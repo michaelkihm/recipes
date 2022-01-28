@@ -33,6 +33,36 @@
         "args": [
           "${workspaceFolder}/auth/src/index.ts"
         ]
+      },
+      {
+        "name": "Recipes microservice debugger with Kubernetes",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/recipes",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/recipes/src/index.ts"
+        ],
+        "preLaunchTask": "bridge-to-kubernetes.resource",
+        "env": {
+          "GRPC_DNS_RESOLVER": "native"
+        }
+      },
+      {
+        "name": "Recipes microservice debugger",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/recipes",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/recipes/src/index.ts"
+        ]
       }
     ]
   }
