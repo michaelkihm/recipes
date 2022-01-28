@@ -1,6 +1,5 @@
-import { User, userFormDataToUser } from '../../models/user.type';
 import { UserAddRequest } from './types';
-import { didMulterSaveImage } from '@mickenhosrecipes/common';
+import { didMulterSaveImage, User, userFormDataToUser } from '@mickenhosrecipes/common';
 
 export const processImageDataAndFormData = (req: UserAddRequest): User => {
 

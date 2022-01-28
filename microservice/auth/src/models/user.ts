@@ -1,6 +1,6 @@
+import { User } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
-import { User } from './user.type';
 
 interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: User): UserDoc;

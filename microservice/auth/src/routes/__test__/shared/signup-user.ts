@@ -1,4 +1,4 @@
-import { UserStrings } from '../../../models/user.type';
+import { UserStrings } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../../app';
 

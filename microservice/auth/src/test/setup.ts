@@ -2,8 +2,8 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
-import { UserStrings } from '../models/user.type';
 import { signupUser } from '../routes/__test__/shared/signup-user';
+import { UserStrings } from '@mickenhosrecipes/common';
 
 declare global {
   // eslint-disable-next-line no-var

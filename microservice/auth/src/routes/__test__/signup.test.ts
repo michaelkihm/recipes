@@ -1,4 +1,4 @@
-import { UserStrings } from '../../models/user.type';
+import { UserStrings } from '@mickenhosrecipes/common';
 import { signupUser } from './shared/signup-user';
 
 
