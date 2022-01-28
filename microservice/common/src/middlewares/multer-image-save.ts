@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import multer from 'multer';
 import { BadRequestError } from '..';
 
@@ -34,3 +35,6 @@ const getStorage = (dirName: string) => multer.diskStorage({
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const multerMiddleware = ( imageDir: string ) =>
     multer({ storage:  getStorage(imageDir) }).single('image');
+
+
+export const didMulterSaveImage = (req: Request) => req?.file?.filename ? true : false;
