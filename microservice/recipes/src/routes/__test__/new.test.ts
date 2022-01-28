@@ -80,7 +80,7 @@ describe('Add recipes - /api/recipes', () => {
     });
 
 
-    it('creates a ticket with valid inputs', async () => {
+    it('creates a recipe with valid inputs', async () => {
 
         const recipe: BaseRecipe = {
             name: 'Test recipe',
