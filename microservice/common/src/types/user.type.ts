@@ -1,3 +1,4 @@
+import { HasKeys } from './shared.types';
 
 export interface User {
     email: string;
@@ -5,12 +6,6 @@ export interface User {
     username: string;
     image?: string;
 }
-
-
-type HasKeys<T> = {
-  [P in keyof T]: string
-};
-
 
 export type UserStrings = HasKeys<User>;
 
