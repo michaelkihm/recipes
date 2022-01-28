@@ -62,7 +62,7 @@ const removeTestImages = ( ) => {
   
       files.forEach(file => {
           const fileDir = path.join(imagePath, file);
-          if (file !== 'profile-dummy.jpg') {
+          if (file !== 'profile-dummy.jpg' && file !== 'identicon.png') {
                 fs.unlinkSync(fileDir);
           }
       });
