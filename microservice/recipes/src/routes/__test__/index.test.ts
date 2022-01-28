@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { NEW_RECIPES } from './dummy-new-recipes';
-import { createRecipe } from './shared';
+import { NEW_RECIPES } from './data/dummy-new-recipes';
+import { createRecipe } from './shared/create-recipe';
 
 
 describe('Get recipes - /api/recipes', () => {

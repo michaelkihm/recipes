@@ -2,7 +2,7 @@ import { BaseRecipe } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
-import { NEW_RECIPES } from './dummy-new-recipes';
+import { NEW_RECIPES } from './data/dummy-new-recipes';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postNewRecipe = (recipe: any) => {

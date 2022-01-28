@@ -2,7 +2,8 @@ import { requireAuth, validateRequest, multerMiddleware } from '@mickenhosrecipe
 import express, { Response } from 'express';
 import { body } from 'express-validator';
 import { RecipeModel } from '../models/recipe.model';
-import { PostRequest, processImageDataAndFormData } from './shared';
+import { processImageDataAndFormData } from './shared/image-handling';
+import { PostRequest } from './shared/types';
 
 
 const router = express.Router();

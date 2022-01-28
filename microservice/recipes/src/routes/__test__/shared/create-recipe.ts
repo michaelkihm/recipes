@@ -1,6 +1,6 @@
 import { BaseRecipe } from '@mickenhosrecipes/common';
 import request from 'supertest';
-import { app } from '../../app';
+import { app } from '../../../app';
 
 export const createRecipe = (recipe: BaseRecipe): request.Test => {
     

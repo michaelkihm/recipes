@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
-import { NEW_RECIPES } from './dummy-new-recipes';
-import { createRecipe } from './shared';
+import { NEW_RECIPES } from './data/dummy-new-recipes';
+import { createRecipe } from './shared/create-recipe';
 
 const putRecipe = (recipe: BaseRecipe, id: string) => {
   

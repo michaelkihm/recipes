@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
-import { NEW_RECIPES } from './dummy-new-recipes';
-import { createRecipe } from './shared';
+import { NEW_RECIPES } from './data/dummy-new-recipes';
+import { createRecipe } from './shared/create-recipe';
 
 
 describe('Delete recipes - /api/recipes/:id', () => {

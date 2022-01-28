@@ -1,8 +1,9 @@
 import { BadRequestError, multerMiddleware, requireAuth, validateRequest } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
 import { RecipeDoc, RecipeModel } from '../models/recipe.model';
-import { processImageDataAndFormData, PutRequest } from './shared';
 import { body } from 'express-validator';
+import { PutRequest } from './shared/types';
+import { processImageDataAndFormData } from './shared/image-handling';
 
 const router = express.Router();
 
