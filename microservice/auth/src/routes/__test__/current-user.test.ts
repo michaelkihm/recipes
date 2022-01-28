@@ -15,6 +15,9 @@ describe('Get curentuser - api/users/currentuser', () => {
 		  .expect(200);
 	  
 		expect(response.body.currentUser.email).toEqual('test@test.com');
+		expect(response.body.currentUser.username).toEqual('username');
+		expect(response.body.currentUser.image).toBeDefined();
+		expect(response.body.currentUser.image.includes('profile-dummy')).toBeTruthy();
 	  });
 	  
 	it('responds with null if not authenticated', async () => {

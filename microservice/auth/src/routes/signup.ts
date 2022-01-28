@@ -1,10 +1,10 @@
 import express, { Response } from 'express';
 import { body } from 'express-validator';
-import jwt from 'jsonwebtoken';
 import { validateRequest, BadRequestError, multerMiddleware } from '@mickenhosrecipes/common';
 import { UserDoc, UserModel } from '../models/user';
 import { UserAddRequest } from './shared/types';
 import { processImageDataAndFormData } from './shared/image-handling';
+import { generateJWT } from './shared/generate-jwt';
 
 
 const router = express.Router();
@@ -21,20 +21,7 @@ const userSignUp = async (req: UserAddRequest, res: Response<UserDoc>) => {
 	const user = UserModel.build(newUser);
 	await user.save();
 
-	// Generate JWT
-	const userJwt = jwt.sign(
-		{
-		id: user.id,
-		email: user.email
-		},
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		process.env.JWT_KEY!
-	);
-
-	// Store it on session object
-	req.session = {
-		jwt: userJwt
-	};
+	generateJWT(user, req);
 
 	res.status(201).send(user);
 };
