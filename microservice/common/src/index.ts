@@ -16,3 +16,4 @@ export * from './types/duration.type';
 export * from './types/ingredient.type';
 export * from './types/recipe.type';
 export * from './types/base-recipe.type';
+export * from './types/user.type';
