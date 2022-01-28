@@ -12,6 +12,7 @@ import { signupRouter } from './routes/signup';
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
+app.use('/images', express.static('/images'));
 app.use(
   cookieSession({
     signed: false,

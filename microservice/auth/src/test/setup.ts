@@ -1,9 +1,9 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
-import { app } from '../app';
 import fs from 'fs';
 import path from 'path';
+import { UserStrings } from '../models/user.type';
+import { signupUser } from '../routes/__test__/shared/signup-user';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -39,16 +39,14 @@ afterAll(async () => {
 });
 
 global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
 
-  const response = await request(app)
-    .post('/api/users/signup')
-    .send({
-      email,
-      password
-    })
-    .expect(201);
+  const newUser: UserStrings = {
+    email: 'test@test.com',
+    password: 'password',
+    username: 'username',
+  };
+  
+  const response = await signupUser(newUser);
 
   const cookie = response.get('Set-Cookie');
 

@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
-
 import { Password } from '../services/password';
-import { User } from '../models/user';
 import { BadRequestError, validateRequest } from '@mickenhosrecipes/common';
+import { UserModel } from '../models/user';
 
 const router = express.Router();
 
@@ -23,7 +22,7 @@ router.post(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (!existingUser) {
       throw new BadRequestError('Invalid credentials');
     }
