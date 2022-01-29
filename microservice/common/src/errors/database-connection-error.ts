@@ -1,3 +1,4 @@
+import { ErrorResponse } from '..';
 import { CustomError } from './custom-error';
 
 export class DatabaseConnectionError extends CustomError {
@@ -10,7 +11,7 @@ export class DatabaseConnectionError extends CustomError {
     Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
   }
 
-  serializeErrors() {
+  serializeErrors(): ErrorResponse {
     return [{ message: this.reason }];
   }
 }

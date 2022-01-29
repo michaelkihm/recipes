@@ -1,3 +1,4 @@
+import { ErrorResponse } from '..';
 import { CustomError } from './custom-error';
 
 export class NotAuthorizedError extends CustomError {
@@ -9,7 +10,7 @@ export class NotAuthorizedError extends CustomError {
     Object.setPrototypeOf(this, NotAuthorizedError.prototype);
   }
 
-  serializeErrors() {
+  serializeErrors(): ErrorResponse {
     return [{ message: 'Not authorized' }];
   }
 }

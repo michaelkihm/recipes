@@ -1,4 +1,5 @@
 import { ValidationError } from 'express-validator';
+import { ErrorResponse } from '..';
 import { CustomError } from './custom-error';
 
 export class RequestValidationError extends CustomError {
@@ -11,7 +12,7 @@ export class RequestValidationError extends CustomError {
     Object.setPrototypeOf(this, RequestValidationError.prototype);
   }
 
-  serializeErrors() {
+  serializeErrors(): ErrorResponse {
     return this.errors.map(err => {
       return { message: err.msg, field: err.param };
     });

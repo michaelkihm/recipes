@@ -1,3 +1,4 @@
+import { ErrorResponse } from '..';
 import { CustomError } from './custom-error';
 
 export class BadRequestError extends CustomError {
@@ -9,7 +10,7 @@ export class BadRequestError extends CustomError {
     Object.setPrototypeOf(this, BadRequestError.prototype);
   }
 
-  serializeErrors() {
+  serializeErrors(): ErrorResponse {
     return [{ message: this.message }];
   }
 }

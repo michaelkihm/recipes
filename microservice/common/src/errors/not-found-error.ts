@@ -1,3 +1,4 @@
+import { ErrorResponse } from '..';
 import { CustomError } from './custom-error';
 
 export class NotFoundError extends CustomError {
@@ -9,7 +10,7 @@ export class NotFoundError extends CustomError {
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 
-  serializeErrors() {
+  serializeErrors(): ErrorResponse {
     return [{ message: 'Not Found' }];
   }
 }
