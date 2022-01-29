@@ -18,3 +18,7 @@ spec:
             backend:
               serviceName: recipes-srv
               servicePort: 3001
+          - path: /?(.*)
+            backend:
+              serviceName: client-srv
+              servicePort: 3000
