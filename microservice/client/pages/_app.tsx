@@ -2,12 +2,8 @@ import '../styles/globals.css';
 import type { AppContext, AppProps } from 'next/app';
 import Header from '../components/Header';
 import buildAxiosClient from '../api/build-client';
-import { UserDoc } from '@mickenhosrecipes/common';
-import { UserContextProvider } from '../context/user-context';
+import { UserContextProvider, CurrentUser } from '../context/user-context';
 
-interface CurrentUser {
-	currentUser: UserDoc | null;
-}
 
 interface Props extends AppProps, CurrentUser {}
 
