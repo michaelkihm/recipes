@@ -8,9 +8,8 @@ export const processImageDataAndFormData = (req: PostRequest | PutRequest): Base
     const recipe = newRecipeStringToNewRecipe({ ...req.body, userId: req.currentUser!.id });
     let image = recipe.image;
     if(didMulterSaveImage(req as Request)){
-        const url = `${req.protocol}://${req.get('host')}`;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        image = `${url}/images/${(req as any)?.file?.filename}`;
+        image = `/api/recipes/images/${(req as any)?.file?.filename}`;
     }
 
     return { ...recipe, image: image || undefined };

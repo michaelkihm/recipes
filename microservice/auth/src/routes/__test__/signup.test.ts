@@ -71,13 +71,16 @@ describe('Signup User - /api/users/signup', () => {
 
 		expect(response.body.image).toBeDefined();
 		expect(response.body.image.includes(newUser.image)).toBeTruthy();
+		expect(response.body.image.includes(newUser.image)).toBeTruthy();
 	});
  
 	it('Set profile-dummy image a profile image if new image is provided', async () => {
 
+		const baseURL = '/api/users/images';
 		const response = await signupUser(validUser).expect(201);
 
 		expect(response.body.image).toBeDefined();
-		expect(response.body.image).toEqual('http://localhost:3000/images/profile-dummy.png');
+		expect(response.body.image.substring(0,baseURL.length)).toEqual(baseURL);
+		expect(response.body.image).toEqual('/api/users/images/profile-dummy.jpg');
 	});
 });

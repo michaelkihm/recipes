@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema<User>(
     image: {
       type: String,
       required: false,
-      default: 'http://localhost:3000/images/profile-dummy.png'
+      default: '/api/users/images/profile-dummy.jpg'
     },
     username: {
       type: String,

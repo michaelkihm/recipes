@@ -30,7 +30,7 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
         required: true },
     categories: { type: [String], required: true },
     ingredients: { type: [IngredientSchema], required: true },
-    image: { type: String, required: false, default: 'http://localhost:3001/images/recipe-dummy.png' } },
+    image: { type: String, required: false, default: '/api/recipes/images/recipe-dummy.png' } },
     {
       toJSON: {
         transform(doc, ret) {

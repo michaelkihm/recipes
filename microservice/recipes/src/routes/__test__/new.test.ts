@@ -90,8 +90,9 @@ describe('Add recipes - /api/recipes', () => {
                 [{ name: 'Potato', amount: 2, unit: 'pieces' }, { name: 'Tomatojuice', amount: 200, unit: 'ml' }],
             userId: '',
             categories: ['italian'],
-            image: 'images/recipe-dummy.png',
+            image: 'images/salmon-g856c1740c_640.jpg',
         };
+        const imageBaseURL = '/api/recipes/images/';
 
         let recipes = await RecipeModel.find({});
         expect(recipes.length).toEqual(0);
@@ -101,11 +102,14 @@ describe('Add recipes - /api/recipes', () => {
 
         recipes = await RecipeModel.find({});
 
+        const image = recipes[0].image;
         expect(recipes.length).toEqual(1);
         expect(recipes[0].name).toEqual(recipe.name);
         expect([...recipes[0].description]).toEqual(recipe.description);
         expect(recipes[0].userId).toBeDefined();
-        expect(recipes[0].image).toBeDefined();
+        expect(image).toBeDefined();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(image!.substring(0,imageBaseURL.length)).toEqual(imageBaseURL);
         expect(recipes[0].duration).toEqual(recipe.duration);
         expect([...recipes[0].categories]).toEqual(recipe.categories);
         recipes[0].ingredients.forEach((ingredient, i) => {

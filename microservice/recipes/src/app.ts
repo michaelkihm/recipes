@@ -13,7 +13,7 @@ import { updateRecipeRouter } from './routes/update';
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
-app.use('/images', express.static('/images'));
+app.use('/api/recipes/images', express.static('images'));
 
 app.use(
   cookieSession({
