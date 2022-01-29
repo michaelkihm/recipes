@@ -2,14 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../types/user.type';
 
-interface UserPayload extends User {
+export interface UserDoc extends User {
   id: string
 }
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
-      currentUser?: UserPayload;
+      currentUser?: UserDoc;
     }
   }
 }
@@ -27,7 +27,7 @@ export const currentUser = (
       req.session.jwt,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       process.env.JWT_KEY!
-    ) as UserPayload;
+    ) as UserDoc;
     req.currentUser = payload;
   } catch (err) {}
 
