@@ -74,4 +74,30 @@ describe('Get recipes - /api/recipes', () => {
         expect(firstIds).toContain(response.body[1].id);
         
     });
+
+    it('Returns recipes with categories given in query param categories', async () => {
+
+        await writeTestRecipesToDb();
+
+        // query vegan recipes
+        const veganRecipes = NEW_RECIPES.filter(recipe => recipe.categories.includes('vegan'));
+
+        const response = await request(app)
+                            .get('/api/recipes')
+                            .query({ categories:  ['vegan'] })
+                            .send().expect(200);
+
+        expect(response.body.length).toBe(veganRecipes.length);
+
+        // query for italian and healthy
+        const healthyItalianRecipes = NEW_RECIPES.filter(recipe =>
+            recipe.categories.includes('healthy') && recipe.categories.includes('italian'));
+        
+        const response2 = await request(app)
+            .get('/api/recipes')
+            .query({ categories:  ['healthy', 'italian'] })
+            .send().expect(200);
+
+        expect(response2.body.length).toBe(healthyItalianRecipes.length);
+    });
 });

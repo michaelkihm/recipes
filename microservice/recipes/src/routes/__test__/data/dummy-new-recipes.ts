@@ -13,7 +13,7 @@ export const NEW_RECIPES: BaseRecipe[] = [
             'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat',
             'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'],
         userId: user1Id,
-        categories: ['italian', 'pasta'],
+        categories: ['italian', 'pasta', 'vegan', 'healthy'],
         ingredients: [
             { name: 'tomatoes', amount: 2, unit: 'pieces' },
             { name: 'garlic', amount: 5, unit: 'pieces' },
@@ -64,7 +64,7 @@ export const NEW_RECIPES: BaseRecipe[] = [
             'Sit amet mauris commodo quis imperdiet. Sem fringilla ut morbi tincidunt augue. Mattis nunc sed blandit libero. Tortor at auctor urna nunc id. Sapien eget mi proin sed libero enim sed faucibus.',
             'Massa massa ultricies mi quis hendrerit dolor magna eget. Posuere ac ut consequat semper. Ut enim blandit volutpat maecenas volutpat blandit aliquam. Aliquet bibendum enim facilisis gravida neque. Volutpat diam ut venenatis tellus in metus vulputate eu. Bibendum neque egestas congue quisque egestas diam in arcu cursus. Posuere lorem ipsum dolor sit amet consectetur adipiscing elit duis. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Gravida rutrum quisque non tellus. Vulputate sapien nec sagittis aliquam.'],
         userId: user1Id,
-        categories: ['chicken', 'forTheWeekend'],
+        categories: ['chicken', 'forTheWeekend', 'italian', 'healthy'],
         ingredients: [
             { name: 'meat', amount: 4, unit: 'g' },
             { name: 'water', amount: 2, unit: 'ml' },
