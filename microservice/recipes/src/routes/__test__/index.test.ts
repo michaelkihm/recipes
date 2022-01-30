@@ -100,4 +100,29 @@ describe('Get recipes - /api/recipes', () => {
 
         expect(response2.body.length).toBe(healthyItalianRecipes.length);
     });
+
+    it('Can by searched by text if searchString is given in query param', async () => {
+
+        await writeTestRecipesToDb();
+        let searchString = 'Burger';
+        const response = await request(app)
+            .get('/api/recipes')
+            .query({ searchString })
+            .send().expect(200);
+
+        expect(response.body.length).toBe(1);
+        expect(response.body[0].name).toBe(searchString);
+
+        // search for magna eget
+        searchString = 'magna eget';
+        const response2 = await request(app)
+            .get('/api/recipes')
+            .query({ searchString })
+            .send().expect(200);
+
+        expect(response2.body.length).toBe(2);
+        expect(['Rezept', 'Spaghetti aglio']).toContain(response2.body[0].name);
+        expect(['Rezept', 'Spaghetti aglio']).toContain(response2.body[1].name);
+       
+    });
 });

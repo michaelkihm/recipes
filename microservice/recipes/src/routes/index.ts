@@ -7,6 +7,7 @@ type QueryParams = {
     userId?: string;
     ids?: string[];
     categories?: Category[];
+    searchString?: string;
 };
 type GetRecipesRequest = Request<never,never,never,QueryParams>;
 
@@ -20,6 +21,8 @@ router.get('/api/recipes', async (req: GetRecipesRequest, res: Response<RecipeDo
         query._id = { $in: req.query.ids };
     } else if(req.query.categories) {
         query.categories = { $all: req.query.categories };
+    } else if(req.query.searchString) {
+        query.$text = { $search: req.query.searchString };
     } else if (req.query.userId) {
         query.userId = req.query.userId;
     }

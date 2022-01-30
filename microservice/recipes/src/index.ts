@@ -17,6 +17,8 @@ const start = async () => {
           useCreateIndex: true,
           useFindAndModify: false,
     });
+    const recipes = await mongoose.connection.createCollection('recipes');
+	  await recipes.createIndex({ name: 'text', description: 'text' });
     console.log('Connected to MongoDb');
   } catch (err) {
     console.error(err);
