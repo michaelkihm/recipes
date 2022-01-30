@@ -4,6 +4,10 @@ import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
 import { NEW_RECIPES, user1Id } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
 
+const writeTestRecipesToDb = () => RecipeModel.collection.insertMany(
+    NEW_RECIPES.map(recipe => RecipeModel.build(recipe))
+);
+
 
 describe('Get recipes - /api/recipes', () => {
 
@@ -37,10 +41,9 @@ describe('Get recipes - /api/recipes', () => {
 
     it('Returns recipes from user if userId is a provided query param',async () => {
 
-        const recipes: RecipeDoc[] = [];
-        NEW_RECIPES.forEach(recipe => recipes.push(RecipeModel.build(recipe)));
+        await writeTestRecipesToDb();
         const user1Recipes = NEW_RECIPES.filter(recipe => recipe.userId === user1Id);
-        await RecipeModel.collection.insertMany(recipes);
+    
 
         const response = await request(app)
                             .get('/api/recipes')
@@ -55,7 +58,7 @@ describe('Get recipes - /api/recipes', () => {
 
     it('Returns recipes queried by its ids in the query param', async () => {
         
-        await RecipeModel.collection.insertMany(NEW_RECIPES.map(recipe => RecipeModel.build(recipe)));
+        await writeTestRecipesToDb();
         const recipes = await RecipeModel.find({});
         const [id1, id2, ..._rest] = recipes.map(recipe => recipe.id);
         const firstIds = [id1, id2];
