@@ -17,3 +17,11 @@ export * from './types/ingredient.type';
 export * from './types/recipe.type';
 export * from './types/base-recipe.type';
 export * from './types/user.type';
+
+export * from './events/base-listener';
+export * from './events/base-publisher';
+export * from './events/subjects';
+export * from './events/user-events/user-deleted-event';
+export * from './events/recipe-events/recipe-created-event';
+export * from './events/recipe-events/recipes-deleted-event';
+export * from './events/recipe-events/recipe-updated-event';
