@@ -1,7 +1,8 @@
-import { BaseRecipe } from '@mickenhosrecipes/common';
+import { BaseRecipe, Subjects } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
+import { natsWrapper } from '../../nats-wrapper';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,6 +22,8 @@ const postNewRecipe = (recipe: any) => {
 };
 
 describe('Add recipes - /api/recipes', () => {
+
+    beforeEach(() => jest.clearAllMocks());
 
 
     it('has a route handler listening to POST /api/recipes', async () => {
@@ -140,5 +143,14 @@ describe('Add recipes - /api/recipes', () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(recipes[0].image!.includes('recipe-dummy')).toBeTruthy();
 
+    });
+
+    it('publishes an event if new recipe gets created', async () => {
+
+        const recipe = NEW_RECIPES[0];
+        await postNewRecipe(recipe)
+            .expect(201);
+ 
+        expect(natsWrapper.client.publish).toHaveBeenCalled();
     });
 });
