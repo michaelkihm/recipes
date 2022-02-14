@@ -1,7 +1,9 @@
 import { requireAuth, validateRequest, multerMiddleware } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
 import { body } from 'express-validator';
+import { RecipeCreatedPublisher } from '../events/publishers/recipe-created-publisher';
 import { RecipeModel } from '../models/recipe.model';
+import { natsWrapper } from '../nats-wrapper';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { PostRequest } from './shared/types';
 
@@ -15,6 +17,17 @@ const postHandler = async (req: PostRequest, res: Response): Promise<void> => {
 
     const recipe = RecipeModel.build(newRecipe);
     await recipe.save();
+    const { id, name, description, userId, categories, ingredients, duration, image } = recipe;
+    await new RecipeCreatedPublisher(natsWrapper.client).publish({
+        id,
+        userId,
+        name,
+        description,
+        ingredients,
+        categories,
+        duration,
+        image
+    });
 
     res.status(201).send(recipe);
 };
