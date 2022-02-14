@@ -16,6 +16,12 @@ spec:
         - name: recipes
           image: mickenhos90/recipes
           env:
+            - name: NATS_CLUSTER_ID
+              value: recipes
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

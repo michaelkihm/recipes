@@ -10,8 +10,8 @@ const start = async () => {
 
   try {
 		await natsWrapper.connect(
-			'recipes',
-			'ladlfla',
+			process.env.NATS_CLUSTER_ID!,
+			process.env.NATS_CLIENT_ID!,
 			`http://${process.env.NATS_SRV_SERVICE_HOST}:${process.env.NATS_SRV_SERVICE_PORT}`);
 		natsWrapper.client.on('close', () => {
 			console.log('NATS connection closed');
