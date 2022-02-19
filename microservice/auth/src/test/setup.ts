@@ -10,10 +10,14 @@ declare global {
   var signin: () => Promise<string[]>;
 }
 
+jest.mock('@mickenhosrecipes/common');
+
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
   process.env.JWT_KEY = 'asdfasdf';
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+  jest.clearAllMocks();
 
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();

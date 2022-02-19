@@ -16,6 +16,12 @@ spec:
         - name: auth
           image: mickenhos90/recipes-auth
           env:
+            - name: NATS_CLUSTER_ID
+              value: recipes
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
