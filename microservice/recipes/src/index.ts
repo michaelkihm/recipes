@@ -3,26 +3,23 @@ import mongoose from 'mongoose';
 import { app } from './app';
 
 
-const start = async () => {
+const setupNatsStreamingServer = async () => {
 
-  if(!process.env.JWT_KEY) throw new Error('JWT_KEY must be defined');
-  if(!process.env.NATS_CLUSTER_ID) throw new Error('NATS_CLUSTER_ID must be defined');
-  if(!process.env.NATS_CLIENT_ID) throw new Error('NATS_CLIENT_ID must be defined');
-  
+	await natsWrapper.connect(
+		process.env.NATS_CLUSTER_ID!,
+		process.env.NATS_CLIENT_ID!,
+		`http://${process.env.NATS_SRV_SERVICE_HOST}:${process.env.NATS_SRV_SERVICE_PORT}`);
+	natsWrapper.client.on('close', () => {
+		console.log('NATS connection closed');
+		process.exit();
+	});
+	process.on('SIGINT', () => natsWrapper.client.close());
+	process.on('SIGTERM', () => natsWrapper.client.close());
+};
 
-  try {
-		await natsWrapper.connect(
-			process.env.NATS_CLUSTER_ID!,
-			process.env.NATS_CLIENT_ID!,
-			`http://${process.env.NATS_SRV_SERVICE_HOST}:${process.env.NATS_SRV_SERVICE_PORT}`);
-		natsWrapper.client.on('close', () => {
-			console.log('NATS connection closed');
-			process.exit();
-		});
-		process.on('SIGINT', () => natsWrapper.client.close());
-		process.on('SIGTERM', () => natsWrapper.client.close());
-		
-		await mongoose.connect(
+const setupMongoDB = async () => {
+
+	await mongoose.connect(
 		`mongodb://${process.env.RECIPES_MONGO_SRV_SERVICE_HOST}:${process.env.RECIPES_MONGO_SRV_SERVICE_PORT}/recipes`,
 		{
 			useNewUrlParser: true,
@@ -31,12 +28,26 @@ const start = async () => {
 			useFindAndModify: false,
 		});
 
-		if( !('recipes' in mongoose.connection.collections) ) {
-			const recipes = await mongoose.connection.createCollection('recipes');
-			await recipes.createIndex({ name: 'text', description: 'text' });
-		}
+	// Setup indexer
+	if( !('recipes' in mongoose.connection.collections) ) {
+		const recipes = await mongoose.connection.createCollection('recipes');
+		await recipes.createIndex({ name: 'text', description: 'text' });
+	}
+	
+	console.log('Connected to MongoDb');
+};
+
+const start = async () => {
+
+  if(!process.env.JWT_KEY) throw new Error('JWT_KEY must be defined');
+  if(!process.env.NATS_CLUSTER_ID) throw new Error('NATS_CLUSTER_ID must be defined');
+  if(!process.env.NATS_CLIENT_ID) throw new Error('NATS_CLIENT_ID must be defined');
+  
+
+  try {
 		
-    	console.log('Connected to MongoDb');
+		setupNatsStreamingServer();
+		setupMongoDB();
 
   } catch (err) {
     console.error(err);
