@@ -1,11 +1,10 @@
-import { BadRequestError, multerMiddleware, requireAuth, validateRequest } from '@mickenhosrecipes/common';
+import { BadRequestError, multerMiddleware, natsWrapper, requireAuth, validateRequest } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
 import { RecipeDoc, RecipeModel } from '../models/recipe.model';
 import { body } from 'express-validator';
 import { PutRequest } from './shared/types';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { RecipeUpdatedPublisher } from '../events/publishers/recipe-updated-publisher';
-import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 

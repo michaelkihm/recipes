@@ -9,7 +9,7 @@ declare global {
   var signin: () => string[];
 }
 
-jest.mock('../nats-wrapper');
+jest.mock('@mickenhosrecipes/common');
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {

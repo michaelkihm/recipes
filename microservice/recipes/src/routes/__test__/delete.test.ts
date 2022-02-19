@@ -1,7 +1,7 @@
+import { natsWrapper } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
-import { natsWrapper } from '../../nats-wrapper';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
 

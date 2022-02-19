@@ -1,8 +1,7 @@
-import { BadRequestError, requireAuth } from '@mickenhosrecipes/common';
+import { BadRequestError, requireAuth, natsWrapper } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { RecipeDeletedPublisher } from '../events/publishers/recipe-deleted-publisher';
 import { RecipeModel } from '../models/recipe.model';
-import { natsWrapper } from '../nats-wrapper';
 
 type DeleteRecipeResponse = {
     message: string;

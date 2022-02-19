@@ -1,9 +1,8 @@
-import { requireAuth, validateRequest, multerMiddleware } from '@mickenhosrecipes/common';
+import { requireAuth, validateRequest, multerMiddleware, natsWrapper } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
 import { body } from 'express-validator';
 import { RecipeCreatedPublisher } from '../events/publishers/recipe-created-publisher';
 import { RecipeModel } from '../models/recipe.model';
-import { natsWrapper } from '../nats-wrapper';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { PostRequest } from './shared/types';
 

@@ -25,3 +25,5 @@ export * from './events/user-events/user-deleted-event';
 export * from './events/recipe-events/recipe-created-event';
 export * from './events/recipe-events/recipes-deleted-event';
 export * from './events/recipe-events/recipe-updated-event';
+
+export * from './nats-wrapper';

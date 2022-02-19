@@ -1,9 +1,8 @@
-import { BaseRecipe, Category, Duration, Ingredient } from '@mickenhosrecipes/common';
+import { BaseRecipe, Category, Duration, Ingredient, natsWrapper } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
-import { natsWrapper } from '../../nats-wrapper';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
 
