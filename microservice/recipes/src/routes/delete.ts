@@ -13,8 +13,8 @@ const deleteRecipe = async (req: Request<{id: string}>, res: Response<DeleteReci
 
     try {
         await RecipeModel.findByIdAndDelete(req.params.id);
-        res.status(200).send({ message: `Deleted recipe ${req.params.id}` });
         await new RecipeDeletedPublisher(natsWrapper.client).publish([req.params.id]);
+        res.status(200).send({ message: `Deleted recipe ${req.params.id}` });
     } catch (err) {
         throw new BadRequestError(`Recipe with id ${req.params.id} does not exist and can not be deleted`);
     }

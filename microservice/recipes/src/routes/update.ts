@@ -15,7 +15,6 @@ const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
     const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, updatedRecipe, { new: true });
     if(recipe) {
         const { id, name, description, userId, categories, ingredients, duration, image } = recipe;
-        res.send(recipe);
         await new RecipeUpdatedPublisher(natsWrapper.client).publish({
             id,
             userId,
@@ -26,6 +25,7 @@ const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
             duration,
             image
         });
+        res.send(recipe);
     } else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
 
 };
