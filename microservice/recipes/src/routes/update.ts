@@ -4,6 +4,8 @@ import { RecipeDoc, RecipeModel } from '../models/recipe.model';
 import { body } from 'express-validator';
 import { PutRequest } from './shared/types';
 import { processImageDataAndFormData } from './shared/image-handling';
+import { RecipeUpdatedPublisher } from '../events/publishers/recipe-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -12,8 +14,20 @@ const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
     const updatedRecipe = processImageDataAndFormData(req);
 
     const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, updatedRecipe, { new: true });
-    if(recipe) res.send(recipe);
-    else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
+    if(recipe) {
+        const { id, name, description, userId, categories, ingredients, duration, image } = recipe;
+        res.send(recipe);
+        await new RecipeUpdatedPublisher(natsWrapper.client).publish({
+            id,
+            userId,
+            name,
+            description,
+            ingredients,
+            categories,
+            duration,
+            image
+        });
+    } else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
 
 };
 

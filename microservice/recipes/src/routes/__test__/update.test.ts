@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
+import { natsWrapper } from '../../nats-wrapper';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
 
@@ -22,6 +23,8 @@ const putRecipe = (recipe: BaseRecipe, id: string) => {
 };
 
 describe('Update recipe - PUT /api/recipes/:id', () => {
+
+    beforeEach(() => jest.clearAllMocks());
 
     it('has a route handler listening to PUT /api/recipes/:id', async () => {
 
@@ -163,5 +166,17 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
 
         expect(response.body.image).not.toEqual(recipe.image);
         expect(response.body.image.includes(recipe.image)).toBeTruthy();
+    });
+
+
+    it('publishes an event if recipe gets updapted', async() => {
+
+        const newRecipe = NEW_RECIPES[0];
+        const dbRecipe = RecipeModel.build(newRecipe);
+        await dbRecipe.save();
+        const foundRecipe = await RecipeModel.find({ name: newRecipe.name });
+        await putRecipe({ ...newRecipe, name: 'New Name' }, foundRecipe[0].id).expect(200);
+
+        expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
     });
 });
