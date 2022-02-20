@@ -18,14 +18,8 @@ const postHandler = async (req: PostRequest, res: Response): Promise<void> => {
     await recipe.save();
     const { id, name, description, userId, categories, ingredients, duration, image } = recipe;
     await new RecipeCreatedPublisher(natsWrapper.client).publish({
-        id,
-        userId,
-        name,
-        description,
-        ingredients,
-        categories,
-        duration,
-        image
+        recipe:  { id, userId, name, description, ingredients, categories, duration, image },
+        version: recipe.version,
     });
 
     res.status(201).send(recipe);

@@ -1,7 +1,10 @@
 import { Ingredient, BaseRecipe, Recipe } from '@mickenhosrecipes/common';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 
-export interface RecipeDoc extends mongoose.Document, BaseRecipe {}
+export interface RecipeDoc extends mongoose.Document, BaseRecipe {
+    version: number;
+}
 
 interface RecipeModel extends mongoose.Model<RecipeDoc> {
     build(attrs: BaseRecipe): RecipeDoc;
@@ -19,7 +22,7 @@ const IngredientSchema = new mongoose.Schema<Ingredient>({
     }
 });
 
-const RecipeSchema = new mongoose.Schema<Recipe>({
+const RecipeSchema = new mongoose.Schema({
     name: { type: String, required: true, index: true },
     description: { type: [String], required: true, index: true },
     userId: { type: String ,required: true },
@@ -40,6 +43,10 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
       },
     }
 );
+
+RecipeSchema.set('versionKey','version');
+RecipeSchema.plugin(updateIfCurrentPlugin);
+
 
 RecipeSchema.statics.build = (attrs: Recipe) => {
     return new RecipeModel(attrs);

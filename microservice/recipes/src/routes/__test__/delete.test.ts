@@ -4,7 +4,7 @@ import { app } from '../../app';
 import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
-
+import mongoose from 'mongoose';
 
 describe('Delete recipes - /api/recipes/:id', () => {
 
@@ -13,14 +13,14 @@ describe('Delete recipes - /api/recipes/:id', () => {
 
     it('has a route handler listening to DELETE /api/recipes/:id', async () => {
 
-        const response = await request(app).delete('/api/recipes/1234').send({});
+        const response = await request(app).delete(`/api/recipes/${new mongoose.Types.ObjectId()}`).send({});
         expect(response.status).not.toEqual(404);
     });
 
 
     it('can only be accessed if the user is signed in', async () => {
 
-        await request(app).delete('/api/recipes/1234')
+        await request(app).delete(`/api/recipes/${new mongoose.Types.ObjectId()}`)
             .send({})
             .expect(401);
     });
@@ -28,7 +28,7 @@ describe('Delete recipes - /api/recipes/:id', () => {
 
     it('returns a status other than 401 if the user is signed in', async () => {
         const response = await request(app)
-          .delete('/api/recipes/1234')
+          .delete(`/api/recipes/${new mongoose.Types.ObjectId()}`)
           .set('Cookie', global.signin())
           .send({});
       
@@ -73,6 +73,17 @@ describe('Delete recipes - /api/recipes/:id', () => {
           .expect(200);
 
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+    });
+
+    it('returns a 400 if recipe is not found', async () => {
+
+        const id = new mongoose.Types.ObjectId();
+        await request(app)
+          .delete(`/api/recipes/${id}`)
+          .set('Cookie', global.signin())
+          .send({})
+          .expect(400);
+
     });
 
 });
