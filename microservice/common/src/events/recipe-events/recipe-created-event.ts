@@ -3,6 +3,8 @@ import { Recipe } from '../../types/recipe.type';
 
 export interface RecipeCreatedEvent {
     subject: Subjects.RecipeCreated;
-    data: Recipe;
-    version: number;
+    data: {
+        recipe: Recipe
+        version: number;
+    };
 }
