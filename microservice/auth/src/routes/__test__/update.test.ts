@@ -66,12 +66,13 @@ describe('Update User', () => {
         };
 
         const cookie = await global.signin();
+        jest.clearAllMocks(); // clear user:created event from signin
         await request(app)
-                            .put('/api/users')
-                            .attach('image', updatedUser.image)
-                            .field('username', updatedUser.username)
-                            .set('Cookie', cookie)
-                            .expect(200);
+                .put('/api/users')
+                .attach('image', updatedUser.image)
+                .field('username', updatedUser.username)
+                .set('Cookie', cookie)
+                .expect(200);
 
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
         expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.UserUpdated);

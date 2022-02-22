@@ -1,10 +1,11 @@
 import express, { Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest, BadRequestError, multerMiddleware } from '@mickenhosrecipes/common';
+import { validateRequest, BadRequestError, multerMiddleware, natsWrapper } from '@mickenhosrecipes/common';
 import { UserDoc, UserModel } from '../models/user';
 import { UserAddRequest } from './shared/types';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { generateJWT } from './shared/generate-jwt';
+import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
 
 
 const router = express.Router();
@@ -20,6 +21,10 @@ const userSignUp = async (req: UserAddRequest, res: Response<UserDoc>) => {
 	
 	const user = UserModel.build(newUser);
 	await user.save();
+	await new UserCreatedPublisher(natsWrapper.client).publish({
+		version: 0,
+		user: { username: user.username, image: user.image || '', email: user.email },
+	});
 
 	generateJWT(user, req);
 

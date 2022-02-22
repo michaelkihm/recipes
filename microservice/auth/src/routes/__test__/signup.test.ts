@@ -1,4 +1,4 @@
-import { UserStrings } from '@mickenhosrecipes/common';
+import { natsWrapper, Subjects, UserStrings } from '@mickenhosrecipes/common';
 import { signupUser } from './shared/signup-user';
 
 
@@ -9,6 +9,8 @@ describe('Signup User - /api/users/signup', () => {
 		password: 'password',
 		username: 'username',
 	};
+
+	beforeEach(() => jest.clearAllMocks());
 
 	it('returns a 201 on successful signup', async () => {
 	
@@ -82,5 +84,20 @@ describe('Signup User - /api/users/signup', () => {
 		expect(response.body.image).toBeDefined();
 		expect(response.body.image.substring(0,baseURL.length)).toEqual(baseURL);
 		expect(response.body.image).toEqual('/api/users/images/profile-dummy.jpg');
+	});
+
+	it('publishes and user:update event', async () => {
+
+		const image = 'images/identicon.png';
+		const newUser = { ...validUser, image };
+		await signupUser(newUser).expect(201);
+
+		expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+		expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.UserCreated);
+		const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+		expect(publisherParameter.version).toBe(0);
+        expect(publisherParameter.user.username).toBe(validUser.username);
+        expect(publisherParameter.user.email).toBe(validUser.email);
+		expect(publisherParameter.user.image.includes(image)).toBeTruthy();
 	});
 });
