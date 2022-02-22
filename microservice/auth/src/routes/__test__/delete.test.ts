@@ -2,7 +2,7 @@ import { app } from '../../app';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { UserModel } from '../../models/user';
-import { natsWrapper } from '@mickenhosrecipes/common';
+import { natsWrapper, Subjects } from '@mickenhosrecipes/common';
 
 describe('Delete User - /api/users/:id',() => {
 
@@ -65,6 +65,7 @@ describe('Delete User - /api/users/:id',() => {
     it('publishes an event if user gets deleted',async () => {
         
         const cookie = await global.signin();
+        jest.clearAllMocks();
         const foundUsers = await UserModel.find({ email: 'test@test.com' });
 
         await request(app)
@@ -74,5 +75,9 @@ describe('Delete User - /api/users/:id',() => {
                 .expect(200);
         
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+        expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.UserDeleted);
+        const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+        expect(publisherParameter.version).toBe(0);
+        expect(publisherParameter.id).toBe(foundUsers[0].id);
     });
 });

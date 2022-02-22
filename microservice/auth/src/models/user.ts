@@ -1,6 +1,7 @@
 import { User } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: User): UserDoc;
@@ -8,9 +9,11 @@ interface UserModel extends mongoose.Model<UserDoc> {
 
 // An interface that describes the properties
 // that a User Document has
-export interface UserDoc extends mongoose.Document, User {}
+export interface UserDoc extends mongoose.Document, User {
+  version: number
+}
 
-const userSchema = new mongoose.Schema<User>(
+const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -42,6 +45,8 @@ const userSchema = new mongoose.Schema<User>(
   }
 );
 
+userSchema.set('versionKey', 'version');
+userSchema.plugin(updateIfCurrentPlugin);
 userSchema.pre('save', async function(done) {
   if (this.isModified('password')) {
     const hashed = await Password.toHash(this.get('password'));

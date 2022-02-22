@@ -44,7 +44,7 @@ const updateUser = async (req: UpdateUserRequest, res: Response<UserEvent>) => {
             image: user.image || '',
         };
         await new UserUpdatedPublisher(natsWrapper.client).publish({
-            version: 0,
+            version: user.version,
             user: userResponse,
         });
         res.status(200).send(userResponse);

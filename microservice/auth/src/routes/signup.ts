@@ -22,7 +22,7 @@ const userSignUp = async (req: UserAddRequest, res: Response<UserDoc>) => {
 	const user = UserModel.build(newUser);
 	await user.save();
 	await new UserCreatedPublisher(natsWrapper.client).publish({
-		version: 0,
+		version: user.version,
 		user: { username: user.username, image: user.image || '', email: user.email },
 	});
 
