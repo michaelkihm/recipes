@@ -4,6 +4,6 @@ export interface UserDeletedEvent {
     subject: Subjects.UserDeleted;
     data: {
         version: number
-        id: string
+        _id: string
     }
 }
