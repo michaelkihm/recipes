@@ -1,6 +1,6 @@
 import { natsWrapper, Subjects, UserStrings } from '@mickenhosrecipes/common';
 import { signupUser } from './shared/signup-user';
-
+import mongoose from 'mongoose';
 
 describe('Signup User - /api/users/signup', () => {
 
@@ -99,5 +99,6 @@ describe('Signup User - /api/users/signup', () => {
         expect(publisherParameter.user.username).toBe(validUser.username);
         expect(publisherParameter.user.email).toBe(validUser.email);
 		expect(publisherParameter.user.image.includes(image)).toBeTruthy();
+		expect(mongoose.Types.ObjectId.isValid(publisherParameter.userId)).toBeTruthy();
 	});
 });

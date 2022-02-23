@@ -46,6 +46,7 @@ const updateUser = async (req: UpdateUserRequest, res: Response<UserEvent>) => {
         await new UserUpdatedPublisher(natsWrapper.client).publish({
             version: user.version,
             user: userResponse,
+            userId: user.id,
         });
         res.status(200).send(userResponse);
     } else throw new BadRequestError(`Could not update user ${req.currentUser.id}`);

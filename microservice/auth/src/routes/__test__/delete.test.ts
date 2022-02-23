@@ -78,6 +78,6 @@ describe('Delete User - /api/users/:id',() => {
         expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.UserDeleted);
         const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
         expect(publisherParameter.version).toBe(0);
-        expect(publisherParameter.id).toBe(foundUsers[0].id);
+        expect(publisherParameter.userId).toBe(foundUsers[0].id);
     });
 });

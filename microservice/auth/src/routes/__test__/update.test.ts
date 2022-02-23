@@ -2,6 +2,7 @@ import { app } from '../../app';
 import request from 'supertest';
 import { UserModel } from '../../models/user';
 import { natsWrapper, Subjects } from '@mickenhosrecipes/common';
+import mongoose from 'mongoose';
 
 describe('Update User', () => {
 
@@ -80,6 +81,7 @@ describe('Update User', () => {
         expect(publisherParameter.version).toBe(0);
         expect(publisherParameter.user.username).toBe(updatedUser.username);
         expect(publisherParameter.user.email).toBe('test@test.com');
+        expect(mongoose.Types.ObjectId.isValid(publisherParameter.userId)).toBeTruthy();
     });
 
 });

@@ -24,6 +24,7 @@ const userSignUp = async (req: UserAddRequest, res: Response<UserDoc>) => {
 	await new UserCreatedPublisher(natsWrapper.client).publish({
 		version: user.version,
 		user: { username: user.username, image: user.image || '', email: user.email },
+		userId: user.id,
 	});
 
 	generateJWT(user, req);

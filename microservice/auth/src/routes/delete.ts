@@ -17,7 +17,7 @@ const deleteUser = async (req: Request<{id: string}>, res: Response<{message: st
         const user = await UserModel.findByIdAndDelete(req.params.id);
         if(!user) throw new BadRequestError(`User with id ${req.params.id} does not exist and can not be deleted`);
         await new UserDeletedPublisher(natsWrapper.client).publish({
-            id: req.params.id,
+            userId: req.params.id,
             version: user.version,
         });
         req.session = null; //logout user
