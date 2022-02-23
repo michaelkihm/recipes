@@ -25,7 +25,10 @@ const IngredientSchema = new mongoose.Schema<Ingredient>({
 const RecipeSchema = new mongoose.Schema({
     name: { type: String, required: true, index: true },
     description: { type: [String], required: true, index: true },
-    userId: { type: String ,required: true },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true },
     duration: {
         type: {
             duration: Number,
