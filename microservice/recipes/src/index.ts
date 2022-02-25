@@ -1,6 +1,7 @@
 import { natsWrapper } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import { app } from './app';
+import { UserCreatedListener } from './events/listeners/user-created-listener';
 import { UserDeletedListener } from './events/listeners/user-deleted-listener';
 
 
@@ -17,6 +18,7 @@ const setupNatsStreamingServer = async () => {
 	process.on('SIGINT', () => natsWrapper.client.close());
 	process.on('SIGTERM', () => natsWrapper.client.close());
 
+	new UserCreatedListener(natsWrapper.client).listen();
 	new UserDeletedListener(natsWrapper.client).listen();
 };
 
