@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
+import { user1Id } from '../routes/__test__/data/dummy-new-recipes';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -45,7 +46,7 @@ afterAll(async () => {
 global.signin = () => {
 	// Build a JWT payload.  { id, email }
 	const payload = {
-		id: new mongoose.Types.ObjectId().toHexString(),
+		id: user1Id,
 		email: 'test@test.com',
 	};
 

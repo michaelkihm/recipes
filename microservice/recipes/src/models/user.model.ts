@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import { UserEvent } from '@mickenhosrecipes/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { RecipeDoc } from './recipe.model';
 
 export interface UserDoc extends mongoose.Document, UserEvent {
     version: number
+    bookmarks: RecipeDoc[];
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
@@ -15,6 +17,12 @@ const UserSchema = new mongoose.Schema({
         username: { type: String, required: true },
         email: { type: String, required: true },
         image: { type: String, required: true },
+        bookmarks: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Recipe',
+            default: [],
+            required: true,
+        }
     },
     {
         toJSON: {
