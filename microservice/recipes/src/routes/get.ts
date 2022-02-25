@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/api/recipes/:id', async (req: Request<{id: string}>, res: Response<RecipeDoc>) => {
 
-    const recipe = await RecipeModel.findById(req.params.id);
+    const recipe = await RecipeModel.findById(req.params.id).populate('userId');
     if(recipe) res.send(recipe);
     else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
 
