@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { UserCreatedListener } from './events/listeners/user-created-listener';
 import { UserDeletedListener } from './events/listeners/user-deleted-listener';
+import { UserUpdatedListener } from './events/listeners/user-updated-listener';
 
 
 const setupNatsStreamingServer = async () => {
@@ -19,6 +20,7 @@ const setupNatsStreamingServer = async () => {
 	process.on('SIGTERM', () => natsWrapper.client.close());
 
 	new UserCreatedListener(natsWrapper.client).listen();
+	new UserUpdatedListener(natsWrapper.client).listen();
 	new UserDeletedListener(natsWrapper.client).listen();
 };
 
