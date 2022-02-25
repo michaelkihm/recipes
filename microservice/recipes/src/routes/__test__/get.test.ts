@@ -1,7 +1,6 @@
 import { app } from '../../app';
 import request from 'supertest';
 import mongoose from 'mongoose';
-import { createRecipe } from './shared/create-recipe';
 import { NEW_RECIPES } from './data/dummy-new-recipes';
 import { RecipeModel } from '../../models/recipe.model';
 import { UserModel } from '../../models/user.model';
