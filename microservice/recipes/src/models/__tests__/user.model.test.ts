@@ -12,7 +12,7 @@ describe('User Model', () => {
         image: 'path-to-image',
     };
 
-    it('creates a user coming from an user:created event', () => {
+    it('creates a user coming from an user:created event', async () => {
 
         const id = new mongoose.Types.ObjectId().toHexString();
         const userEventData: UserEventData = {
@@ -21,7 +21,11 @@ describe('User Model', () => {
             userId: id,
         };
         const user = UserModel.build(userEventData.userId, userEventData.user);
+        await user.save();
 
+        const foundUser = await UserModel.findById(id);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(foundUser!.id).toBe(id);
         for(const [key, value] of Object.entries(userEventData.user)){
             expect(user.get(key)).toBe(value);
         }
