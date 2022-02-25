@@ -1,4 +1,4 @@
-import { BaseRecipe, Category, Duration, Ingredient, natsWrapper } from '@mickenhosrecipes/common';
+import { BaseRecipe, Category, Duration, Ingredient, natsWrapper, Subjects } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
@@ -170,12 +170,21 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
 
     it('publishes an event if recipe gets updapted', async() => {
 
+        const newName = 'New Name';
         const newRecipe = NEW_RECIPES[0];
         const dbRecipe = RecipeModel.build(newRecipe);
         await dbRecipe.save();
         const foundRecipe = await RecipeModel.find({ name: newRecipe.name });
-        await putRecipe({ ...newRecipe, name: 'New Name' }, foundRecipe[0].id).expect(200);
+        const response = await putRecipe({ ...newRecipe, name: newName }, foundRecipe[0].id).expect(200);
 
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+        const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+        expect(publisherParameter.recipe.name).toEqual(response.body.name);
+        expect(publisherParameter.recipe.duration).toMatchObject(response.body.duration);
+        expect(publisherParameter.recipe.description).toEqual(response.body.description);
+        expect(publisherParameter.recipe.ingredients).toEqual(response.body.ingredients);
+        expect(publisherParameter.recipe.categories).toEqual(response.body.categories);
+        expect(publisherParameter.recipe.image.includes(response.body.image)).toBeTruthy();
+        expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.RecipeUpdated);
     });
 });

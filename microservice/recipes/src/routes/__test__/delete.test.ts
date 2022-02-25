@@ -1,4 +1,4 @@
-import { natsWrapper } from '@mickenhosrecipes/common';
+import { natsWrapper, Subjects } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
@@ -73,6 +73,9 @@ describe('Delete recipes - /api/recipes/:id', () => {
           .expect(200);
 
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+        const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+        expect(publisherParameter[0]).toMatchObject({ id: foundRecipes[0]._id.toString(), version: 0 });
+        expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.RecipesDeleted);
     });
 
     it('returns a 400 if recipe is not found', async () => {

@@ -1,4 +1,4 @@
-import { BaseRecipe, natsWrapper } from '@mickenhosrecipes/common';
+import { BaseRecipe, natsWrapper, Subjects } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { RecipeModel } from '../../models/recipe.model';
@@ -150,6 +150,14 @@ describe('Add recipes - /api/recipes', () => {
         await postNewRecipe(recipe)
             .expect(201);
  
-        expect(natsWrapper.client.publish).toHaveBeenCalled();
+        expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
+        const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+        expect(publisherParameter.recipe.name).toEqual(recipe.name);
+        expect(publisherParameter.recipe.duration).toMatchObject(recipe.duration);
+        expect(publisherParameter.recipe.description).toEqual(recipe.description);
+        expect(publisherParameter.recipe.ingredients).toEqual(recipe.ingredients);
+        expect(publisherParameter.recipe.categories).toEqual(recipe.categories);
+        expect(publisherParameter.recipe.image.includes(recipe.image)).toBeTruthy();
+        expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.RecipeCreated);
     });
 });
