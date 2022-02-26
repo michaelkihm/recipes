@@ -21,7 +21,7 @@ const SearchDrawer: FunctionComponent<{show: boolean}> = ({ show }) => {
                 <div
                     ref={nodeRef}
                     // eslint-disable-next-line max-len
-                    className="fixed w-full top-header p-2 bg-header transition-transform duration-300 ease-in-out text-header-text border-t border-header-text"
+                    className="fixed w-full top-header z-drawer p-2 bg-header transition-transform duration-300 ease-in-out text-header-text border-t border-header-text"
                      style={{ ...transitionStyles[state] }}
                 >
                     <input

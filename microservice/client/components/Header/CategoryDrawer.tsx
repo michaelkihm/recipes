@@ -26,7 +26,7 @@ const CategoryDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
                 <div
                     ref={nodeRef}
                     // eslint-disable-next-line max-len
-                    className="fixed w-full h-3/5 top-header p-2 overflow-y-auto bg-header transition-transform duration-300 ease-in-out text-header-text border-t border-header-text scroll-container"
+                    className="fixed w-full h-3/5 top-header z-drawer p-2 overflow-y-auto bg-header transition-transform duration-300 ease-in-out text-header-text border-t border-header-text scroll-container"
                      style={{ ...transitionStyles[state] }}>
                     {ALL_CATEGORIES.map(category => (
                         <div key={category} className="block flex items-center gap-x-1">
