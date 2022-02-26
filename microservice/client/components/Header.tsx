@@ -2,6 +2,10 @@ import { FunctionComponent, useContext } from 'react';
 import UserContext from '../context/user-context';
 import Link from 'next/link';
 import UserIcon from './icons/UserIcon';
+import CheckBoxIcon from './icons/CheckBoxIcon';
+import SearchIcon from './icons/SearchIcon';
+
+const ICON_SIZE_REM = 2;
 
 const Header: FunctionComponent = () => {
 
@@ -14,14 +18,15 @@ const Header: FunctionComponent = () => {
             </Link>
             <div className="w-full flex justify-between items-center">
                 <div className="flex">
-                    icons
+                    <SearchIcon sizeRem={ICON_SIZE_REM} />
+                    <CheckBoxIcon sizeRem={ICON_SIZE_REM}/>
                 </div>
                 <div className='flex items-center gap-x-2 '>
                  {!currentUser && <Link href="/auth/signup" passHref><p className='hover:underline'>Sign Up</p></Link>}
                  {!currentUser && <Link href="/auth/signin" passHref><p className='hover:underline'>Sign In</p></Link>}
                  {currentUser && <p>{currentUser.username}</p>}
                  {currentUser && <Link href="/auth/signout" passHref><p>Logout</p></Link>}
-                 <UserIcon sizeRem={2}/>
+                 <UserIcon sizeRem={ICON_SIZE_REM}/>
                 </div>
             </div>
         </div>
