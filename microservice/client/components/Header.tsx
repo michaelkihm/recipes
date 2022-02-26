@@ -1,6 +1,7 @@
 import { FunctionComponent, useContext } from 'react';
 import UserContext from '../context/user-context';
 import Link from 'next/link';
+import UserIcon from './icons/UserIcon';
 
 const Header: FunctionComponent = () => {
 
@@ -20,6 +21,7 @@ const Header: FunctionComponent = () => {
                  {!currentUser && <Link href="/auth/signin" passHref><p className='hover:underline'>Sign In</p></Link>}
                  {currentUser && <p>{currentUser.username}</p>}
                  {currentUser && <Link href="/auth/signout" passHref><p>Logout</p></Link>}
+                 <UserIcon sizeRem={2}/>
                 </div>
             </div>
         </div>
