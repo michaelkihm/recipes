@@ -7,7 +7,6 @@ import SearchIcon from '../icons/SearchIcon';
 import SearchDrawer from './SearchDrawer';
 import CategoryDrawer from './CategoryDrawer';
 
-
 const ICON_SIZE_REM = 2;
 
 const Header: FunctionComponent = () => {
@@ -16,6 +15,15 @@ const Header: FunctionComponent = () => {
     const [showCategories, setShowCategories] = useState<boolean>(false);
 
     const { currentUser } = useContext(UserContext);
+
+
+    const iconDisabled = (name: 'search' | 'category') => {
+        
+        if(!showSearchBar && !showCategories) return false;
+        if(name === 'search') return !showSearchBar;
+        else return !showCategories;
+    };
+    
     
     return (
         <Fragment>
@@ -25,8 +33,16 @@ const Header: FunctionComponent = () => {
                 </Link>
                 <div className="w-full flex justify-between items-center">
                     <div className="flex">
-                        <SearchIcon sizeRem={ICON_SIZE_REM} onClick={() => setShowSearchBar(!showSearchBar)}/>
-                        <CheckBoxIcon sizeRem={ICON_SIZE_REM} onClick={() => setShowCategories(!showCategories)}/>
+                        <SearchIcon
+                            sizeRem={ICON_SIZE_REM}
+                            onClick={() => setShowSearchBar(!showSearchBar)}
+                            disabled={iconDisabled('search')}
+                        />
+                        <CheckBoxIcon
+                            sizeRem={ICON_SIZE_REM}
+                            onClick={() => setShowCategories(!showCategories)}
+                            disabled={iconDisabled('category')}
+                        />
                     </div>
                     <div className='flex items-center gap-x-2 '>
                      {!currentUser && <Link href="/auth/signup" passHref><p className='hover:underline'>Sign Up</p></Link>}
