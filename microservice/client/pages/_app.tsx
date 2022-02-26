@@ -3,6 +3,7 @@ import type { AppContext, AppProps } from 'next/app';
 import Header from '../components/Header';
 import buildAxiosClient from '../api/build-client';
 import { UserContextProvider, CurrentUser } from '../context/user-context';
+import Head from 'next/head';
 
 
 interface Props extends AppProps, CurrentUser {}
@@ -15,8 +16,10 @@ const AppComponent = ({ Component, pageProps, currentUser }: Props): JSX.Element
 			<Head>
 				<link rel="shortcut icon" href="/favicon.ico" />
 			</Head>
-			<Header />
-			<Component {...pageProps} />
+			<div className='h-screen w-screen overflow-hidden'>
+				<Header />
+				<Component {...pageProps} />
+			</div>
 		</UserContextProvider>);
 
     

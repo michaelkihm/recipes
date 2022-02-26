@@ -5,7 +5,11 @@ module.exports = {
     "./hooks/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'header-bg': "url('/black-g0ec09ab00_1920.jpg')"
+      }
+    },
   },
   plugins: [],
 }
