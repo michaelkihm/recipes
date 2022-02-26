@@ -12,6 +12,9 @@ const AppComponent = ({ Component, pageProps, currentUser }: Props): JSX.Element
 
   	return (
 		<UserContextProvider currentUser={currentUser}>
+			<Head>
+				<link rel="shortcut icon" href="/favicon.ico" />
+			</Head>
 			<Header />
 			<Component {...pageProps} />
 		</UserContextProvider>);
