@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import type { AppContext, AppProps } from 'next/app';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import buildAxiosClient from '../api/build-client';
 import { UserContextProvider, CurrentUser } from '../context/user-context';
 import Head from 'next/head';

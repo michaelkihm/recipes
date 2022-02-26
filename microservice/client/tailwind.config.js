@@ -7,7 +7,16 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'header-bg': "url('/black-g0ec09ab00_1920.jpg')"
+        'header': "url('/black-g0ec09ab00_1920.jpg')"
+      },
+      zIndex: {
+        'drawer': '20',
+      },
+      spacing: {
+        header: '20%'
+      },
+      colors: {
+        'header-text': 'white', 
       }
     },
   },
