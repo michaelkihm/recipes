@@ -4,8 +4,9 @@ import Link from 'next/link';
 import UserIcon from '../icons/UserIcon';
 import CheckBoxIcon from '../icons/CheckBoxIcon';
 import SearchIcon from '../icons/SearchIcon';
-import SearchDrawer from './SearchDrawer';
-import CategoryDrawer from './CategoryDrawer';
+import SearchDrawer from './Drawer/SearchDrawer';
+import CategoryDrawer from './Drawer/CategoryDrawer';
+import UserDrawer from './Drawer/UserDrawer';
 
 const ICON_SIZE_REM = 2;
 
@@ -13,14 +14,17 @@ const Header: FunctionComponent = () => {
 
     const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
     const [showCategories, setShowCategories] = useState<boolean>(false);
+    const [showUser, setShowUser] = useState<boolean>(false);
+
 
     const { currentUser } = useContext(UserContext);
 
 
-    const iconDisabled = (name: 'search' | 'category') => {
+    const iconDisabled = (name: 'search' | 'category' | 'user') => {
         
-        if(!showSearchBar && !showCategories) return false;
+        if(!showSearchBar && !showCategories && !showUser) return false;
         if(name === 'search') return !showSearchBar;
+        else if(name === 'user' ) return !showUser;
         else return !showCategories;
     };
     
@@ -49,12 +53,17 @@ const Header: FunctionComponent = () => {
                      {!currentUser && <Link href="/auth/signin" passHref><p className='hover:underline'>Sign In</p></Link>}
                      {currentUser && <p>{currentUser.username}</p>}
                      {currentUser && <Link href="/auth/signout" passHref><p>Logout</p></Link>}
-                     <UserIcon sizeRem={ICON_SIZE_REM}/>
+                     <UserIcon
+                        sizeRem={ICON_SIZE_REM}
+                        onClick={() => setShowUser(!showUser)}
+                        disabled={iconDisabled('user')}
+                    />
                     </div>
                 </div>
             </div>
             <SearchDrawer show={ showSearchBar } />
             <CategoryDrawer show={ showCategories } />
+            <UserDrawer show={ showUser } />
         </Fragment>
     );
 };
