@@ -6,7 +6,7 @@ import CheckBoxIcon from '../icons/CheckBoxIcon';
 import SearchIcon from '../icons/SearchIcon';
 import SearchDrawer from './Drawer/SearchDrawer';
 import CategoryDrawer from './Drawer/CategoryDrawer';
-import UserDrawer from './Drawer/UserDrawer';
+import UserDrawer from './Drawer/UserDrawer/UserDrawer';
 
 const ICON_SIZE_REM = 2;
 
@@ -49,10 +49,10 @@ const Header: FunctionComponent = () => {
                         />
                     </div>
                     <div className='flex items-center gap-x-2 '>
-                     {!currentUser && <Link href="/auth/signup" passHref><p className='hover:underline'>Sign Up</p></Link>}
-                     {!currentUser && <Link href="/auth/signin" passHref><p className='hover:underline'>Sign In</p></Link>}
+                     {/* {!currentUser && <Link href="/auth/signup" passHref><p className='hover:underline'>Sign Up</p></Link>}
+                     {!currentUser && <Link href="/auth/signin" passHref><p className='hover:underline'>Sign In</p></Link>} */}
                      {currentUser && <p>{currentUser.username}</p>}
-                     {currentUser && <Link href="/auth/signout" passHref><p>Logout</p></Link>}
+                     {/* {currentUser && <Link href="/auth/signout" passHref><p>Logout</p></Link>} */}
                      <UserIcon
                         sizeRem={ICON_SIZE_REM}
                         onClick={() => setShowUser(!showUser)}
