@@ -6,8 +6,8 @@ import HeaderButton from '../../HeaderButton';
 import BaseDrawer from '../BaseDrawer';
 import Login from './Login';
 import LogOutButton from './LogOutButton';
-import UserAccountButton from './UserAccountButton';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
+import UserAccountIcon from '../../../icons/UserAccountIcon';
 
 const ICON_SIZE_REM = 2;
 
@@ -29,6 +29,7 @@ const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({
     const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
     const { currentUser } = useContext(UserContext);
+    const router = useRouter();
 
     const setterFuncs: OpenModal = { login: setShowLogin, signUp: setShowSignUp };
 
@@ -53,7 +54,9 @@ const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({
                 <HeaderButton onClick={() => modalOpenHandler('login')} >Einloggen</HeaderButton>
             </div>}
             { currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
-                    <UserAccountButton sizeRem={ICON_SIZE_REM} onClick={userAccountHandler}/>
+                        <UserAccountIcon sizeRem={ICON_SIZE_REM} onClick={userAccountHandler}
+                            disabled={router.route === '/user'}
+                        />
                     <LogOutButton sizeRem={ICON_SIZE_REM} />
                 </div>}
             {showLogin && <Login onLogin={() => setShowLogin(false)}/>}
