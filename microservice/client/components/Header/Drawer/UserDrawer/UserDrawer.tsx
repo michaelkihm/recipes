@@ -7,6 +7,7 @@ import BaseDrawer from '../BaseDrawer';
 import Login from './Login';
 import LogOutButton from './LogOutButton';
 import UserAccountButton from './UserAccountButton';
+import Router from 'next/router';
 
 const ICON_SIZE_REM = 2;
 
@@ -22,7 +23,7 @@ type OpenModal = {
     signUp: Dispatch<SetStateAction<boolean>>;
 };
 
-const UserDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
+const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({ show, onClose }) => {
 
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignUp, setShowSignUp] = useState<boolean>(false);
@@ -38,6 +39,12 @@ const UserDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
         setterFuncs[value](true);
     };
 
+    const userAccountHandler = () => {
+
+        onClose();
+        Router.push('/user');
+    };
+
 
     return (
         <BaseDrawer show={ show } transitionStyles={ transitionStyles } className="max-h-[45vh]">
@@ -46,7 +53,7 @@ const UserDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
                 <HeaderButton onClick={() => modalOpenHandler('login')} >Einloggen</HeaderButton>
             </div>}
             { currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
-                    <UserAccountButton sizeRem={ICON_SIZE_REM} />
+                    <UserAccountButton sizeRem={ICON_SIZE_REM} onClick={userAccountHandler}/>
                     <LogOutButton sizeRem={ICON_SIZE_REM} />
                 </div>}
             {showLogin && <Login onLogin={() => setShowLogin(false)}/>}

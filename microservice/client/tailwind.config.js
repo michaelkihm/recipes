@@ -13,10 +13,12 @@ module.exports = {
         'drawer': '20',
       },
       spacing: {
-        header: '20%'
+        header: '20%',
+        page: '80%',
       },
       colors: {
-        'header-text': 'white', 
+        'header-text': 'white',
+        app: '#F8EFEA',
         danger: 'rgb(248 113 113)'
       },
       opacity: {

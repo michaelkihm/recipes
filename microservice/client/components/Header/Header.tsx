@@ -60,7 +60,7 @@ const Header: FunctionComponent = () => {
             </div>
             <SearchDrawer show={ showSearchBar } />
             <CategoryDrawer show={ showCategories } />
-            <UserDrawer show={ showUser } />
+            <UserDrawer show={ showUser } onClose={() => setShowUser(false)} />
         </Fragment>
     );
 };
