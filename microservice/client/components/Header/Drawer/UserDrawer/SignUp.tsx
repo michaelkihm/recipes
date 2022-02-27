@@ -41,7 +41,7 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
             <Input title="Benutzer" onChange={setUsername} value={username} type="text" />
             <Input title="Passwort" onChange={setPassword1} value={password1} type="password" />
             <Input title="Passwort" onChange={setPassword2} value={password2} type="password" />
-            {!passwordsEqual && <p className="p-1 mt-2 bg-red-400">Passwörter stimmen nicht überein</p>}
+            {!passwordsEqual && <p className="p-1 mt-2 bg-danger">Passwörter stimmen nicht überein</p>}
             <ImageInput selectedImage={selectedImage} onChange={setSelectedImage}/>
             <hr className='mt-2'/>
         </Form>

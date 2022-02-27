@@ -31,7 +31,7 @@ const SignUp = (): JSX.Element => {
             <button className="p-1 bg-blue-400 text-white  hover:bg-blue-200 rounded shadow m-1">
                 Sign Up
             </button>
-            {errors.length > 0 && <div className='bg-red-400 rounded shadow p-2'>
+            {errors.length > 0 && <div className='bg-danger rounded shadow p-2'>
                     <h4 className='underline'>something went wrong</h4>
                     {errors.map(err => <p key={err.message}>{err.message}</p>)}
                 </div>}

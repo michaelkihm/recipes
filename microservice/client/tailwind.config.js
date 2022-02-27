@@ -17,6 +17,7 @@ module.exports = {
       },
       colors: {
         'header-text': 'white', 
+        danger: 'rgb(248 113 113)'
       },
       opacity: {
         disabled: '.50'

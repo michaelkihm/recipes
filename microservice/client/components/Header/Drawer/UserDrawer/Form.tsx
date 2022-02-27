@@ -13,7 +13,7 @@ const Form: FunctionComponent<FormProps> = ({ onSubmit, title, children, errors 
         <form className="p-4 m-2 border-2 rounded border-text-header overflow-y-auto" onSubmit={onSubmit}>
             <h1 className="text-xl text-bold underline">{title}</h1>
             {children}
-            {errors.length > 0 && <div className='bg-red-400'>
+            {errors.length > 0 && <div className='mt-2 px-1 bg-danger'>
                 <h4 className='underline'>something went wrong</h4>
                 {errors.map(err => <p key={err.message}>{err.message}</p>)}
             </div>}
