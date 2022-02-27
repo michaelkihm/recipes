@@ -7,6 +7,7 @@ import BaseDrawer from '../BaseDrawer';
 import Login from './Login';
 import LogOutButton from './LogOutButton';
 import Router, { useRouter } from 'next/router';
+import AddIcon from '../../../icons/AddIcon';
 import UserAccountIcon from '../../../icons/UserAccountIcon';
 
 const ICON_SIZE_REM = 2;
@@ -46,6 +47,12 @@ const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({
         Router.push('/user');
     };
 
+    const addRecipeHandler = () => {
+
+        onClose();
+        Router.push('/recipe/add');
+    };
+
 
     return (
         <BaseDrawer show={ show } transitionStyles={ transitionStyles } className="max-h-[45vh]">
@@ -54,9 +61,14 @@ const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({
                 <HeaderButton onClick={() => modalOpenHandler('login')} >Einloggen</HeaderButton>
             </div>}
             { currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
+                    <div className="flex gap-x-4">
                         <UserAccountIcon sizeRem={ICON_SIZE_REM} onClick={userAccountHandler}
                             disabled={router.route === '/user'}
                         />
+                        <AddIcon sizeRem={ICON_SIZE_REM}
+                            onClick={ addRecipeHandler } disabled={ router.route === '/recipe/add'}
+                        />
+                    </div>
                     <LogOutButton sizeRem={ICON_SIZE_REM} />
                 </div>}
             {showLogin && <Login onLogin={() => setShowLogin(false)}/>}

@@ -2,7 +2,7 @@
 import { FunctionComponent } from 'react';
 import { IconBaseProps } from './icon-base-props';
 
-const UserAccountIcon: FunctionComponent<IconBaseProps> = ({ onClick, sizeRem, disabled}) => {
+const UserAccountIcon: FunctionComponent<IconBaseProps> = ({ onClick, sizeRem, disabled }) => {
 
     return (
         <button onClick={ onClick } disabled={ disabled } className="disabled:opacity-disabled">
