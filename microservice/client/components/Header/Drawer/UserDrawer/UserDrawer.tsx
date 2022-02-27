@@ -1,8 +1,10 @@
-import { FunctionComponent, useContext } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction, useContext, useState } from 'react';
 import UserContext from '../../../../context/user-context';
+import SignUp from './SignUp';
 import { TransitionStyles } from '../../../../types/transition-styles';
 import HeaderButton from '../../HeaderButton';
 import BaseDrawer from '../BaseDrawer';
+import Login from './Login';
 import LogOutButton from './LogOutButton';
 import UserAccountButton from './UserAccountButton';
 
@@ -15,20 +17,40 @@ const transitionStyles: TransitionStyles = {
     exited:  { transform: 'translateX(100%)' },
 };
 
+type OpenModal = {
+    login: Dispatch<SetStateAction<boolean>>;
+    signUp: Dispatch<SetStateAction<boolean>>;
+};
+
 const UserDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
+
+    const [showLogin, setShowLogin] = useState<boolean>(false);
+    const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
     const { currentUser } = useContext(UserContext);
 
+    const setterFuncs: OpenModal = { login: setShowLogin, signUp: setShowSignUp };
+
+
+    const modalOpenHandler = (value: keyof OpenModal) => {
+
+        Object.keys(setterFuncs).forEach(key => setterFuncs[key as keyof OpenModal](false));
+        setterFuncs[value](true);
+    };
+
+
     return (
-        <BaseDrawer show={ show } transitionStyles={ transitionStyles }>
+        <BaseDrawer show={ show } transitionStyles={ transitionStyles } className="max-h-[45vh]">
             { !currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
-                <HeaderButton onClick={() => console.log('log')}>Sign Up</HeaderButton>
-                <HeaderButton onClick={() => console.log('log')} >Einloggen</HeaderButton>
+                <HeaderButton onClick={() => modalOpenHandler('signUp')}>Sign Up</HeaderButton>
+                <HeaderButton onClick={() => modalOpenHandler('login')} >Einloggen</HeaderButton>
             </div>}
             { currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
                     <UserAccountButton sizeRem={ICON_SIZE_REM} />
                     <LogOutButton sizeRem={ICON_SIZE_REM} />
                 </div>}
+            {showLogin && <Login onLogin={() => setShowLogin(false)}/>}
+            {showSignUp && <SignUp onSignup={() => setShowSignUp(false)}/>}
         </BaseDrawer>
     );
 };
