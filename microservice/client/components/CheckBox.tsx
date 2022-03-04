@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 
 interface CheckBoxProps {
     checked: boolean;
-    onClick: () => void;
+    onClick?: () => void;
     sizeRem: number;
 }
 
@@ -22,7 +22,7 @@ const CheckBox: FunctionComponent<CheckBoxProps> = ({ checked, onClick, sizeRem 
             {!checked && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={`${sizeRem}rem`}>
                     <title>Ellipse</title>
                     <circle cx="256" cy="256" r="192"
-                        fill="none" stroke="currentColor" 
+                        fill="none" stroke="currentColor"
                         strokeLinecap="round" strokeLinejoin="round" strokeWidth="32"/>
                 </svg>
             }

@@ -4,7 +4,7 @@ import { IconBaseProps } from './icon-base-props';
 const AddIcon: FunctionComponent<IconBaseProps> = ({ onClick, sizeRem, disabled }) => {
 
     return (
-        <button onClick={ onClick } disabled={ disabled } className="disabled:opacity-disabled">
+        <button type="button" onClick={ onClick } disabled={ disabled } className="disabled:opacity-disabled">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={`${sizeRem}rem`}>
                 <title>Add</title>
                 <path fill="none" stroke="currentColor"

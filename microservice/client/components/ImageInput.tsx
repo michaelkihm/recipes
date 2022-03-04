@@ -3,11 +3,11 @@ import { FunctionComponent } from 'react';
 interface ImageInputProps {
     onChange: (value: File | null) => void;
     selectedImage: File | null;
+    defaultImage: string;
 }
 
-const defaultImage = '/api/users/images/profile-dummy.jpg';
 
-const ImageInput: FunctionComponent<ImageInputProps> = ({ onChange, selectedImage }) => {
+const ImageInput: FunctionComponent<ImageInputProps> = ({ onChange, selectedImage, defaultImage }) => {
 
     return (
         <div className="mt-2 flex gap-x-2 items-center">

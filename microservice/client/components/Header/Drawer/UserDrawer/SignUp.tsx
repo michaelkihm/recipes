@@ -5,6 +5,7 @@ import Input from './Input';
 import ImageInput from '../../../ImageInput';
 import Router from 'next/router';
 
+const defaultImage = '/api/users/images/profile-dummy.jpg';
 
 const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
 
@@ -42,7 +43,7 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
             <Input title="Passwort" onChange={setPassword1} value={password1} type="password" />
             <Input title="Passwort" onChange={setPassword2} value={password2} type="password" />
             {!passwordsEqual && <p className="p-1 mt-2 bg-danger">Passwörter stimmen nicht überein</p>}
-            <ImageInput selectedImage={selectedImage} onChange={setSelectedImage}/>
+            <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage={defaultImage} />
             <hr className='mt-2'/>
         </Form>
     );

@@ -18,7 +18,7 @@ const AppComponent = ({ Component, pageProps, currentUser }: Props): JSX.Element
 			</Head>
 			<div className='h-screen w-screen overflow-hidden'>
 				<Header />
-				<div className="p-2 bg-app h-page">
+				<div className="h-page p-2 bg-app">
 					<Component {...pageProps} />
 				</div>
 			</div>

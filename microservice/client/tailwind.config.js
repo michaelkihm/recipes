@@ -19,7 +19,10 @@ module.exports = {
       colors: {
         'header-text': 'white',
         app: '#F8EFEA',
-        danger: 'rgb(248 113 113)'
+        danger: 'rgb(248 113 113)',
+        chenin: '#DED369',
+        mandy: '#E0475B',
+        deepfir: '#192F01'
       },
       opacity: {
         disabled: '.50'

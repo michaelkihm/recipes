@@ -1,5 +1,5 @@
 export interface IconBaseProps {
     sizeRem: number,
-    onClick: () => void,
-    disabled: boolean,
+    onClick?: () => void,
+    disabled?: boolean,
 }
