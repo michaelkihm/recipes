@@ -24,7 +24,7 @@ const ImageInput: FunctionComponent<ImageInputProps> = ({ onChange, selectedImag
             <input 
                 className='self-end p-1 bg-blue-400 text-white hover:bg-blue-200 rounded'
                 type="button" 
-                value="Browse..." 
+                value="Bild suchen..." 
                 onClick={() => document.getElementById('selectedFile')!.click() }/>
         </div>
     )

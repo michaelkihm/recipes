@@ -33,7 +33,7 @@ const DescriptionInput: FunctionComponent<DescriptionInputProps> = ({ descriptio
         <div>
             {descriptionPlusOne().map((step, i) => (
                 <div key={i}>
-                    <p className="font-bold">Step {i + 1}</p>
+                    <p className="font-bold">Schritt {i + 1}</p>
                     <div className="w-full flex gap-x-1 items-start">
                         <textarea
                             className="grow"
