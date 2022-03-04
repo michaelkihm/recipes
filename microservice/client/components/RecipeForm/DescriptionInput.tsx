@@ -8,6 +8,9 @@ interface DescriptionInputProps {
 }
 
 const ICON_SIZE_REM = 1.25;
+
+export const removeEmptyDescriptionSteps = (description: string[]): string[] => description.filter(step => step !== '');
+
 const DescriptionInput: FunctionComponent<DescriptionInputProps> = ({ description, setDescription }) => {
 
     const descriptionPlusOne = () => [...description, ...(!description.length ? [''] : [])];
@@ -42,12 +45,12 @@ const DescriptionInput: FunctionComponent<DescriptionInputProps> = ({ descriptio
                             onChange={(e) => handleChange(e.target.value, i)}
                             rows={4}
                         />
-                        <DeleteIcon onClick={() => removeStep(i)} sizeRem={1.25}/>
+                        <DeleteIcon onClick={() => removeStep(i)} sizeRem={ICON_SIZE_REM}/>
                     </div>
                 </div>
             ))}
             <div className="w-8 my-1 p-1 flex items-center justify-center bg-chenin rounded">
-                <AddIcon sizeRem={1.12} onClick={plusBtnHandler}/>
+                <AddIcon sizeRem={ICON_SIZE_REM} onClick={plusBtnHandler}/>
             </div>
         </div>
     );

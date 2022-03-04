@@ -12,7 +12,10 @@ interface IngredientsInputProps {
 
 const emptyIngredient: Ingredient = { name: '', amount: 0, unit: 'g' };
 
-//const isEmptyIngredient = (ingredient: Ingredient) => JSON.stringify(ingredient) === JSON.stringify(emptyIngredient);
+const isEmptyIngredient = (ingredient: Ingredient) => JSON.stringify(ingredient) === JSON.stringify(emptyIngredient);
+
+export const removeEmptyIngredients = (ingredients: Ingredient[]): Ingredient[] =>
+    ingredients.filter(ingredient => !isEmptyIngredient(ingredient));
 
 const IngredientsInput: FunctionComponent<IngredientsInputProps> = ({ ingredients, setIngredients }) => {
 
