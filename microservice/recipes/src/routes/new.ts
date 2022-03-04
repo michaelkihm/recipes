@@ -2,7 +2,7 @@ import { requireAuth, validateRequest, multerMiddleware, natsWrapper } from '@mi
 import express, { Response } from 'express';
 import { body } from 'express-validator';
 import { RecipeCreatedPublisher } from '../events/publishers/recipe-created-publisher';
-import { RecipeModel } from '../models/recipe.model';
+import { RecipeDoc, RecipeModel } from '../models/recipe.model';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { PostRequest } from './shared/types';
 
@@ -10,7 +10,7 @@ import { PostRequest } from './shared/types';
 const router = express.Router();
 
 
-const postHandler = async (req: PostRequest, res: Response): Promise<void> => {
+const postHandler = async (req: PostRequest, res: Response<RecipeDoc>): Promise<void> => {
 
     const newRecipe = processImageDataAndFormData(req);
 

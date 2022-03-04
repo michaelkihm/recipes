@@ -7,7 +7,7 @@ type ReqeuestProps = {
     url: string,
     method: 'post' | 'get' | 'patch' | 'delete',
     body: {[key: string]: any}
-    onSuccess?: () => void
+    onSuccess?: (data?: any) => void
 }
 
 const useRequest = ({ url, method, body, onSuccess}: ReqeuestProps) => {
@@ -18,7 +18,7 @@ const useRequest = ({ url, method, body, onSuccess}: ReqeuestProps) => {
         try {
             const response = await axios[method](url, body);
             setErrors([])
-            onSuccess && onSuccess();
+            onSuccess && onSuccess(response.data);
             return response.data
         } catch (err) {
             const error = err as AxiosError<APIErrorResponse>;
