@@ -7,6 +7,7 @@ interface DescriptionInputProps {
     setDescription: (description: string[]) => void;
 }
 
+const ICON_SIZE_REM = 1.25;
 const DescriptionInput: FunctionComponent<DescriptionInputProps> = ({ description, setDescription }) => {
 
     const descriptionPlusOne = () => [...description, ...(!description.length ? [''] : [])];
