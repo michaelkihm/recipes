@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import { FormEvent, useState, FunctionComponent } from 'react';
 import useRequest from '../../../../hooks/use-request';
-import Form from './Form';
+import Form from '../../../Form';
 import Input from './Input';
 
 const Login: FunctionComponent<{onLogin: () => void }> = ({ onLogin }) => {

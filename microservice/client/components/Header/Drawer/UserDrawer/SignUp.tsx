@@ -1,6 +1,6 @@
 import { FunctionComponent, useState, FormEvent } from 'react';
 import useRequest from '../../../../hooks/use-request';
-import Form from './Form';
+import Form from '../../../Form';
 import Input from './Input';
 import ImageInput from '../../../ImageInput';
 import Router from 'next/router';
