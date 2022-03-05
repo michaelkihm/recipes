@@ -37,7 +37,8 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
     };
 
     return (
-        <Form onSubmit={onSubmit} title="SignUp" errors={errors}>
+        <Form onSubmit={onSubmit} title="SignUp" errors={errors}
+            className="p-4 m-2 border-2 rounded border-text-header overflow-y-auto">
             <Input title="E-Mail" onChange={setEmail} value={email} type="text" />
             <Input title="Benutzer" onChange={setUsername} value={username} type="text" />
             <Input title="Passwort" onChange={setPassword1} value={password1} type="password" />

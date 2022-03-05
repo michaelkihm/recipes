@@ -23,7 +23,8 @@ const Login: FunctionComponent<{onLogin: () => void }> = ({ onLogin }) => {
     };
 
     return (
-        <Form title='Einloggen' onSubmit={onSubmit} errors={errors}>
+        <Form title='Einloggen' onSubmit={onSubmit} errors={errors}
+            className="p-4 m-2 border-2 rounded border-text-header overflow-y-auto">
             <Input title='E-Mail' type='text' onChange={setEmail} value={email}/>
             <Input title='Password' type='password' onChange={setPassword} value={password}/>
         </Form>

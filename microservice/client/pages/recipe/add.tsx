@@ -9,6 +9,7 @@ import NameInput from '../../components/RecipeForm/NameInput';
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
 import FormData from 'form-data';
+import Form from '../../components/Form';
 
 const defaultImage = '/api/recipes/images/recipe-dummy.png';
 
@@ -39,8 +40,7 @@ const Add: FunctionComponent = () => {
     
 
     return (
-        <form className="h-full flex flex-col gap-y-2 overflow-y-scroll" onSubmit={onSubmit}>
-            <h1 className="text-2xl text-bold font-mono">Rezept erstellen</h1>
+        <Form onSubmit={onSubmit} errors={errors} title="Rezept erstellen" className="h-full flex flex-col gap-y-2 overflow-y-scroll">
             <NameInput value={name} onChange={ setName }/>
             <DurationInput duration={ duration } setDuration={ setDuration }/>
             <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage={defaultImage}/>
@@ -53,19 +53,7 @@ const Add: FunctionComponent = () => {
                 <p>Zubereitung</p>
             </div>
             <DescriptionInput description={description} setDescription={setDescription} />
-            {errors.length > 0 && <div className='mt-2 px-1 bg-danger'>
-                <h4 className='underline'>something went wrong</h4>
-                {errors.map(err => <p key={err.message}>{err.message}</p>)}
-            </div>}
-            <button className='p-1 bg-blue-400 text-white hover:bg-blue-200 rounded' type="submit">
-                Hinzufügen
-            </button>
-            {/* <input 
-                className='p-1 bg-blue-400 text-white hover:bg-blue-200 rounded'
-                type="submit" 
-                value="Hinzufügen" 
-                onClick={() => document.getElementById('selectedFile')!.click() }/> */}
-        </form>
+        </Form>
     );
 };
 
