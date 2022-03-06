@@ -1,5 +1,6 @@
 import axios, { AxiosRequestHeaders, AxiosInstance } from 'axios';
 import { NextPageContext } from 'next';
+import { backendUrlOnServer } from './constants';
 
 
 const buildAxiosClient = ({ req } : NextPageContext): AxiosInstance => {
@@ -7,7 +8,7 @@ const buildAxiosClient = ({ req } : NextPageContext): AxiosInstance => {
     if(typeof window === 'undefined') {
         //On the server
         return axios.create({
-            baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+            baseURL: backendUrlOnServer,
             headers: req?.headers as AxiosRequestHeaders,
         });
     } else {

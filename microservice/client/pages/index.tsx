@@ -1,7 +1,7 @@
-import type { NextPage } from 'next';
-import buildAxiosClient from '../api/build-client';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Recipe } from '@mickenhosrecipes/common';
 import RecipeCard from '../components/RecipeCard';
+import { buildAxiosBackendClient } from '../api/server-side-axios-client';
 
 interface HomeProps {
 	recipes: Recipe[]
@@ -17,12 +17,16 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
 		</div>);
 };
 
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
+    
+    const client = buildAxiosBackendClient(context.req.headers);
+    const { data } = await client.get<Recipe[]>('api/recipes');
 
-Home.getInitialProps = async (context): Promise<HomeProps> => {
-
-	const client = buildAxiosClient(context);
-	const { data } = await client.get<Recipe[]>('/api/recipes');
-	return { recipes: data };
+    return {
+        props: {
+          recipes: data,
+        },
+    };
 };
 
 export default Home;

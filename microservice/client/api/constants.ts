@@ -1,0 +1,1 @@
+export const backendUrlOnServer = 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local';
