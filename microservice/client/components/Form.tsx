@@ -12,7 +12,7 @@ const Form: FunctionComponent<FormProps> = ({ onSubmit, title, children, errors,
    
     return (
         <form className={className} onSubmit={onSubmit}>
-            <h1 className="text-xl text-bold underline">{title}</h1>
+            <h1 className="text-xl font-bold underline">{title}</h1>
             {children}
             {errors.length > 0 && <div className='mt-2 px-1 bg-danger'>
                 <h4 className='underline'>something went wrong</h4>
