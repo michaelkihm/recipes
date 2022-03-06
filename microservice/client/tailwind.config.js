@@ -15,6 +15,8 @@ module.exports = {
       spacing: {
         header: '20%',
         page: '80%',
+        card_width: '14rem',
+        card_height: '18.5rem'
       },
       colors: {
         'header-text': 'white',
