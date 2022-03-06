@@ -10,8 +10,7 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ recipes }) => {
 	
 	return (
-		<div className='p-2'>
-			<h1>Landing Page</h1>
+		<div className="h-full overflow-y-auto scroll-container">
 			{!recipes.length && <p>No recipes are here</p>}
 			{recipes.map(recipe => <RecipeCard key={recipe.id} recipe={recipe}/>)}
 		</div>);
