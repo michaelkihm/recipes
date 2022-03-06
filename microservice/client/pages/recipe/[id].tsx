@@ -22,11 +22,14 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
             </div>
             {/* {image && <Image src={image} alt={name} width={200} height={200} loader={imageLoader} unoptimized/>} */}
             { image && <img src={image} alt={name} height={'25%'}/>}
-            { categories.map(category => (
-                <div key={category} className="max-w-[25%] p-0.5 flex justify-center items-center rounded-lg bg-chenin">
-                    <p className='text-black'>{category}</p>
-                </div>
-            ))}
+            <div className="flex flex-wrap gap-x-1">
+                { categories.map(category => (
+                    <div key={category}
+                        className="min-w-[25%] px-1 py-0.5 flex justify-center items-center rounded-lg bg-chenin">
+                            <p className='text-black'>{category}</p>
+                    </div>
+                ))}
+            </div>
             <RecipeThematicBreak name="Zutaten" />
             <ul className="list-inside">
                 {ingredients.map(ingredient => (
