@@ -33,7 +33,7 @@ const Header: FunctionComponent = () => {
         <Fragment>
             <div className='w-full h-header p-2 flex flex-col justify-between items-center bg-header text-header-text'>
                 <Link href="/" passHref>
-                    <h1 className='text-3xl text-bold font-mono cursor-pointer'>Recipes</h1>
+                    <h1 className='text-3xl font-bold font-mono cursor-pointer'>Recipes</h1>
                 </Link>
                 <div className="w-full flex justify-between items-center">
                     <div className="flex">
