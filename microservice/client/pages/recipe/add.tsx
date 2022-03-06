@@ -10,6 +10,7 @@ import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
 import FormData from 'form-data';
 import Form from '../../components/Form';
+import RecipeThematicBreak from '../../components/RecipeThematicBreak';
 
 const defaultImage = '/api/recipes/images/recipe-dummy.png';
 
@@ -44,13 +45,9 @@ const Add: FunctionComponent = () => {
             <DurationInput duration={ duration } setDuration={ setDuration }/>
             <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage={defaultImage}/>
             <CategoryInput categories={categories} setCategories={ setCategories } />
-            <div className="w-full py-2 flex justify-center items-center bg-mandy text-white text-bold">
-                <p>Zutaten</p>
-            </div>
+            <RecipeThematicBreak name="Zutaten"/>
             <IngredientsInput ingredients={ingredients} setIngredients={setIngredients}/>
-            <div className="w-full py-2 flex justify-center items-center bg-mandy text-white text-bold">
-                <p>Zubereitung</p>
-            </div>
+            <RecipeThematicBreak name="Zubereitung"/>
             <DescriptionInput description={description} setDescription={setDescription} />
         </Form>
     );
