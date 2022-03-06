@@ -4,6 +4,7 @@ import { inputStyle } from './form-styles';
 import { ALL_INGREDIENT_UNITS } from '@mickenhosrecipes/common/build/types/ingredient.type';
 import AddIcon from '../icons/AddIcon';
 import DeleteIcon from '../icons/DeleteIcon';
+import BulletPointIcon from '../icons/BulletPointIcon';
 
 interface IngredientsInputProps {
     ingredients: Ingredient[];
@@ -54,9 +55,10 @@ const IngredientsInput: FunctionComponent<IngredientsInputProps> = ({ ingredient
 
     return (
         <div>
-            <ul className='list-inside list-disc'>
+            <ul className="list-inside">
                 {ingredientsPlusOne().map((ingredient, i) => (
-                    <li key={i} className="w-full my-1">
+                    <li key={i} className="w-full my-1 flex gap-x-1">
+                            <BulletPointIcon />
                             <input
                                 type="number"
                                 className={`w-2/12 ${inputStyle}`}
