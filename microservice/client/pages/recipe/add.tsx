@@ -27,8 +27,7 @@ const Add: FunctionComponent = () => {
         method: 'post', body: createRecipeFormData(name, description, categories, duration, ingredients, selectedImage!),
         onSuccess: (recipe: any) => {
             console.log(recipe.name)
-            //Router.push(`recipe/${recipe.id}`)
-            Router.push('/');
+            Router.push(`${recipe.id}`)
         }
     })
 
