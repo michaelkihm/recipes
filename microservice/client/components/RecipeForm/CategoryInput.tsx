@@ -20,17 +20,19 @@ const CategoryInput: FunctionComponent<CategoryInputProps> = ({ categories, setC
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
-    const categorySelectHandler = (category: Category) => {
-        setSelectedCategories({ ...selectedCategories, [category]: !selectedCategories[category] });
-        updateCategories();
-    };
+    useEffect(() => {
 
-    const updateCategories = () => {
         const categories: Category[] = [];
         Object.entries(selectedCategories).forEach(([key, value]) => {
             if(value) categories.push(key as Category);
         });
+        console.log(categories)
         setCategories(categories);
+    },[selectedCategories, setCategories]);
+
+    const categorySelectHandler = (category: Category) => {
+        setSelectedCategories({ ...selectedCategories, [category]: !selectedCategories[category] });
+
     };
 
     return (
