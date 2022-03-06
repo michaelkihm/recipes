@@ -24,7 +24,7 @@ const Add: FunctionComponent = () => {
 
     const { doRequest, errors } = useRequest({
         url: '/api/recipes',
-        method: 'post', body: createRecipeFormData(name, description, categories, duration, ingredients, selectedImage!),
+        method: 'post', body: createRecipeFormData(name, description, categories, duration, ingredients, selectedImage),
         onSuccess: (recipe: any) => {
             console.log(recipe.name)
             Router.push(`${recipe.id}`)
@@ -57,13 +57,13 @@ const Add: FunctionComponent = () => {
 };
 
 const createRecipeFormData = (
-    name: string, description: string[], categories: Category[], duration: Duration, ingredients: Ingredient[], image: File ) => {
+    name: string, description: string[], categories: Category[], duration: Duration, ingredients: Ingredient[], image: File | null ) => {
     
         const recipeFormData = new FormData();
 
         recipeFormData.append('name', name);
         recipeFormData.append('categories', JSON.stringify(categories))
-        recipeFormData.append('image', image);
+        recipeFormData.append('image', image || '');
         recipeFormData.append('duration', JSON.stringify(duration));
         recipeFormData.append('description', JSON.stringify(removeEmptyDescriptionSteps(description)));
         recipeFormData.append('ingredients', JSON.stringify(removeEmptyIngredients(ingredients)))
