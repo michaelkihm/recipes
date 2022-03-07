@@ -1,5 +1,5 @@
 import { Category, Duration, Ingredient } from '@mickenhosrecipes/common';
-import { FormEvent, FunctionComponent, useState } from 'react';
+import { FormEvent, FunctionComponent, useContext, useState } from 'react';
 import ImageInput from '../../components/ImageInput';
 import CategoryInput from '../../components/RecipeForm/CategoryInput';
 import DescriptionInput, { removeEmptyDescriptionSteps } from '../../components/RecipeForm/DescriptionInput';
@@ -11,6 +11,8 @@ import Router from 'next/router';
 import FormData from 'form-data';
 import Form from '../../components/Form';
 import RecipeThematicBreak from '../../components/RecipeThematicBreak';
+import UserContext from '../../context/user-context';
+import PleaseLogin from '../../components/PleaseLogin';
 
 const defaultImage = '/api/recipes/images/recipe-dummy.png';
 
@@ -22,6 +24,10 @@ const Add: FunctionComponent = () => {
     const [description, setDescription] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+    const { currentUser } = useContext(UserContext);
+
+    if(!currentUser) return <PleaseLogin />
 
     const { doRequest, errors } = useRequest({
         url: '/api/recipes',
