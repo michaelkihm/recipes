@@ -26,7 +26,6 @@ const CategoryInput: FunctionComponent<CategoryInputProps> = ({ categories, setC
         Object.entries(selectedCategories).forEach(([key, value]) => {
             if(value) categories.push(key as Category);
         });
-        console.log(categories)
         setCategories(categories);
     },[selectedCategories, setCategories]);
 
