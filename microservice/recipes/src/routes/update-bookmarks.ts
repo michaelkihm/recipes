@@ -14,13 +14,13 @@ const updateBookmarks = async (
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const userId = req.currentUser!.id;
         const { recipeId, method } = req.body;
-        const result = await UserModel.updateOne(
+        await UserModel.updateOne(
             { _id: userId },
             method === 'push' ? { $addToSet: { bookmarks: recipeId } } : { $pull: { bookmarks: recipeId } },
         );
         const user = await UserModel.findById(userId).populate('bookmarks');
 
-        if(result.nModified && user) {
+        if( user) {
             res.send(user.bookmarks);
         } else throw new BadRequestError(`Could update bookmarks of user ${userId}`);
 };

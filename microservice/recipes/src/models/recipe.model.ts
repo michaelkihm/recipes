@@ -1,4 +1,4 @@
-import { Ingredient, BaseRecipe, Recipe } from '@mickenhosrecipes/common';
+import { Ingredient, BaseRecipe, Recipe, Duration } from '@mickenhosrecipes/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 
@@ -22,18 +22,25 @@ const IngredientSchema = new mongoose.Schema<Ingredient>({
     }
 });
 
+const DurationSchema = new mongoose.Schema<Duration>({
+    duration: { type: Number, required: true },
+    unit: { type: String, required: true },
+},{
+    toJSON: {
+        transform(_doc, ret) {
+            delete ret._id;
+        }
+    }
+});
+
 const RecipeSchema = new mongoose.Schema({
-    name: { type: String, required: true, index: true },
-    description: { type: [String], required: true, index: true },
+    name: { type: String, required: true },
+    description: { type: [String], required: true },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true },
-    duration: {
-        type: {
-            duration: Number,
-            unit: String },
-        required: true },
+    duration: { type: DurationSchema, required: true },
     categories: { type: [String], required: true },
     ingredients: { type: [IngredientSchema], required: true },
     image: { type: String, required: false, default: '/api/recipes/images/recipe-dummy.png' } },
@@ -47,6 +54,7 @@ const RecipeSchema = new mongoose.Schema({
     }
 );
 
+RecipeSchema.index({ name: 'text', description: 'text' });
 RecipeSchema.set('versionKey','version');
 RecipeSchema.plugin(updateIfCurrentPlugin);
 

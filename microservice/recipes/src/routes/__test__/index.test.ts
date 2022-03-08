@@ -4,7 +4,7 @@ import { RecipeDoc, RecipeModel } from '../../models/recipe.model';
 import { NEW_RECIPES, user1Id } from './data/dummy-new-recipes';
 import { createRecipe } from './shared/create-recipe';
 
-const writeTestRecipesToDb = () => RecipeModel.collection.insertMany(
+const writeTestRecipesToDb = () => RecipeModel.insertMany(
     NEW_RECIPES.map(recipe => RecipeModel.build(recipe))
 );
 

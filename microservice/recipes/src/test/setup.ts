@@ -25,8 +25,6 @@ beforeAll(async () => {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	});
-	const recipes = await mongoose.connection.createCollection('recipes');
-	await recipes.createIndex({ name: 'text', description: 'text' });
 });
 
 beforeEach(async () => {

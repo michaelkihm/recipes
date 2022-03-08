@@ -112,7 +112,8 @@ describe('Add recipes - /api/recipes', () => {
         expect(image).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(image!.substring(0,imageBaseURL.length)).toEqual(imageBaseURL);
-        expect(recipes[0].duration).toEqual(recipe.duration);
+        expect(recipes[0].duration.duration).toEqual(recipe.duration.duration);
+        expect(recipes[0].duration.unit).toEqual(recipe.duration.unit);
         expect([...recipes[0].categories]).toEqual(recipe.categories);
         recipes[0].ingredients.forEach((ingredient, i) => {
             expect(ingredient.name).toEqual(recipe.ingredients[i].name);
