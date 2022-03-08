@@ -75,9 +75,9 @@
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
 "@mickenhosrecipes/common@^1.0.10":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@mickenhosrecipes/common/-/common-1.1.9.tgz#1dc83fa4ffc2bb1e6208560ee17d9b8008c963a1"
-  integrity sha512-X35vT2CVmfIL4JxxhFjqwXTCP3jm7Mn6YKaCAFz+DWM0tVZjorBsd63YQA0HfO39xWGkXky4rohxzgqrX1/dfw==
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@mickenhosrecipes/common/-/common-1.1.11.tgz#f7c17d8a6292575c6e8a29ebcabe1436dbe77cca"
+  integrity sha512-uKoUbvUsAOYTEKhkxHbnu1c4NpMD7lVPIbjY+SzT/utcU1tcdX8mmfTxt5P2LReym1qRYOzfP4wR2vKiGkiadQ==
   dependencies:
     "@types/cookie-session" "^2.0.42"
     "@types/express" "^4.17.12"

@@ -1,20 +1,23 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { Recipe } from '@mickenhosrecipes/common';
+import { RecipeUserDetails } from '@mickenhosrecipes/common';
 import { buildAxiosBackendClient } from '../../api/server-side-axios-client';
 import RecipeThematicBreak from '../../components/RecipeThematicBreak';
 import BulletPointIcon from '../../components/icons/BulletPointIcon';
 
 interface RecipePageProps {
-    recipe: Recipe
+    recipe: RecipeUserDetails
 }
 
 const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
 
-    const { name, image, duration, categories, ingredients, description } = recipe;
+    const { name, image, duration, categories, ingredients, description, userId } = recipe;
 
     return (
         <div className="h-full flex flex-col gap-y-2 overflow-y-auto scroll-container">
-            <h1 className="text-3xl font-mono">{name}</h1>
+            <div className="relative mb-2">
+                <h1 className="text-3xl font-mono">{name}</h1>
+                <p className="absolute top-6 text-gray-400 font-bold">by {userId.username}</p>
+            </div>
             <div className="flex gap-x-1">
                 <p className="font-bold">Zeit:</p>
                 <p>{duration.duration}</p>
@@ -57,7 +60,7 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
 export const getServerSideProps: GetServerSideProps<RecipePageProps> = async (context) => {
     
     const client = buildAxiosBackendClient(context.req.headers);
-    const { data } = await client.get<Recipe>(`api/recipes/${context.query.id}`);
+    const { data } = await client.get<RecipeUserDetails>(`api/recipes/${context.query.id}`);
 
     return {
         props: {
