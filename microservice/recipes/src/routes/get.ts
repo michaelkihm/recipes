@@ -1,14 +1,15 @@
-import { BadRequestError } from '@mickenhosrecipes/common';
+import { BadRequestError, isRecipeUserDetails } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
-import { RecipeDoc, RecipeModel } from '../models/recipe.model';
+import { RecipeModel } from '../models/recipe.model';
 
 const router = express.Router();
 
-router.get('/api/recipes/:id', async (req: Request<{id: string}>, res: Response<RecipeDoc>) => {
+router.get('/api/recipes/:id', async (req: Request<{id: string}>, res: Response) => {
 
     const recipe = await RecipeModel.findById(req.params.id).populate('userId');
-    if(recipe) res.send(recipe);
-    else throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
+    if(recipe && isRecipeUserDetails(recipe.userId)) res.send(recipe);
+    else if(!recipe) throw new BadRequestError(`Could not find recipe with id ${req.params.id}`);
+    else throw new BadRequestError('Could not populate data with user data');
 
 });
 
