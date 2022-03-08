@@ -17,6 +17,7 @@ export * from './types/ingredient.type';
 export * from './types/recipe.type';
 export * from './types/base-recipe.type';
 export * from './types/user.type';
+export * from './types/recipe-user-details.type';
 
 export * from './events/base-listener';
 export * from './events/base-publisher';
