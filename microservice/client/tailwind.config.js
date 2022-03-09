@@ -11,6 +11,8 @@ module.exports = {
       },
       zIndex: {
         'drawer': '20',
+        'modal': '30',
+        'modal-backdrop': '10',
       },
       spacing: {
         header: '20%',
