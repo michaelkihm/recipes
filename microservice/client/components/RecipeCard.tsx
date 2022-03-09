@@ -2,6 +2,8 @@ import { FunctionComponent, MouseEvent, useState } from 'react';
 import { Recipe } from '@mickenhosrecipes/common';
 import Router from 'next/router';
 import BookmarkIcon from './icons/BookmarkIcon';
+import VeganIcon from './icons/VeganIcon';
+import RecipeImage from './RecipeImage';
 
 const BOOKMARK_ICON_SIZE_REM = 2;
 
@@ -9,7 +11,7 @@ const RecipeCard: FunctionComponent<{recipe: Recipe}> = ({ recipe }) => {
 
     const [bookmarked, setBookmarked] = useState<boolean>(false);
 
-    const { name, image, duration } = recipe;
+    const { name, image, duration, categories } = recipe;
 
     const handleBookmarkClick = (event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>) => {
         event.stopPropagation();
@@ -17,10 +19,11 @@ const RecipeCard: FunctionComponent<{recipe: Recipe}> = ({ recipe }) => {
     };
 
     return (
-        <div className="w-card_width h-card_height shrink-0 flex flex-col justify-between bg-white shadow-lg"
+        <div className="relative w-card_width h-card_height shrink-0 flex flex-col justify-between bg-white shadow-lg"
             onClick={() => Router.push(`recipe/${recipe.id}`)}>
             <div className="grow">
-                {image && <img src={image} alt={name} className="w-full h-[75%]"/>}
+                { image && <RecipeImage imagePath={image} name={name}
+                    categories={categories} className="w-full h-[75%]"/>}
                 <h3 className="pl-2 text-xl font-bold break-normal">{name}</h3>
             </div>
             <div className="p-2 flex justify-between font-bold text-gray-600">

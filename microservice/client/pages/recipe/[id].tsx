@@ -3,6 +3,7 @@ import { RecipeUserDetails } from '@mickenhosrecipes/common';
 import { buildAxiosBackendClient } from '../../api/server-side-axios-client';
 import RecipeThematicBreak from '../../components/RecipeThematicBreak';
 import BulletPointIcon from '../../components/icons/BulletPointIcon';
+import RecipeImage from '../../components/RecipeImage';
 
 interface RecipePageProps {
     recipe: RecipeUserDetails
@@ -24,7 +25,7 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
                 <p>{duration.unit}</p>
             </div>
             {/* {image && <Image src={image} alt={name} width={200} height={200} loader={imageLoader} unoptimized/>} */}
-            { image && <img src={image} alt={name} height={'25%'}/>}
+            { image && <RecipeImage imagePath={image} name={name} categories={categories} className="h-[75%]"/>}
             <div className="flex flex-wrap gap-x-1">
                 { categories.map(category => (
                     <div key={category}
