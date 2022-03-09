@@ -24,7 +24,11 @@ router.get('/api/recipes', async (req: GetRecipesRequest, res: Response<RecipeDo
     } else if(req.query.searchString) {
         query.$text = { $search: req.query.searchString };
     } else if (req.query.userId) {
-        query.userId = req.query.userId;
+        const userId = req.query.userId;
+        if(userId === 'currentUser' && req.currentUser) {
+            query.userId = req.currentUser.id;
+        } else
+            query.userId = req.query.userId;
     }
     
     const recipes = await RecipeModel.find(query);

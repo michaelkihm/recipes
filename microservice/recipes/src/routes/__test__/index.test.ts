@@ -56,6 +56,24 @@ describe('Get recipes - /api/recipes', () => {
         });
     });
 
+    it('Returns recipes from the current user if query params userId=currentUser', async () => {
+        
+        const currentUserId = user1Id; //see test/setup.ts
+        const currentUserRecipes = NEW_RECIPES.filter(recipe => recipe.userId === currentUserId);
+        await writeTestRecipesToDb();
+
+        const response = await request(app)
+                            .get('/api/recipes')
+                            .set('Cookie', global.signin())
+                            .query({ userId: 'currentUser' })
+                            .send().expect(200);
+
+        expect(response.body.length).toBe(currentUserRecipes.length);
+        response.body.forEach((recipe: RecipeDoc) => {
+            expect(currentUserRecipes.findIndex(r => r.name === recipe.name)).not.toBe(-1);
+        });
+    });
+
     it('Returns recipes queried by its ids in the query param', async () => {
         
         await writeTestRecipesToDb();
