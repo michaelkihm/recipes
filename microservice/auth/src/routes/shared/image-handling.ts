@@ -10,5 +10,5 @@ export const processImageDataAndFormData = (req: UserAddRequest): User => {
         image = `/api/users/images/${(req as any)?.file?.filename}`;
     }
     
-    return { ...user, image };
+    return { ...user, image: image || undefined };
 };

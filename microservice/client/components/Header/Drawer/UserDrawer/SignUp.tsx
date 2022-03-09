@@ -19,7 +19,7 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
     const { doRequest, errors } = useRequest({
                 url: '/api/users/signup',
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                method: 'post', body: createFormData(email, username, password1, selectedImage!),
+                method: 'post', body: createFormData(email, username, password1, selectedImage),
                 onSuccess: () => {
                     onSignup();
                     Router.push('/');
@@ -50,14 +50,14 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
     );
 };
 
-const createFormData = (email: string, username: string, password: string, image: File) => {
+const createFormData = (email: string, username: string, password: string, image: File | null) => {
 
     const userFormData = new FormData();
 
     userFormData.append('email', email);
     userFormData.append('username', username);
     userFormData.append('password', password);
-    userFormData.append('image', image);
+    userFormData.append('image', image || '');
 
     return userFormData;
 };
