@@ -4,6 +4,7 @@ import {
 from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+import { defaultImageUrl } from '../constants';
 import { UserUpdatedPublisher } from '../events/publishers/user-updated-publisher';
 import { UserModel } from '../models/user';
 
@@ -18,7 +19,7 @@ type UpdateUserRequest = Request<any,any,{
 
 const processImageData = (req: UpdateUserRequest): string => {
 
-    let image = '/api/users/images/profile-dummy.jpg';
+    let image = defaultImageUrl;
     if(didMulterSaveImage(req)) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         image = `/api/users/images/${(req as any)?.file?.filename}`;
