@@ -59,6 +59,26 @@ describe('Update User', () => {
         expect(foundUser[0].image?.includes(updatedUser.image)).toBeTruthy();
     });
 
+    it('updates the version number correctly when updated', async () => {
+
+        const updatedUser: { username: string; image: string } = {
+            username: 'new username',
+            image: 'images/identicon.png',
+        };
+
+        const cookie = await global.signin();
+        await request(app)
+                            .put('/api/users')
+                            .attach('image', updatedUser.image)
+                            .field('username', updatedUser.username)
+                            .set('Cookie', cookie)
+                            .expect(200);
+        const foundUser = await UserModel.findOne({ username: updatedUser.username });
+        
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(foundUser!.version).toBe(1);
+    });
+
     it('publishes and user:update event', async () => {
 
         const updatedUser: { username: string; image: string } = {
@@ -78,7 +98,7 @@ describe('Update User', () => {
         expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
         expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.UserUpdated);
         const publisherParameter = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
-        expect(publisherParameter.version).toBe(0);
+        expect(publisherParameter.version).toBe(1);
         expect(publisherParameter.user.username).toBe(updatedUser.username);
         expect(publisherParameter.user.email).toBe('test@test.com');
         expect(mongoose.Types.ObjectId.isValid(publisherParameter.userId)).toBeTruthy();

@@ -36,8 +36,10 @@ const updateUser = async (req: UpdateUserRequest, res: Response<UserEvent>) => {
         image: processImageData(req)
     };
 
-    const user = await UserModel.findByIdAndUpdate(req.currentUser.id, updatedUser,{ new: true } );
+    const user = await UserModel.findById(req.currentUser.id );
     if(user) {
+        user.set(updatedUser);
+        await user.save();
         const userResponse = {
             username: user.username,
             email: user.email,
