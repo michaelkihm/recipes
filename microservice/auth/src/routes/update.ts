@@ -31,15 +31,14 @@ const processImageData = (req: UpdateUserRequest): string => {
 const updateUser = async (req: UpdateUserRequest, res: Response<UserEvent>) => {
 
     if(!req.currentUser || !req.currentUser?.id) throw new BadRequestError('No valid user id');
-    const updatedUser = {
-        ...req.currentUser,
-        username: req.body.username,
-        image: processImageData(req)
-    };
 
     const user = await UserModel.findById(req.currentUser.id );
     if(user) {
-        user.set(updatedUser);
+        const newImage = processImageData(req);
+        user.set({
+            username: req.body.username,
+            image: newImage !== defaultImageUrl ? newImage : user.image,
+        });
         await user.save();
         const userResponse = {
             username: user.username,
