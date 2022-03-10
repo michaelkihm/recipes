@@ -13,7 +13,7 @@ const Login: FunctionComponent<{onLogin: () => void }> = ({ onLogin }) => {
                 method: 'post', body: { email, password, username: 'username' },
                 onSuccess: () => {
                     onLogin();
-                    Router.push('/');
+                    Router.push('/user');
                 } } );
 
 
