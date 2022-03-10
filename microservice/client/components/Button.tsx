@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-type BtnStyles = 'danger' | 'black' | 'white';
+type BtnStyles = 'danger' | 'black' | 'white' | 'blue';
 // eslint-disable-next-line max-len
 export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, React.AriaAttributes {
     color: BtnStyles;
@@ -9,7 +9,8 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
 const btnStyles: {[key in BtnStyles]: string} = {
     danger: 'bg-danger text-white',
     black: 'bg-stone-800 text-white',
-    white: 'bg-white text-black border border-black'
+    white: 'bg-white text-black border border-black',
+    blue: 'bg-blue-400 text-white',
 };
 
 
