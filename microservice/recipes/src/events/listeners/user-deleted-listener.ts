@@ -10,7 +10,7 @@ export class UserDeletedListener extends Listener<UserDeletedEvent> {
 
     async onMessage(data: UserDeletedEvent['data'], msg: Message): Promise<void> {
 
-        const user = await UserModel.findByEvent({ id: data.userId, version: data.version });
+        const user = await UserModel.findById(data.userId);
         if(user) {
             await user.remove();
             msg.ack();
