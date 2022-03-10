@@ -1,51 +1,25 @@
 import { app } from '../../app';
 import request from 'supertest';
-import mongoose from 'mongoose';
 import { UserModel } from '../../models/user';
 import { natsWrapper, Subjects } from '@mickenhosrecipes/common';
 
-describe('Delete User - /api/users/:id',() => {
+describe('Delete User - /api/users',() => {
 
     beforeEach(() => jest.clearAllMocks());
 
-    it('has a route handler listening to DELETE /api/users/:id', async () => {
+    it('has a route handler listening to DELETE /api/users', async () => {
         
-        const response = await request(app).delete('/api/users/1234').send({});
+        const response = await request(app).delete('/api/users').send({});
         expect(response.status).not.toEqual(404);
     });
 
     it('can only be accessed if the user is signed in', async () => {
 
-        await request(app).delete('/api/users/1234')
+        await request(app).delete('/api/users')
             .send({})
             .expect(401);
     });
 
-    it('returns an error if no valid user id is provided', async () => {
-
-
-        const cookie = await global.signin();
-        const response = await request(app)
-                                .delete('/api/users/1234')
-                                .set('Cookie', cookie)
-                                .send({});
-
-        expect(response.status).not.toEqual(401);
-        expect(response.status).toEqual(400);
-    });
-
-    it('returns an error if param id does not correspond to currentUser', async () => {
-
-        const id = new mongoose.Types.ObjectId();
-
-        const cookie = await global.signin();
-        const response = await request(app)
-                                .delete(`/api/users/${id}`)
-                                .set('Cookie', cookie)
-                                .send({});
-
-        expect(response.status).toEqual(400);
-    });
 
     it('deletes the user if DELETE request is valid', async () => {
 
@@ -53,7 +27,7 @@ describe('Delete User - /api/users/:id',() => {
         let foundUsers = await UserModel.find({ email: 'test@test.com' });
 
         await request(app)
-                .delete(`/api/users/${foundUsers[0].id}`)
+                .delete('/api/users')
                 .set('Cookie', cookie)
                 .send({})
                 .expect(200);
@@ -69,7 +43,7 @@ describe('Delete User - /api/users/:id',() => {
         const foundUsers = await UserModel.find({ email: 'test@test.com' });
 
         await request(app)
-                .delete(`/api/users/${foundUsers[0].id}`)
+                .delete('/api/users')
                 .set('Cookie', cookie)
                 .send({})
                 .expect(200);
