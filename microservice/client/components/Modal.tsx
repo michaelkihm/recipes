@@ -6,14 +6,16 @@ interface ModalProps {
     title: string;
 }
 
+const modalPosition = 'fixed p-4 top-0 left-0 h-page w-screen';
+
 const Modal: FunctionComponent<ModalProps> = ({ onClose, title, children }) => {
 
     return (
-        <div className="fixed p-4 top-header left-0 h-page w-screen flex items-center justify-center">
+        <div className={`${modalPosition} flex items-center justify-center`}>
             {/* Backdrop */}
             <div
                 onClick={onClose}
-                className="fixed top-header left-0 h-page w-screen bg-white opacity-40 z-modal-backdrop">
+                className={`${modalPosition} bg-white opacity-40 z-modal-backdrop`}>
             </div>
             {/* Modal */}
             <div className="w-3/4 bg-white z-modal drop-shadow-xl">
