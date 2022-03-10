@@ -49,7 +49,7 @@ const Add: FunctionComponent = () => {
         <Form onSubmit={onSubmit} errors={errors} title="Rezept erstellen" className="h-full flex flex-col gap-y-2 overflow-y-scroll">
             <NameInput value={name} onChange={ setName }/>
             <DurationInput duration={ duration } setDuration={ setDuration }/>
-            <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage={defaultImage}/>
+            <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage={defaultImage} className="drop-shadow-lg"/>
             <CategoryInput categories={categories} setCategories={ setCategories } />
             <RecipeThematicBreak name="Zutaten"/>
             <IngredientsInput ingredients={ingredients} setIngredients={setIngredients}/>
