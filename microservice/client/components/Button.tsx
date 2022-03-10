@@ -19,7 +19,7 @@ const Button: FunctionComponent<ButtonProps> = (props) => {
 
     return (
         <button {...rest}
-            className={`h-7 p-1 flex items-center justify-center rounded shadow ${btnStyles[color]} ${className}`}>
+            className={`min-h-7 p-1 flex items-center justify-center rounded shadow ${btnStyles[color]} ${className}`}>
                 {children}
         </button>);
 };
