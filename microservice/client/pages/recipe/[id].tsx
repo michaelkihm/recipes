@@ -1,23 +1,39 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { RecipeUserDetails } from '@mickenhosrecipes/common';
+import { Recipe, RecipeUserDetails } from '@mickenhosrecipes/common';
 import { buildAxiosBackendClient } from '../../api/server-side-axios-client';
 import RecipeThematicBreak from '../../components/RecipeThematicBreak';
 import BulletPointIcon from '../../components/icons/BulletPointIcon';
 import RecipeImage from '../../components/RecipeImage';
+import { AxiosResponse } from 'axios';
+import { useContext, useEffect, useState } from 'react';
+import UserContext from '../../context/user-context';
+import { updateBookmarksRequest } from '../../api/update-bookmarks';
+import BookmarkIcon from '../../components/icons/BookmarkIcon';
 
 interface RecipePageProps {
-    recipe: RecipeUserDetails
+    recipe: RecipeUserDetails;
+    bookmarks: string[];
 }
 
-const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
+const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
 
-    const { name, image, duration, categories, ingredients, description, userId } = recipe;
+    const { name, image, duration, categories, ingredients, description, userId, id } = recipe;
+    const [bookmarked, setBookmarked] = useState<boolean>(bookmarks.includes(id));
+
+    const { currentUser } = useContext(UserContext);
+
+    useEffect(() => {
+        currentUser && updateBookmarksRequest(bookmarked ? 'push' : 'pull', id);
+    },[bookmarked])
 
     return (
         <div className="h-full flex flex-col gap-y-2 overflow-y-auto scroll-container">
-            <div className="relative mb-2">
-                <h1 className="text-3xl font-mono">{name}</h1>
-                <p className="absolute top-6 text-gray-400 font-bold">by {userId.username}</p>
+            <div className="w-full mb-2 flex justify-between">
+                <div className="grow relative">
+                    <h1 className="text-3xl font-mono">{name}</h1>
+                    <p className="absolute top-6 text-gray-400 font-bold">by {userId.username}</p>
+                </div>
+                {currentUser && <BookmarkIcon checked={bookmarked} sizeRem={2} onClick={() => setBookmarked(!bookmarked)}/>}
             </div>
             <div className="flex gap-x-1">
                 <p className="font-bold">Zeit:</p>
@@ -61,11 +77,18 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe }) => {
 export const getServerSideProps: GetServerSideProps<RecipePageProps> = async (context) => {
     
     const client = buildAxiosBackendClient(context.req.headers);
-    const { data } = await client.get<RecipeUserDetails>(`api/recipes/${context.query.id}`);
+    let booksmarksResponse: AxiosResponse<Recipe[], any> | undefined;
+
+    const recipeResponse = await client.get<RecipeUserDetails>(`api/recipes/${context.query.id}`);
+
+    if(Object.keys(context.req.cookies).length) {
+        booksmarksResponse = await client.get<Recipe[]>('/api/recipes/bookmarks');
+    }
 
     return {
         props: {
-          recipe: data,
+          recipe: recipeResponse.data,
+          bookmarks: booksmarksResponse ? booksmarksResponse.data.map(recipe => recipe.id) : [],
         },
     };
 };
