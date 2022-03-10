@@ -1,4 +1,5 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
+import Button from './Button';
 
 interface ImageInputProps {
     onChange: (value: File | null) => void;
@@ -22,11 +23,11 @@ const ImageInput: FunctionComponent<ImageInputProps> = ({ onChange, selectedImag
                 style={{display: 'none'}} 
                 onChange={event => event.target.files && onChange(event.target.files[0])}
             />
-            <input 
-                className='self-end p-1 bg-blue-400 text-white hover:bg-blue-200 rounded'
-                type="button" 
-                value="Bild suchen..." 
-                onClick={() => document.getElementById('selectedFile')!.click() }/>
+            <Button 
+                type="button"
+                color="blue"
+                onClick={() => document.getElementById('selectedFile')!.click() }
+                className="self-end">Bild suchen...</Button>
         </div>
     )
 };
