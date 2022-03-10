@@ -1,20 +1,30 @@
-import { FunctionComponent, MouseEvent, useState } from 'react';
+import { FunctionComponent, MouseEvent, useContext } from 'react';
 import { Recipe } from '@mickenhosrecipes/common';
 import Router from 'next/router';
 import BookmarkIcon from './icons/BookmarkIcon';
 import RecipeImage from './RecipeImage';
+import UserContext from '../context/user-context';
 
 const BOOKMARK_ICON_SIZE_REM = 2;
 
-const RecipeCard: FunctionComponent<{recipe: Recipe}> = ({ recipe }) => {
+interface RecipeCardProps {
+    recipe: Recipe;
+    bookmarked: boolean;
+    handleBookmark: (bookmarked: boolean) => void;
+}
 
-    const [bookmarked, setBookmarked] = useState<boolean>(false);
+const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, bookmarked, handleBookmark }) => {
+
+    //const [bookmarked, setBookmarked] = useState<boolean>(false);
+
+    const { currentUser } = useContext(UserContext);
 
     const { name, image, duration, categories } = recipe;
 
     const handleBookmarkClick = (event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>) => {
         event.stopPropagation();
-        setBookmarked(!bookmarked);
+        handleBookmark(!bookmarked);
+        //setBookmarked(!bookmarked);
     };
 
     return (
@@ -30,9 +40,9 @@ const RecipeCard: FunctionComponent<{recipe: Recipe}> = ({ recipe }) => {
                     <p>{duration.duration}</p>
                     <p>{duration.unit}</p>
                 </div>
-                <BookmarkIcon checked={bookmarked} onClick={handleBookmarkClick} sizeRem={BOOKMARK_ICON_SIZE_REM}/>
+                {currentUser && <BookmarkIcon checked={bookmarked}
+                    onClick={handleBookmarkClick} sizeRem={BOOKMARK_ICON_SIZE_REM}/>}
             </div>
-
         </div>
     );
 };
