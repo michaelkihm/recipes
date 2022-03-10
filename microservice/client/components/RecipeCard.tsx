@@ -2,7 +2,6 @@ import { FunctionComponent, MouseEvent, useState } from 'react';
 import { Recipe } from '@mickenhosrecipes/common';
 import Router from 'next/router';
 import BookmarkIcon from './icons/BookmarkIcon';
-import VeganIcon from './icons/VeganIcon';
 import RecipeImage from './RecipeImage';
 
 const BOOKMARK_ICON_SIZE_REM = 2;
