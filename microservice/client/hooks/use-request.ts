@@ -5,7 +5,7 @@ import react from 'react'
 
 type ReqeuestProps = {
     url: string,
-    method: 'post' | 'get' | 'patch' | 'delete',
+    method: 'post' | 'get' | 'patch' | 'delete' | 'put',
     body: {[key: string]: any}
     onSuccess?: (data?: any) => void
 }
