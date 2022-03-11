@@ -60,7 +60,7 @@ const UserPage: FunctionComponent<UserPageProps> = ({ booksmarks, recipes, user 
 
     return (
         <Fragment>
-            <div className='flex flex-col '>
+            <div className='h-full flex flex-col overflow-y-auto slider-container'>
                 <div className="flex justify-between">
                     {user.image &&
                         <div className="w-8/12">
