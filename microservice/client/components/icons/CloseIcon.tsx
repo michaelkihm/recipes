@@ -1,10 +1,14 @@
 import { FunctionComponent } from 'react';
 import { IconBaseProps } from './icon-base-props';
 
-const CloseIcon: FunctionComponent<IconBaseProps> = ({ onClick, sizeRem }) => {
+interface CloseIconProps extends IconBaseProps {
+    className?: string
+}
+
+const CloseIcon: FunctionComponent<CloseIconProps> = ({ onClick, sizeRem, className }) => {
 
     return (
-        <button onClick={onClick}>
+        <button onClick={onClick} className={className}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={`${sizeRem}rem`}>
                 <title>Close</title>
                 <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32"
