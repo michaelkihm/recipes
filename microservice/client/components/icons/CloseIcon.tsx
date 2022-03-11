@@ -1,11 +1,8 @@
 import { FunctionComponent } from 'react';
 import { IconBaseProps } from './icon-base-props';
 
-interface CloseIconProps extends IconBaseProps {
-    className?: string
-}
 
-const CloseIcon: FunctionComponent<CloseIconProps> = ({ onClick, sizeRem, className }) => {
+const CloseIcon: FunctionComponent<IconBaseProps> = ({ onClick, sizeRem, className }) => {
 
     return (
         <button onClick={onClick} className={className}>
