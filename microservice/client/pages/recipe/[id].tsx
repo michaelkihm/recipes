@@ -15,6 +15,7 @@ import Button from '../../components/Button';
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
 import ErrorDialog from '../../components/ErrorDialog';
+import EditIcon from '../../components/icons/EditIcon';
 
 interface RecipePageProps {
     recipe: RecipeUserDetails;
@@ -44,6 +45,8 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
         doRequest();
     }
 
+    const editRecipeHandler = () => Router.push(`/recipe/edit/${id}`);
+
     useEffect(() => {
         currentUser && updateBookmarksRequest(bookmarked ? 'push' : 'pull', id);
     },[bookmarked])
@@ -57,6 +60,7 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
                         <p className="absolute top-6 text-gray-400 font-bold">by {userId.username}</p>
                     </div>
                     <div className="flex gap-x-1">
+                        {isAuthor() && <EditIcon sizeRem={ICON_SIZE_REM} onClick={editRecipeHandler} className="border border-black box-shadow-lg rounded bg-white"/>}
                         {isAuthor() && <CloseIcon sizeRem={ICON_SIZE_REM} className="bg-danger rounded" onClick={() => setShowDeleteModal(true)}/>}
                         {currentUser && <BookmarkIcon checked={bookmarked} sizeRem={ICON_SIZE_REM} onClick={() => setBookmarked(!bookmarked)}/>}
                     </div>
