@@ -2,17 +2,17 @@ import { Category, Duration, Ingredient } from '@mickenhosrecipes/common';
 import { FormEvent, FunctionComponent, useContext, useState } from 'react';
 import ImageInput from '../../components/ImageInput';
 import CategoryInput from '../../components/RecipeForm/CategoryInput';
-import DescriptionInput, { removeEmptyDescriptionSteps } from '../../components/RecipeForm/DescriptionInput';
 import DurationInput from '../../components/RecipeForm/DurationInput';
-import IngredientsInput, { removeEmptyIngredients } from '../../components/RecipeForm/IngredientsInput';
 import NameInput from '../../components/RecipeForm/NameInput';
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
-import FormData from 'form-data';
 import Form from '../../components/Form';
 import RecipeThematicBreak from '../../components/RecipeThematicBreak';
 import UserContext from '../../context/user-context';
 import PleaseLogin from '../../components/PleaseLogin';
+import { createRecipeFormData } from '../../components/RecipeForm/create-recipe-form-data';
+import IngredientsInput from '../../components/RecipeForm/IngredientsInput';
+import DescriptionInput from '../../components/RecipeForm/DescriptionInput';
 
 const defaultImage = '/api/recipes/images/recipe-dummy.png';
 
@@ -26,25 +26,19 @@ const Add: FunctionComponent = () => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
     const { currentUser } = useContext(UserContext);
-
-    if(!currentUser) return <PleaseLogin />
-
     const { doRequest, errors } = useRequest({
         url: '/api/recipes',
         method: 'post', body: createRecipeFormData(name, description, categories, duration, ingredients, selectedImage),
-        onSuccess: (recipe: any) => {
-            console.log(recipe.name)
-            Router.push(`${recipe.id}`)
-        }
+        onSuccess: (recipe: any) => Router.push(`${recipe.id}`),
     })
 
     const onSubmit = async (event: FormEvent) => {
-
         event.preventDefault();
         doRequest();
     }
-    
 
+    if(!currentUser) return <PleaseLogin />
+    
     return (
         <Form onSubmit={onSubmit} errors={errors} title="Rezept erstellen" className="h-full flex flex-col gap-y-2 overflow-y-scroll">
             <NameInput value={name} onChange={ setName }/>
@@ -58,21 +52,6 @@ const Add: FunctionComponent = () => {
             <DescriptionInput description={description} setDescription={setDescription} />
         </Form>
     );
-};
-
-const createRecipeFormData = (
-    name: string, description: string[], categories: Category[], duration: Duration, ingredients: Ingredient[], image: File | null ) => {
-    
-        const recipeFormData = new FormData();
-
-        recipeFormData.append('name', name);
-        recipeFormData.append('categories', JSON.stringify(categories))
-        recipeFormData.append('image', image || '');
-        recipeFormData.append('duration', JSON.stringify(duration));
-        recipeFormData.append('description', JSON.stringify(removeEmptyDescriptionSteps(description)));
-        recipeFormData.append('ingredients', JSON.stringify(removeEmptyIngredients(ingredients)))
-
-        return recipeFormData;
 };
 
 export default Add;
