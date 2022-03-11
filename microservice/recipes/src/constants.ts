@@ -1,0 +1,1 @@
+export const recipeDefaultImageUrl = '/api/recipes/images/recipe-dummy.png';

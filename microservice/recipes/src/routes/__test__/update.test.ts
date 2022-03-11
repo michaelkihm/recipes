@@ -185,6 +185,7 @@ describe('Update recipe - PUT /api/recipes/:id', () => {
         expect(publisherParameter.recipe.ingredients).toEqual(response.body.ingredients);
         expect(publisherParameter.recipe.categories).toEqual(response.body.categories);
         expect(publisherParameter.recipe.image.includes(response.body.image)).toBeTruthy();
+        expect(publisherParameter.version).toBe(1);
         expect((natsWrapper.client.publish as jest.Mock).mock.calls[0][0]).toBe(Subjects.RecipeUpdated);
     });
 });

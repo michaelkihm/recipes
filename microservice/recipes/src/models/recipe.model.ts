@@ -1,6 +1,7 @@
 import { Ingredient, BaseRecipe, Recipe, Duration } from '@mickenhosrecipes/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
+import { recipeDefaultImageUrl } from '../constants';
 
 export interface RecipeDoc extends mongoose.Document, BaseRecipe {
     version: number;
@@ -43,7 +44,7 @@ const RecipeSchema = new mongoose.Schema({
     duration: { type: DurationSchema, required: true },
     categories: { type: [String], required: true },
     ingredients: { type: [IngredientSchema], required: true },
-    image: { type: String, required: false, default: '/api/recipes/images/recipe-dummy.png' } },
+    image: { type: String, required: false, default: recipeDefaultImageUrl } },
     {
       toJSON: {
         transform(doc, ret) {

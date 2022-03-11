@@ -5,6 +5,7 @@ import { body } from 'express-validator';
 import { PutRequest } from './shared/types';
 import { processImageDataAndFormData } from './shared/image-handling';
 import { RecipeUpdatedPublisher } from '../events/publishers/recipe-updated-publisher';
+import { recipeDefaultImageUrl } from '../constants';
 
 const router = express.Router();
 
@@ -12,9 +13,15 @@ const updateRecipe = async (req: PutRequest, res: Response<RecipeDoc>) => {
 
     const updatedRecipe = processImageDataAndFormData(req);
 
-    const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, updatedRecipe, { new: true });
+    //const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, updatedRecipe, { new: true });
+    const recipe = await RecipeModel.findById(req.params.id);
     if(recipe) {
+        recipe.set({
+            ...updatedRecipe,
+            image: updatedRecipe.image !== recipeDefaultImageUrl ? updatedRecipe.image : recipe.image
+        });
         const { id, name, description, userId, categories, ingredients, duration, image } = recipe;
+        await recipe.save();
         await new RecipeUpdatedPublisher(natsWrapper.client).publish({
             recipe: { id, userId, name, description, ingredients, categories, duration, image },
             version: recipe.version,
