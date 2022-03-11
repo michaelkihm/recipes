@@ -55,14 +55,14 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
         <Fragment>
             <div className="h-full flex flex-col gap-y-2 overflow-y-auto scroll-container">
                 <div className="w-full mb-2 flex justify-between">
-                    <div className="grow relative">
+                    <div className="grow relative flex gap-x-2">
                         <h1 className="text-3xl font-mono">{name}</h1>
-                        <p className="absolute top-6 text-gray-400 font-bold">by {userId.username}</p>
+                        <p className="absolute top-7 text-gray-400 font-bold">by {userId.username}</p>
+                        {currentUser && <BookmarkIcon checked={bookmarked} sizeRem={ICON_SIZE_REM} onClick={() => setBookmarked(!bookmarked)}/>}
                     </div>
                     <div className="flex gap-x-1">
                         {isAuthor() && <EditIcon sizeRem={ICON_SIZE_REM} onClick={editRecipeHandler} className="border border-black box-shadow-lg rounded bg-white"/>}
                         {isAuthor() && <CloseIcon sizeRem={ICON_SIZE_REM} className="bg-danger rounded" onClick={() => setShowDeleteModal(true)}/>}
-                        {currentUser && <BookmarkIcon checked={bookmarked} sizeRem={ICON_SIZE_REM} onClick={() => setBookmarked(!bookmarked)}/>}
                     </div>
                 </div>
                 {errors.length && <ErrorDialog errors={errors}/>}
