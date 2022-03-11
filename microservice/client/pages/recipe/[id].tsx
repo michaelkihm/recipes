@@ -72,7 +72,7 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
                     <p>{duration.unit}</p>
                 </div>
                 {/* {image && <Image src={image} alt={name} width={200} height={200} loader={imageLoader} unoptimized/>} */}
-                { image && <RecipeImage imagePath={image} name={name} categories={categories} className="h-[75%]"/>}
+                { image && <RecipeImage imagePath={image} name={name} categories={categories} className="h-full"/>}
                 <div className="flex flex-wrap gap-x-1">
                     { categories.map(category => (
                         <div key={category}
