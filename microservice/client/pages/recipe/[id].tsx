@@ -65,7 +65,7 @@ const RecipePage: NextPage<RecipePageProps> = ({ recipe, bookmarks }) => {
                         {isAuthor() && <CloseIcon sizeRem={ICON_SIZE_REM} className="bg-danger rounded" onClick={() => setShowDeleteModal(true)}/>}
                     </div>
                 </div>
-                {errors.length && <ErrorDialog errors={errors}/>}
+                {errors.length > 0 && <ErrorDialog errors={errors}/>}
                 <div className="flex gap-x-1">
                     <p className="font-bold">Zeit:</p>
                     <p>{duration.duration}</p>
