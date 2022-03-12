@@ -1,0 +1,1 @@
+export const defaultImageUrl = '/api/users/images/profile-dummy.jpg';

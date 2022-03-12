@@ -1,0 +1,1 @@
+export const inputStyle = 'bg-transparent focus:outline-none border-b border-black border-dashed';

@@ -4,25 +4,65 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "pwa-msedge",
-            "request": "launch",
-            "name": "Launch Edge against localhost",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}",
-            "runtimeArgs": [
-                "--do-not-de-elevate"
-            ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Backend",
-            "program": "${workspaceFolder}/backend/src/app.ts",
-            "preLaunchTask": "tsc: build - backend/tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/backend/dist/**/*.js"
-            ]
+      {
+        "name": "Auth microservice debugger with Kubernetes",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/auth",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/auth/src/index.ts"
+        ],
+        "preLaunchTask": "bridge-to-kubernetes.resource",
+        "env": {
+          "GRPC_DNS_RESOLVER": "native"
         }
+      },
+      {
+        "name": "Auth microservice debugger",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/auth",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/auth/src/index.ts"
+        ]
+      },
+      {
+        "name": "Recipes microservice debugger with Kubernetes",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/recipes",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/recipes/src/index.ts"
+        ],
+        "preLaunchTask": "bridge-to-kubernetes.resource",
+        "env": {
+          "GRPC_DNS_RESOLVER": "native"
+        }
+      },
+      {
+        "name": "Recipes microservice debugger",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/recipes",
+        "runtimeArgs": [
+          "-r",
+          "ts-node/register"
+        ],
+        "args": [
+          "${workspaceFolder}/recipes/src/index.ts"
+        ]
+      }
     ]
-}
+  }

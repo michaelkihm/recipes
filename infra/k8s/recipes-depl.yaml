@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipes-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recipes
+  template:
+    metadata:
+      labels:
+        app: recipes
+    spec:
+      containers:
+        - name: recipes
+          image: mickenhos90/recipes
+          env:
+            - name: NATS_CLUSTER_ID
+              value: recipes
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recipes-srv
+spec:
+  selector:
+    app: recipes
+  ports:
+    - name: recipes
+      protocol: TCP
+      port: 3001
+      targetPort: 3001
