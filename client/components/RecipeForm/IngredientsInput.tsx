@@ -1,10 +1,10 @@
 import { Ingredient } from '@mickenhosrecipes/common';
-import { FunctionComponent } from 'react';
-import { inputStyle } from './form-styles';
 import { ALL_INGREDIENT_UNITS } from '@mickenhosrecipes/common/build/types/ingredient.type';
+import { FunctionComponent } from 'react';
 import AddIcon from '../icons/AddIcon';
-import DeleteIcon from '../icons/DeleteIcon';
 import BulletPointIcon from '../icons/BulletPointIcon';
+import DeleteIcon from '../icons/DeleteIcon';
+import { inputStyle } from './form-styles';
 
 interface IngredientsInputProps {
     ingredients: Ingredient[];
@@ -57,33 +57,33 @@ const IngredientsInput: FunctionComponent<IngredientsInputProps> = ({ ingredient
         <div>
             <ul className="list-inside">
                 {ingredientsPlusOne().map((ingredient, i) => (
-                    <li key={i} className="w-full my-1 flex gap-x-1">
+                    <li key={ i } className="w-full my-1 flex gap-x-1">
                             <BulletPointIcon />
                             <input
                                 type="number"
-                                className={`w-2/12 ${inputStyle}`}
-                                value={ingredient.amount.toString()}
-                                onChange={(e) => amountChangedHandler(i, e.target.value)}
+                                className={ `w-2/12 ${inputStyle}` }
+                                value={ ingredient.amount.toString() }
+                                onChange={ (e) => amountChangedHandler(i, e.target.value) }
                             />
                             <select
                                 className="w-2/12 bg-transparent px appearance-none"
-                                value={ingredient.unit}
-                                onChange={(e) => unitChangedHandler(i, e.target.value as Ingredient['unit'])}
+                                value={ ingredient.unit }
+                                onChange={ (e) => unitChangedHandler(i, e.target.value as Ingredient['unit']) }
                             >
-                                    {ALL_INGREDIENT_UNITS.map(unit => <option key={unit}>{unit}</option>)}
+                                    {ALL_INGREDIENT_UNITS.map(unit => <option key={ unit }>{unit}</option>)}
                             </select>
                             <input
                                 type="text"
-                                className={`flex-1 ${inputStyle}`}
-                                value={ingredient.name}
-                                onChange={(e) => nameChangedHandler(i, e.target.value)}
+                                className={ `flex-1 ${inputStyle}` }
+                                value={ ingredient.name }
+                                onChange={ (e) => nameChangedHandler(i, e.target.value) }
                             />
-                            <DeleteIcon onClick={() => removeIngredient(i)} sizeRem={1.25}/>
+                            <DeleteIcon onClick={ () => removeIngredient(i) } sizeRem={ 1.25 } />
                     </li>
                 ))}
             </ul>
             <div className="w-8 my-1 p-1 flex items-center justify-center bg-chenin rounded">
-                <AddIcon sizeRem={1.12} onClick={plusBtnHandler}/>
+                <AddIcon sizeRem={ 1.12 } onClick={ plusBtnHandler } />
             </div>
         </div>
     );

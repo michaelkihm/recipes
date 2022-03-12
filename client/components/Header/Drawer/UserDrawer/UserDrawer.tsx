@@ -1,14 +1,14 @@
+import Router, { useRouter } from 'next/router';
 import { Dispatch, FunctionComponent, SetStateAction, useContext, useState } from 'react';
 import UserContext from '../../../../context/user-context';
-import SignUp from './SignUp';
 import { TransitionStyles } from '../../../../types/transition-styles';
+import AddIcon from '../../../icons/AddIcon';
+import UserAccountIcon from '../../../icons/UserAccountIcon';
 import HeaderButton from '../../HeaderButton';
 import BaseDrawer from '../BaseDrawer';
 import Login from './Login';
 import LogOutButton from './LogOutButton';
-import Router, { useRouter } from 'next/router';
-import AddIcon from '../../../icons/AddIcon';
-import UserAccountIcon from '../../../icons/UserAccountIcon';
+import SignUp from './SignUp';
 
 const ICON_SIZE_REM = 2;
 
@@ -56,23 +56,23 @@ const UserDrawer: FunctionComponent<{ show: boolean, onClose: () => void }> = ({
 
     return (
         <BaseDrawer show={ show } transitionStyles={ transitionStyles } className="max-h-[45vh]">
-            { !currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
-                <HeaderButton onClick={() => modalOpenHandler('signUp')}>Sign Up</HeaderButton>
-                <HeaderButton onClick={() => modalOpenHandler('login')} >Einloggen</HeaderButton>
+            { !currentUser && <div className="p-2 flex gap-x-1 justify-between items-center">
+                <HeaderButton onClick={ () => modalOpenHandler('signUp') }>Sign Up</HeaderButton>
+                <HeaderButton onClick={ () => modalOpenHandler('login') } >Einloggen</HeaderButton>
             </div>}
-            { currentUser && <div className='p-2 flex gap-x-1 justify-between items-center'>
+            { currentUser && <div className="p-2 flex gap-x-1 justify-between items-center">
                     <div className="flex gap-x-4">
-                        <UserAccountIcon sizeRem={ICON_SIZE_REM} onClick={userAccountHandler}
-                            disabled={router.route === '/user'}
+                        <UserAccountIcon sizeRem={ ICON_SIZE_REM } onClick={ userAccountHandler }
+                            disabled={ router.route === '/user' }
                         />
-                        <AddIcon sizeRem={ICON_SIZE_REM}
-                            onClick={ addRecipeHandler } disabled={ router.route === '/recipe/add'}
+                        <AddIcon sizeRem={ ICON_SIZE_REM }
+                            onClick={ addRecipeHandler } disabled={ router.route === '/recipe/add' }
                         />
                     </div>
-                    <LogOutButton sizeRem={ICON_SIZE_REM} />
+                    <LogOutButton sizeRem={ ICON_SIZE_REM } />
                 </div>}
-            {showLogin && <Login onLogin={() => setShowLogin(false)}/>}
-            {showSignUp && <SignUp onSignup={() => setShowSignUp(false)}/>}
+            {showLogin && <Login onLogin={ () => setShowLogin(false) } />}
+            {showSignUp && <SignUp onSignup={ () => setShowSignUp(false) } />}
         </BaseDrawer>
     );
 };

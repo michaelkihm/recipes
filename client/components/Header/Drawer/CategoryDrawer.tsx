@@ -1,9 +1,9 @@
-import { FunctionComponent, useState } from 'react';
-import { TransitionStyles } from '../../../types/transition-styles';
 import { ALL_CATEGORIES, Category } from '@mickenhosrecipes/common/build/types/category.type';
+import { FunctionComponent, useState } from 'react';
+import { categoryBoolean } from '../../../types/category-boolean';
+import { TransitionStyles } from '../../../types/transition-styles';
 import CheckBox from '../../CheckBox';
 import BaseDrawer from './BaseDrawer';
-import { categoryBoolean } from '../../../types/category-boolean';
 
 const transitionStyles: TransitionStyles = {
     entering: { transform: 'translateX(0)' },
@@ -21,11 +21,11 @@ const CategoryDrawer: FunctionComponent<{ show: boolean }> = ({ show }) => {
     return (
         <BaseDrawer show={ show } transitionStyles={ transitionStyles } className="h-3/5">
             {ALL_CATEGORIES.map(category => (
-                <div key={category} className="block flex items-center gap-x-1">
+                <div key={ category } className="block flex items-center gap-x-1">
                     <CheckBox
-                        sizeRem={1.25}
-                        onClick={() => clickHandler(category)}
-                        checked={categories[category]}/>
+                        sizeRem={ 1.25 }
+                        onClick={ () => clickHandler(category) }
+                        checked={ categories[category] } />
                     <p className="text-xl">{category}</p>
                 </div>
             ))}

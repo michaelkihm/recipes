@@ -20,7 +20,7 @@ export const UserContextProvider: FunctionComponent<CurrentUser> = ({ children, 
 
     const isUserLoggedIn = () => currentUser !== null;
 
-    return <UserContext.Provider value={{ currentUser, isUserLoggedIn }}>{children}</UserContext.Provider>;
+    return <UserContext.Provider value={ { currentUser, isUserLoggedIn } }>{children}</UserContext.Provider>;
 };
 
 export default UserContext;

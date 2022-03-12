@@ -1,6 +1,6 @@
 import { Category, Duration, Ingredient, RecipeUserDetails } from '@mickenhosrecipes/common';
-import Router from 'next/router';
 import { GetServerSideProps } from 'next';
+import Router from 'next/router';
 import { FormEvent, FunctionComponent, useContext, useState } from 'react';
 import { buildAxiosBackendClient } from '../../../api/server-side-axios-client';
 import Form from '../../../components/Form';
@@ -45,17 +45,17 @@ const EditRecipe: FunctionComponent<EditRecipeProps> = ({ recipe }) => {
     if(!currentUser) return <PleaseLogin />;
     
     return (
-        <Form onSubmit={onSubmit} errors={errors} title="Rezept bearbeiten"
+        <Form onSubmit={ onSubmit } errors={ errors } title="Rezept bearbeiten"
             className="h-full flex flex-col gap-y-2 overflow-y-scroll">
-            <NameInput value={name} onChange={ setName }/>
-            <DurationInput duration={ duration } setDuration={ setDuration }/>
-            <ImageInput selectedImage={selectedImage} onChange={setSelectedImage} defaultImage= {recipe.image! }
-                className="w-8/12 drop-shadow-lg"/>
-            <CategoryInput categories={categories} setCategories={ setCategories } />
-            <RecipeThematicBreak name="Zutaten"/>
-            <IngredientsInput ingredients={ingredients} setIngredients={setIngredients}/>
-            <RecipeThematicBreak name="Zubereitung"/>
-            <DescriptionInput description={description} setDescription={setDescription} />
+            <NameInput value={ name } onChange={ setName } />
+            <DurationInput duration={ duration } setDuration={ setDuration } />
+            <ImageInput selectedImage={ selectedImage } onChange={ setSelectedImage } defaultImage={ recipe.image! }
+                className="w-8/12 drop-shadow-lg" />
+            <CategoryInput categories={ categories } setCategories={ setCategories } />
+            <RecipeThematicBreak name="Zutaten" />
+            <IngredientsInput ingredients={ ingredients } setIngredients={ setIngredients } />
+            <RecipeThematicBreak name="Zubereitung" />
+            <DescriptionInput description={ description } setDescription={ setDescription } />
         </Form>
     );
 };

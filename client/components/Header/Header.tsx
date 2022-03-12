@@ -1,11 +1,11 @@
-import { FunctionComponent, useContext, Fragment, useState } from 'react';
-import UserContext from '../../context/user-context';
 import Link from 'next/link';
-import UserIcon from '../icons/UserIcon';
+import { Fragment, FunctionComponent, useContext, useState } from 'react';
+import UserContext from '../../context/user-context';
 import CheckBoxIcon from '../icons/CheckBoxIcon';
 import SearchIcon from '../icons/SearchIcon';
-import SearchDrawer from './Drawer/SearchDrawer';
+import UserIcon from '../icons/UserIcon';
 import CategoryDrawer from './Drawer/CategoryDrawer';
+import SearchDrawer from './Drawer/SearchDrawer';
 import UserDrawer from './Drawer/UserDrawer/UserDrawer';
 
 const ICON_SIZE_REM = 2;
@@ -31,36 +31,36 @@ const Header: FunctionComponent = () => {
     
     return (
         <Fragment>
-            <div className='w-full h-header p-2 flex flex-col justify-between items-center bg-header text-header-text'>
+            <div className="w-full h-header p-2 flex flex-col justify-between items-center bg-header text-header-text">
                 <Link href="/" passHref>
-                    <h1 className='text-3xl font-bold font-mono cursor-pointer'>Recipes</h1>
+                    <h1 className="text-3xl font-bold font-mono cursor-pointer">Recipes</h1>
                 </Link>
                 <div className="w-full flex justify-between items-center">
                     <div className="flex">
                         <SearchIcon
-                            sizeRem={ICON_SIZE_REM}
-                            onClick={() => setShowSearchBar(!showSearchBar)}
-                            disabled={iconDisabled('search')}
+                            sizeRem={ ICON_SIZE_REM }
+                            onClick={ () => setShowSearchBar(!showSearchBar) }
+                            disabled={ iconDisabled('search') }
                         />
                         <CheckBoxIcon
-                            sizeRem={ICON_SIZE_REM}
-                            onClick={() => setShowCategories(!showCategories)}
-                            disabled={iconDisabled('category')}
+                            sizeRem={ ICON_SIZE_REM }
+                            onClick={ () => setShowCategories(!showCategories) }
+                            disabled={ iconDisabled('category') }
                         />
                     </div>
-                    <div className='flex items-center gap-x-2 '>
+                    <div className="flex items-center gap-x-2 ">
                      {currentUser && <p>{currentUser.username}</p>}
                      <UserIcon
-                        sizeRem={ICON_SIZE_REM}
-                        onClick={() => setShowUser(!showUser)}
-                        disabled={iconDisabled('user')}
+                        sizeRem={ ICON_SIZE_REM }
+                        onClick={ () => setShowUser(!showUser) }
+                        disabled={ iconDisabled('user') }
                     />
                     </div>
                 </div>
             </div>
             <SearchDrawer show={ showSearchBar } />
             <CategoryDrawer show={ showCategories } />
-            <UserDrawer show={ showUser } onClose={() => setShowUser(false)} />
+            <UserDrawer show={ showUser } onClose={ () => setShowUser(false) } />
         </Fragment>
     );
 };

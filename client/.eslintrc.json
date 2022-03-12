@@ -1,3 +1,78 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals", 
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/array-type": [
+      "warn",
+      {
+        "default": "array"
+      }
+    ],
+    "@typescript-eslint/semi": [
+      "warn",
+      "always"
+    ],
+    "@typescript-eslint/no-inferrable-types": 0,
+    "@typescript-eslint/no-empty-function": "off",
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ],
+    "no-trailing-spaces": [
+      "warn",
+      {
+        "skipBlankLines": true
+      }
+    ],
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 2
+      }
+    ],
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "jsx-quotes": [
+      "warn",
+      "prefer-double"
+    ],
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "react/jsx-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "react/jsx-tag-spacing": [
+      "warn"
+    ],
+    "react/jsx-equals-spacing": [
+      "warn"
+    ],
+    "no-multi-spaces": [
+      "warn"
+    ],
+    "eqeqeq": [
+      "warn"
+    ],
+    "space-infix-ops": [
+      "warn"
+    ]
+  }
 }

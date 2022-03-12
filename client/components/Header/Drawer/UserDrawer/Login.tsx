@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { FormEvent, useState, FunctionComponent } from 'react';
+import { FormEvent, FunctionComponent, useState } from 'react';
 import useRequest from '../../../../hooks/use-request';
 import Form from '../../../Form';
 import Input from './Input';
@@ -23,10 +23,10 @@ const Login: FunctionComponent<{onLogin: () => void }> = ({ onLogin }) => {
     };
 
     return (
-        <Form title='Einloggen' onSubmit={onSubmit} errors={errors}
+        <Form title="Einloggen" onSubmit={ onSubmit } errors={ errors }
             className="p-4 m-2 border-2 rounded border-text-header overflow-y-auto">
-            <Input title='E-Mail' type='text' onChange={setEmail} value={email}/>
-            <Input title='Password' type='password' onChange={setPassword} value={password}/>
+            <Input title="E-Mail" type="text" onChange={ setEmail } value={ email } />
+            <Input title="Password" type="password" onChange={ setPassword } value={ password } />
         </Form>
     );
 };

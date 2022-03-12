@@ -36,21 +36,21 @@ const DescriptionInput: FunctionComponent<DescriptionInputProps> = ({ descriptio
     return (
         <div>
             {descriptionPlusOne().map((step, i) => (
-                <div key={i}>
+                <div key={ i }>
                     <p className="font-bold">Schritt {i + 1}</p>
                     <div className="w-full flex gap-x-1 items-start">
                         <textarea
                             className="grow"
-                            value={step}
-                            onChange={(e) => handleChange(e.target.value, i)}
-                            rows={4}
+                            value={ step }
+                            onChange={ (e) => handleChange(e.target.value, i) }
+                            rows={ 4 }
                         />
-                        <DeleteIcon onClick={() => removeStep(i)} sizeRem={ICON_SIZE_REM}/>
+                        <DeleteIcon onClick={ () => removeStep(i) } sizeRem={ ICON_SIZE_REM } />
                     </div>
                 </div>
             ))}
             <div className="w-8 my-1 p-1 flex items-center justify-center bg-chenin rounded">
-                <AddIcon sizeRem={ICON_SIZE_REM} onClick={plusBtnHandler}/>
+                <AddIcon sizeRem={ ICON_SIZE_REM } onClick={ plusBtnHandler } />
             </div>
         </div>
     );

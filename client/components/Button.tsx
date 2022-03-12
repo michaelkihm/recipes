@@ -19,8 +19,9 @@ const Button: FunctionComponent<ButtonProps> = (props) => {
     const { children, color, className, ...rest } = props;
 
     return (
-        <button {...rest}
-            className={`min-h-7 p-1 flex items-center justify-center rounded shadow ${btnStyles[color]} ${className}`}>
+        <button { ...rest }
+            // eslint-disable-next-line max-len
+            className={ `min-h-7 p-1 flex items-center justify-center rounded shadow ${btnStyles[color]} ${className}` }>
                 {children}
         </button>);
 };

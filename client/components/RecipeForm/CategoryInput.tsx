@@ -1,8 +1,8 @@
 import { Category } from '@mickenhosrecipes/common';
-import { FunctionComponent, useEffect, useState } from 'react';
 import { ALL_CATEGORIES } from '@mickenhosrecipes/common/build/types/category.type';
-import CheckBox from '../CheckBox';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { categoryBoolean } from '../../types/category-boolean';
+import CheckBox from '../CheckBox';
 
 interface CategoryInputProps {
     categories: Category[];
@@ -38,12 +38,12 @@ const CategoryInput: FunctionComponent<CategoryInputProps> = ({ categories, setC
         <div className="flex flex-wrap gap-x-2 gap-y-1">
             { ALL_CATEGORIES.map(category =>(
                 <div
-                    className={`min-w-[25%] p-0.5 flex items-center gap-x-1 rounded-lg 
-                        ${selectedCategories[category] ? 'bg-chenin' : 'bg-gray-300' } `}
-                    key={category}
-                    onClick={() => categorySelectHandler(category)}>
-                    <CheckBox sizeRem={1.25} checked={selectedCategories[category]}/>
-                    <p className='text-black'>{category}</p>
+                    className={ `min-w-[25%] p-0.5 flex items-center gap-x-1 rounded-lg 
+                        ${selectedCategories[category] ? 'bg-chenin' : 'bg-gray-300' } ` }
+                    key={ category }
+                    onClick={ () => categorySelectHandler(category) }>
+                    <CheckBox sizeRem={ 1.25 } checked={ selectedCategories[category] } />
+                    <p className="text-black">{category}</p>
                 </div>)) }
         </div>
     );

@@ -1,9 +1,9 @@
-import { FunctionComponent, useState, FormEvent } from 'react';
+import Router from 'next/router';
+import { FormEvent, FunctionComponent, useState } from 'react';
 import useRequest from '../../../../hooks/use-request';
 import Form from '../../../Form';
-import Input from './Input';
 import ImageInput from '../../../ImageInput';
-import Router from 'next/router';
+import Input from './Input';
 
 const defaultImage = '/api/users/images/profile-dummy.jpg';
 
@@ -37,17 +37,17 @@ const SignUp: FunctionComponent<{ onSignup: () => void }> = ({ onSignup }) => {
     };
 
     return (
-        <Form onSubmit={onSubmit} title="SignUp" errors={errors}
+        <Form onSubmit={ onSubmit } title="SignUp" errors={ errors }
             className="p-4 m-2 border-2 rounded border-text-header overflow-y-auto">
-            <Input title="E-Mail" onChange={setEmail} value={email} type="text" />
-            <Input title="Benutzer" onChange={setUsername} value={username} type="text" />
-            <Input title="Passwort" onChange={setPassword1} value={password1} type="password" />
-            <Input title="Passwort" onChange={setPassword2} value={password2} type="password" />
+            <Input title="E-Mail" onChange={ setEmail } value={ email } type="text" />
+            <Input title="Benutzer" onChange={ setUsername } value={ username } type="text" />
+            <Input title="Passwort" onChange={ setPassword1 } value={ password1 } type="password" />
+            <Input title="Passwort" onChange={ setPassword2 } value={ password2 } type="password" />
             {!passwordsEqual && <p className="p-1 mt-2 bg-danger">Passwörter stimmen nicht überein</p>}
             <ImageInput
-                selectedImage={selectedImage}
-                onChange={setSelectedImage} defaultImage={defaultImage} className="w-6/12"/>
-            <hr className='mt-2'/>
+                selectedImage={ selectedImage }
+                onChange={ setSelectedImage } defaultImage={ defaultImage } className="w-6/12" />
+            <hr className="mt-2" />
         </Form>
     );
 };

@@ -13,7 +13,7 @@ const Input: FunctionComponent<InputProps> = ({ type, onChange, value, title }) 
         <div className="px-2 flex justify-between items-center">
             <p>{title}</p>
             <input
-                type={type} onChange={(e) => onChange(e.target.value)} value={value}
+                type={ type } onChange={ (e) => onChange(e.target.value) } value={ value }
                 // eslint-disable-next-line max-len
                 className="p-1 bg-transparent focus:shadow focus:outline-none border-b border-header-text border-dashed"
             />

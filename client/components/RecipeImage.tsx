@@ -21,12 +21,12 @@ const RecipeImage: FunctionComponent<RecipeImageProps> = (
     return (
         <div className="relative">
             { displayVeganIcon() && <div className="absolute top-2 left-2">
-                <VeganIcon sizeRem={iconSizeRem}/>
+                <VeganIcon sizeRem={ iconSizeRem } />
             </div>}
             { displayVegetarianIcon() && <div className="absolute top-2 left-2">
-                <VegetarianIcon sizeRem={iconSizeRem}/>
+                <VegetarianIcon sizeRem={ iconSizeRem } />
             </div>}
-            <img src={imagePath} alt={name} className={ className }/>
+            <img src={ imagePath } alt={ name } className={ className } />
         </div>
     );
 };
