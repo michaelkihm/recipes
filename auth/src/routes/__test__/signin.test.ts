@@ -13,7 +13,7 @@ describe('SignIn User - /api/users/signin', () => {
 			email: 'test@test.com',
 			password: 'password'
 		  })
-		  .expect(400)
+		  .expect(400);
 	});
 	
 	it('fails when an incorrect password is supplied', async () => {
