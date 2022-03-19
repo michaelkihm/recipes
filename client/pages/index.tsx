@@ -14,7 +14,6 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = (props) => {
 	
 	const [bookmarkIds, setBookmarkIds] = useState<string[]>(props.bookmarks.map(recipe => recipe.id));
-  
 
 
 	const updateBookmarks = (id: string, marked: boolean) => {
@@ -26,21 +25,21 @@ const Home: NextPage<HomeProps> = (props) => {
 		} else {
 			const index = bookmarksCopy.indexOf(id);
 			index !== -1 && bookmarksCopy.splice(index,1);
-		};
-		updateBookmarksRequest(marked ? 'push' : 'pull', id)
+		}
+		updateBookmarksRequest(marked ? 'push' : 'pull', id);
 		setBookmarkIds(bookmarksCopy);
-	}
+	};
   
 	return (
 		<div>
 			<div className="h-full w-full flex gap-y-4 gap-x-4 overflow-x-auto scroll-container">
 				{!props.recipes.length && <p>No recipes are here</p>}
 				{props.recipes.map(recipe => (
-					<RecipeCard 
-						key={recipe.id}
-						recipe={recipe}
-						bookmarked={bookmarkIds.includes(recipe.id)}
-						handleBookmark={(marked) => updateBookmarks(recipe.id, marked)}
+					<RecipeCard
+						key={ recipe.id }
+						recipe={ recipe }
+						bookmarked={ bookmarkIds.includes(recipe.id) }
+						handleBookmark={ (marked) => updateBookmarks(recipe.id, marked) }
 					/>))}
       		</div>
     </div>);
