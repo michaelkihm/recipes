@@ -1,11 +1,11 @@
 import { User } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
-import { Password } from '../services/password';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { defaultImageUrl } from '../constants';
+import { Password } from '../services/password';
 
 interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: User): UserDoc;
+  build(attrs: User): UserDoc
 }
 
 // An interface that describes the properties
