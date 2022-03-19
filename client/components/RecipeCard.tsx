@@ -28,7 +28,8 @@ const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, bookmarked, ha
     };
 
     return (
-        <div className="relative w-card_width h-card_height shrink-0 flex flex-col justify-between bg-white shadow-lg"
+        // eslint-disable-next-line max-len
+        <div className="relative w-card_width h-card_height shrink-0 flex flex-col justify-between bg-card drop-shadow-lg border border-bookmark"
             onClick={ () => Router.push(`recipe/${recipe.id}`) }>
             <div className="grow">
                 { image && <RecipeImage imagePath={ image } name={ name }

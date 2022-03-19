@@ -22,11 +22,13 @@ module.exports = {
       },
       colors: {
         'header-text': 'white',
-        app: '#F8EFEA',
+        app: '#f2f3ef',
         danger: 'rgb(248 113 113)',
         chenin: '#DED369',
         mandy: '#E0475B',
-        deepfir: '#192F01'
+        deepfir: '#192F01',
+        card: '#ffffff',
+        bookmark: 'rgb(203 213 225)'
       },
       opacity: {
         disabled: '.50'

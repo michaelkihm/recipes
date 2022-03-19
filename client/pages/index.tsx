@@ -32,7 +32,7 @@ const Home: NextPage<HomeProps> = (props) => {
   
 	return (
 		<div>
-			<div className="h-full w-full flex gap-y-4 gap-x-4 overflow-x-auto scroll-container">
+			<div className="h-full w-full p-4 flex gap-y-4 gap-x-4 overflow-x-auto scroll-container">
 				{!props.recipes.length && <p>No recipes are here</p>}
 				{props.recipes.map(recipe => (
 					<RecipeCard
@@ -48,7 +48,7 @@ const Home: NextPage<HomeProps> = (props) => {
 export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
     
     const client = buildAxiosBackendClient(context.req.headers);
-    let booksmarksResponse: AxiosResponse<Recipe[], any> | undefined;
+    let booksmarksResponse: AxiosResponse<Recipe[], unknown> | undefined;
 
     const recipesResponse = await client.get<Recipe[]>('api/recipes');
 
