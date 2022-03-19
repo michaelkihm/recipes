@@ -1,11 +1,11 @@
+import { BadRequestError, multerMiddleware, natsWrapper, validateRequest } from '@mickenhosrecipes/common';
 import express, { Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest, BadRequestError, multerMiddleware, natsWrapper } from '@mickenhosrecipes/common';
-import { UserDoc, UserModel } from '../models/user';
-import { UserAddRequest } from './shared/types';
-import { processImageDataAndFormData } from './shared/image-handling';
-import { generateJWT } from './shared/generate-jwt';
 import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
+import { UserDoc, UserModel } from '../models/user';
+import { generateJWT } from './shared/generate-jwt';
+import { processImageDataAndFormData } from './shared/image-handling';
+import { UserAddRequest } from './shared/types';
 
 
 const router = express.Router();
