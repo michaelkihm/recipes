@@ -1,8 +1,8 @@
+import { BadRequestError, validateRequest } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { Password } from '../services/password';
-import { BadRequestError, validateRequest } from '@mickenhosrecipes/common';
 import { UserModel } from '../models/user';
+import { Password } from '../services/password';
 import { generateJWT } from './shared/generate-jwt';
 
 const router = express.Router();

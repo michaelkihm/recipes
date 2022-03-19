@@ -1,6 +1,6 @@
-import { UserDoc } from '../../models/user';
-import jwt from 'jsonwebtoken';
 import { Request } from 'express';
+import jwt from 'jsonwebtoken';
+import { UserDoc } from '../../models/user';
 
 export const generateJWT = (user: UserDoc, req: Request): void => {
     

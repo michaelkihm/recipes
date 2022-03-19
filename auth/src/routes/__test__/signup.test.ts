@@ -1,6 +1,6 @@
 import { natsWrapper, Subjects, UserStrings } from '@mickenhosrecipes/common';
-import { signupUser } from './shared/signup-user';
 import mongoose from 'mongoose';
+import { signupUser } from './shared/signup-user';
 
 describe('Signup User - /api/users/signup', () => {
 
