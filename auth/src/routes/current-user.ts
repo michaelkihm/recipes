@@ -1,5 +1,5 @@
-import express, { Response } from 'express';
 import { currentUser } from '@mickenhosrecipes/common';
+import express, { Response } from 'express';
 import { UserDoc, UserModel } from '../models/user';
 
 const router = express.Router();

@@ -1,6 +1,6 @@
+import { UserStrings } from '@mickenhosrecipes/common';
 import request from 'supertest';
 import { app } from '../../app';
-import { UserStrings } from '@mickenhosrecipes/common';
 import { signupUser } from './shared/signup-user';
 
 

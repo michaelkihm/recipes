@@ -1,4 +1,4 @@
-import { BadRequestError, requireAuth, natsWrapper } from '@mickenhosrecipes/common';
+import { BadRequestError, natsWrapper, requireAuth } from '@mickenhosrecipes/common';
 import express, { Request, Response } from 'express';
 import { UserDeletedPublisher } from '../events/publishers/user-deleted-publisher';
 import { UserModel } from '../models/user';

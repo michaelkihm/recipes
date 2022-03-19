@@ -1,8 +1,8 @@
-import { app } from '../../app';
-import request from 'supertest';
-import { UserModel } from '../../models/user';
 import { natsWrapper, Subjects } from '@mickenhosrecipes/common';
 import mongoose from 'mongoose';
+import request from 'supertest';
+import { app } from '../../app';
+import { UserModel } from '../../models/user';
 
 describe('Update User', () => {
 
