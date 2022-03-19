@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import { natsWrapper } from '@mickenhosrecipes/common';
+import mongoose from 'mongoose';
 import { app } from './app';
 
 const start = async () => {
