@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
@@ -7,18 +7,28 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: recipes.dev
+    - host: www.recipes-gang.de
       http:
         paths:
           - path: /api/users/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: auth-srv
-              servicePort: 3000
+              service:
+                name: auth-srv
+                port:
+                  number: 3000
           - path: /api/recipes/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: recipes-srv
-              servicePort: 3001
+              service:
+                name: recipes-srv
+                port: 
+                  number: 3001
           - path: /?(.*)
+            pathType: Prefix
             backend:
-              serviceName: client-srv
-              servicePort: 3000
+              service:
+                name: client-srv
+                port: 
+                  number: 3000
+
