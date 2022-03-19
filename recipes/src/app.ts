@@ -13,7 +13,7 @@ import { updateUserBookmarksRouter } from './routes/update-bookmarks';
 
 
 const app = express();
-app.set('trust proxy', true)
+app.set('trust proxy', true);
 app.use(json());
 app.use('/api/recipes/images', express.static('images'));
 
