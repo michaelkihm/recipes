@@ -16,7 +16,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd recipes && docker build -t mickenhos90/recipes-recipes .
+      - run: cd recipes && docker build -t mickenhos90/recipes .
       - run: docker push mickenhos90/recipes
       - uses: digitalocean/action-doctl@v2
         with:
