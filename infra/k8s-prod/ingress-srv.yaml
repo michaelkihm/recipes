@@ -7,13 +7,21 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: ticketing.dev
+    - host: recipes.dev
       http:
         paths:
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:
-              service:
-                name: auth-srv
-                port:
-                  number: 3000
+              serviceName: auth-srv
+              servicePort: 3000
+          - path: /api/recipes/?(.*)
+            pathType: Prefix
+            backend:
+              serviceName: recipes-srv
+              servicePort: 3001
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              serviceName: client-srv
+              servicePort: 3000
