@@ -1,7 +1,7 @@
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
-import fs from 'fs';
 import path from 'path';
 import { user1Id } from '../routes/__test__/data/dummy-new-recipes';
 
@@ -21,10 +21,7 @@ beforeAll(async () => {
 	mongo = new MongoMemoryServer();
 	const mongoUri = await mongo.getUri();
 
-	await mongoose.connect(mongoUri, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true
-	});
+	await mongoose.connect(mongoUri);
 });
 
 beforeEach(async () => {
